@@ -6,7 +6,7 @@ import OrderHistoryScreen from '../screen/OrderHistoryScreen'
 import ProfileScreen from '../screen/ProfileScreen'
 import CustomIcon from '../components/CustomIcon'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { COLORS } from '../theme/theme'
+import { COLORS, FONTFAMILY, FONTSIZE } from '../theme/theme'
 import { Ionicons } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -18,26 +18,31 @@ const TabNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         tabBarStyle: styles.tabBarStyle,
-      }}>
+        tabBarActiveTintColor: COLORS.primaryRedHex,
+        tabBarInactiveTintColor: COLORS.primaryBlackHex,
+        tabBarLabelStyle: styles.tabBarLabelStyle,
+      }}
+      >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
           tabBarIcon:({focused, color,size}) => (
-            <Ionicons name="home" size={30} color={
-              focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
-            } />
-          )
+            <Ionicons name={focused?"home-sharp":"home-outline"} size={35} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
+            // <Ionicons name="home" size={30} color={
+            //   focused ? COLORS.primaryOrangeHex : COLORS.primaryBlackHex
+            // } />
+          ),
         }}
         ></Tab.Screen>
       <Tab.Screen
-        name="Chat"
+        name="Cart"
         component={ChatScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Ionicons name="chatbox-ellipses" size={30} color={focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex} />
+            <Ionicons name={focused ? "cart-sharp" : "cart-outline"} size={40} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
           ),
         }}></Tab.Screen>
       <Tab.Screen
@@ -45,7 +50,7 @@ const TabNavigator = () => {
         component={OrderHistoryScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <FontAwesome5 name="history" size={30} color={focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex} />
+            <Ionicons name={focused?"list-sharp":"list-outline"} size={40} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
           ),
         }}></Tab.Screen>
       <Tab.Screen
@@ -53,7 +58,7 @@ const TabNavigator = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Ionicons name="person" size={30} color={focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex} />
+            <Ionicons name={focused ? "person-circle-sharp" : "person-circle-outline"} size={40} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
           ),
         }}></Tab.Screen>
     </Tab.Navigator>
@@ -66,10 +71,10 @@ const styles = StyleSheet.create({
   tabBarStyle: {
     height: 80,
     position: 'absolute',
-    backgroundColor: COLORS.primaryBlackRGBA,
-    borderTopWidth: 0,
+    backgroundColor: COLORS.primaryWhiteHex,
+    borderTopWidth: 2,
     elevation: 0,
-    borderTopColor: 'transparent',
+    borderTopColor: COLORS.secondaryRedHex,
   },
   BlurViewStyle: {
     position: 'absolute',
@@ -78,4 +83,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  tabBarLabelStyle: {
+    fontFamily:'Poppins-Light',
+    fontSize:FONTSIZE.size_12,
+  }
 });

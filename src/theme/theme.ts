@@ -45,10 +45,11 @@ interface Color {
   primaryWhiteHex: string;
   primaryBlackRGBA: string;
   secondaryBlackRGBA: string;
+  secondaryRedHex: string;
 }
 
 export const COLORS: Color = {
-  primaryRedHex: '#DC3535',
+  primaryRedHex: '#AE1E1E',
   primaryOrangeHex: '#D17842',
   primaryBlackHex: '#0C0F14',
   primaryDarkGreyHex: '#141921',
@@ -60,6 +61,7 @@ export const COLORS: Color = {
   primaryWhiteHex: '#FFFFFF',
   primaryBlackRGBA: 'rgba(12,15,20,0.5)',
   secondaryBlackRGBA: 'rgba(0,0,0,0.7)',
+  secondaryRedHex: '#E9DADA',
 };
 
 interface FontFamily {
@@ -97,6 +99,7 @@ interface FontSize {
   size_24: number;
   size_28: number;
   size_30: number;
+  size_52: number;
 }
 
 export const FONTSIZE: FontSize = {
@@ -110,6 +113,7 @@ export const FONTSIZE: FontSize = {
   size_24: 24,
   size_28: 28,
   size_30: 30,
+  size_52: 52,
 };
 
 interface BorderRadius {
