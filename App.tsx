@@ -10,6 +10,8 @@ import LandingScreen from "./src/screen/LandingScreen";
 import RegisterScreen from "./src/screen/RegisterScreen";
 import DetailScreen from "./src/screen/DetailScreen";
 import LoginScreen from "./src/screen/LoginScreen";
+import RegisterCustomerScreen from "./src/screen/RegisterCustomerScreen";
+import RegisterProviderScreen from "./src/screen/RegisterProviderScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -57,15 +59,25 @@ export default function App() {
           // options={{ animation: "slide_from_bottom" }}
         ></Stack.Screen>
         <Stack.Screen
+          name="Register_Customer"
+          component={RegisterCustomerScreen}
+          // options={{ animation: "slide_from_bottom" }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="Register_Provider"
+          component={RegisterProviderScreen}
+          // options={{ animation: "slide_from_bottom" }}
+        ></Stack.Screen>
+        <Stack.Screen
           name="Tab"
           component={TabNavigator}
           // options={{ animation: "slide_from_bottom" }}
         ></Stack.Screen>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Detail"
           component={DetailScreen}
           // options={{ animation: "slide_from_bottom" }}
-        ></Stack.Screen> */}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
