@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen'
 import LandingScreen from "./src/screen/LandingScreen";
 import RegisterScreen from "./src/screen/RegisterScreen";
 import DetailScreen from "./src/screen/DetailScreen";
+import LoginScreen from "./src/screen/LoginScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,16 +41,21 @@ export default function App() {
   return (
     <NavigationContainer onReady={onLayoutRootView}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          // options={{ animation: "slide_from_bottom" }}
-        ></Stack.Screen>
         <Stack.Screen
           name="Landing"
           component={LandingScreen}
           // options={{ animation: "slide_from_bottom" }}
-        ></Stack.Screen> */}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          // options={{ animation: "slide_from_bottom" }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          // options={{ animation: "slide_from_bottom" }}
+        ></Stack.Screen>
         <Stack.Screen
           name="Tab"
           component={TabNavigator}

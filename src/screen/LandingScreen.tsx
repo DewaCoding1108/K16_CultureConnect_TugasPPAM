@@ -10,7 +10,7 @@ const LandingScreen = ({navigation}:any) => {
       <ImageBackground style={styles.LandingImage}source={require("../assets/app_images/LandingPageImage.png")}>
         <View style={styles.TextContainer}>
           <Text style={styles.TextHeader}>Contribute In Culture</Text>
-          <AppButton title="Login" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryBlackHex} onPress={()=>{navigation.push('Tab')}}/>
+          <AppButton title="Login" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryBlackHex} onPress={()=>{navigation.push('Login')}}/>
           {/* <Button title='Login' ></Button> */}
           <Text style={styles.TextParagraph}>Don't have an account? 
             <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryRedHex}}> Create account</Text>
