@@ -7,9 +7,10 @@ interface InputTextProps{
   value:string,
   changeHandler:any,
   placeholder:string,
+  secureTextEntry?:boolean,
 }
 
-const InputText:React.FC<InputTextProps> = ({label,value,changeHandler,placeholder}) => {
+const InputText:React.FC<InputTextProps> = ({label,value,changeHandler,placeholder,secureTextEntry=false}) => {
   return (
     <View style={styles.TextInputComponent}>
           <Text style={styles.TextLabel}>{label}</Text>
@@ -18,6 +19,7 @@ const InputText:React.FC<InputTextProps> = ({label,value,changeHandler,placehold
             onChangeText={changeHandler}
             value={value}
             placeholder={placeholder}
+            secureTextEntry={secureTextEntry}
           />
     </View>
   )

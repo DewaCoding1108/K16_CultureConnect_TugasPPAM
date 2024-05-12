@@ -1,15 +1,17 @@
 import {ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { BORDERRADIUS, COLORS, SPACING } from "../theme/theme";
 import { StatusBar } from "expo-status-bar";
 import ImageBackgroundInfo from "../components/ImageBackgroundInfo";
 import SeniCard from "../components/SeniCard";
 
 const HomeScreen = ({navigation}:any) => {
+
+  const [searchQuery, setSearchQuery] = useState('');
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar translucent backgroundColor="transparent" />
-      <ImageBackgroundInfo imagelink_portrait={require("../../src/assets/app_images/HomePageImage.png")}/>
+      <ImageBackgroundInfo imagelink_portrait={require("../../src/assets/app_images/HomePageImage.png")} value={searchQuery} onChangeText={(searchQuery:string) => setSearchQuery(searchQuery)} clickHandler={()=> navigation.navigate('Detail')} editable={false}/>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
         <View style={styles.CardContainer}>
           <SeniCard buttonPressHandler={()=>{navigation.push('Detail')}} name="Sanggar Seni" description= "Temukan bakat seni Anda dalam lukisan, tari, musik, dan teater di satu tempat yang penuh kreativitas" imagelink={require("../../src/assets/app_images/Home_SanggarSeni.png")}/>

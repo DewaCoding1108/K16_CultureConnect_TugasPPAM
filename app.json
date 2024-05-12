@@ -19,6 +19,7 @@
       "bundleIdentifier": "com.kadekpradnyana1108.CultureConnect"
     },
     "android": {
+      
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

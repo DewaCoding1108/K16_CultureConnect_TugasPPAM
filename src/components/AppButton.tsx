@@ -10,9 +10,12 @@ interface AppButtonProps{
 }
 
 const AppButton:React.FC<AppButtonProps> = ({ title,backgroundColor,textColor,onPress}) => (
-  <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer, {backgroundColor:backgroundColor}]}>
-    <Text style={[styles.appButtonText,{color:textColor}]}>{title}</Text>
-  </TouchableOpacity>
+  <View>
+    <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer, {backgroundColor:backgroundColor}]}>
+      <Text style={[styles.appButtonText,{color:textColor}]}>{title}</Text>
+    </TouchableOpacity>
+  </View>
+  
 );
 
 export default AppButton

@@ -1,15 +1,38 @@
 import { StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React,{ useState } from 'react'
+import React,{ useEffect, useState } from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from '../theme/theme';
 import AppButton from '../components/AppButton';
 import InputText from '../components/InputText';
 import BackButton from '../components/BackButton';
+import { auth } from '../../firebaseConfig';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const LoginScreen = ({navigation}:any) => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password,setPassword] = useState('');
+  // const [userCredentials, setUserCredentials] = useState({});
+
+  useEffect(() => {
+    const subscribe = auth.onAuthStateChanged(user => {
+      if(user){
+        navigation.navigate('Tab')
+      }
+    })
+    return subscribe
+  }, [])
+
+  const loginHandler = () => {
+    signInWithEmailAndPassword(auth,email,password)
+    .then((userCredential) => {
+      // userCredential, 
+      const user = userCredential.user;
+      // console.log(res);
+      console.log('login with: ',user.email)
+    })
+    .catch(error => alert(error.message))
+  }
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar translucent backgroundColor="transparent" />
@@ -17,10 +40,10 @@ const LoginScreen = ({navigation}:any) => {
         <BackButton pressHandler={()=>{navigation.goBack()}}/>
         <Text style={styles.TextHeader}>Login</Text>
         <Text style={styles.TextParagraph}>Fill the Information Below with the Correct Identity to Complete the Login Account</Text>
-        <InputText label='Email' value={email} placeholder='input your email address' changeHandler={setEmail}/>
-        <InputText label='Password' value={password} placeholder='input your password' changeHandler={setPassword}/>
+        <InputText label='Email' value={email} placeholder='input your email address' changeHandler={(email:string) => setEmail(email)}/>
+        <InputText label='Password' value={password} placeholder='input your password' changeHandler={(password:string) => setPassword(password)} secureTextEntry={true} />
         <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryBlackHex, textAlign:'right', marginBottom:SPACING.space_24, fontFamily:'Poppins-Medium', fontSize:14}}> Forgot Password?</Text>
-        <AppButton title="Login" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{navigation.push('Tab')}}/>
+        <AppButton title="Login" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={loginHandler}/>
         <View style={{flex:1, justifyContent:'flex-end', alignItems:'center'}}>
           <Text style={styles.TextParagraph}>Don't have an account? 
             <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryRedHex}}> Create account</Text>

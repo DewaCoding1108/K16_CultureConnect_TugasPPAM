@@ -9,7 +9,7 @@ interface BackButtonProps{
 const BackButton:React.FC<BackButtonProps> = ({pressHandler}) => {
   return (
     <View>
-      <TouchableOpacity onPress={pressHandler}>
+      <TouchableOpacity style={styles.TouchContainer} onPress={pressHandler}>
         <Ionicons name="arrow-back" size={30} color="black" />
       </TouchableOpacity>
     </View>
@@ -18,4 +18,8 @@ const BackButton:React.FC<BackButtonProps> = ({pressHandler}) => {
 
 export default BackButton
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  TouchContainer:{
+    width:50,
+  }
+})
