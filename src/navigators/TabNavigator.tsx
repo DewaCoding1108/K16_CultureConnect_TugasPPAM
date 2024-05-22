@@ -31,9 +31,6 @@ const TabNavigator = () => {
         options={{
           tabBarIcon:({focused, color,size}) => (
             <Ionicons name={focused?"home-sharp":"home-outline"} size={35} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
-            // <Ionicons name="home" size={30} color={
-            //   focused ? COLORS.primaryOrangeHex : COLORS.primaryBlackHex
-            // } />
           ),
         }}
         ></Tab.Screen>

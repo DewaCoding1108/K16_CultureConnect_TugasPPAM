@@ -12,8 +12,8 @@ const RegisterScreen = ({navigation}:any) => {
       <ImageBackground style={styles.LandingImage}source={require("../assets/app_images/RegisterPageImage.png")}>
         <View style={styles.TextContainer}>
           <Text style={styles.TextHeader}>Join To Explore Culture</Text>
-          <AppButton title="Register as a Customer" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{navigation.push('Register_Customer')}}/>
-          <AppButton title="Register as a Provider" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryBlackHex} onPress={()=>{navigation.push('Register_Provider')}}/>
+          <AppButton title="Register as a Customer" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{navigation.push('Register_User',{role:'Customer'})}}/>
+          <AppButton title="Register as a Provider" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryBlackHex} onPress={()=>{navigation.push('Register_User',{role:'Provider'})}}/>
           {/* <Button title='Login' ></Button> */}
           <Text style={styles.TextParagraph}>Have an account already? 
             <Text onPress={()=>{navigation.push('Login')}} style={{color:COLORS.primaryRedHex}}> Login</Text>

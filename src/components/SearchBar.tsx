@@ -9,9 +9,10 @@ interface SearchBarProps{
   onChangeText:any,
   editable?:boolean,
   inputRef?:any,
+  submitHandler?:any;
 }
 
-const SearchBar:React.FC<SearchBarProps> = ({clickHandler, value, onChangeText, editable=true, inputRef}) => {
+const SearchBar:React.FC<SearchBarProps> = ({clickHandler, value, onChangeText, editable=true, inputRef, submitHandler=()=>{}}) => {
   return (
     <TouchableOpacity onPress={clickHandler} style={styles.InputContainerComponent} activeOpacity={0.7}>
           <Ionicons
@@ -29,6 +30,7 @@ const SearchBar:React.FC<SearchBarProps> = ({clickHandler, value, onChangeText, 
             onChangeText={onChangeText}
             editable={editable}
             ref={inputRef}
+            onSubmitEditing={submitHandler}
           />
     </TouchableOpacity>
   )
@@ -40,7 +42,9 @@ const styles = StyleSheet.create({
   InputContainerComponent: {
     padding:5,
     width:'95%',
-    marginTop: SPACING.space_24,
+    marginTop: SPACING.space_16,
+    borderWidth:1,
+    borderColor:'#A19C9C',
     borderRadius: BORDERRADIUS.radius_15,
     backgroundColor: COLORS.primaryWhiteHex,
     flexDirection: "row",

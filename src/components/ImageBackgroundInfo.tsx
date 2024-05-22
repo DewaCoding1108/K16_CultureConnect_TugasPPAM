@@ -14,45 +14,60 @@ import { Ionicons } from "@expo/vector-icons";
 import SearchBar from "./SearchBar";
 
 interface ImageBackgroundInfoProps {
-  EnablebackHandler?: boolean;
-  imagelink_portrait: ImageProps;
-  clickHandler:any,
-  value:string,
-  onChangeText:any,
+  enablebackHandler?: boolean;
+  backHandler?:any;
+  enableSearch?:boolean;
+  enableText?:boolean;
+  imagelink_portrait: any;
+  clickHandler?:any,
+  value?:string,
+  onChangeText?:any,
   editable?:boolean,
+  imageStyle?:any,
 }
 
 const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
-  EnablebackHandler,
+  enablebackHandler = false,
+  backHandler = () => {},
+  enableSearch = false,
+  enableText = false,
   imagelink_portrait,
   clickHandler,
   value,
   onChangeText,
   editable = true,
+  imageStyle = {},
 }) => {
   return (
     <ImageBackground
       source={imagelink_portrait}
-      style={styles.ItemBackgroundImage}
+      style={[styles.ItemBackgroundImage,imageStyle]}
     >
+        {
+          enablebackHandler ?
+          <>
+            <TouchableOpacity onPress={backHandler}style={styles.BackButtonContainer} activeOpacity={0.7}>
+              <Ionicons style={{marginVertical:SPACING.space_10,marginHorizontal:SPACING.space_10}}name="chevron-back" size={24} color="black" />
+            </TouchableOpacity>
+          </>
+          :
+          <></>
+        }
       <View style={styles.TextContainer}>
-        <Text style={styles.TextHeader}>Tempat Inspirasi Tanpa Batas</Text>
-        <Text style={styles.TextParagraph}>
-          Berkontribusi terhadap budaya indonesia!
-        </Text>
-        <SearchBar clickHandler={clickHandler} onChangeText={onChangeText} value={value} editable={editable}/>
-        {/* <TouchableOpacity onPress={() => {}} style={styles.InputContainerComponent}>
-          <Ionicons
-            style={styles.InputIcon}
-            name={"search-sharp"}
-            size={25}
-            color={COLORS.primaryBlackHex}
-          />
-          <TextInput
-          style={styles.TextInputContainer}
-          placeholder="Search all you need!"
-          />
-        </TouchableOpacity> */}
+        {
+          enableText ?
+          <> 
+            <Text style={styles.TextHeader}>Tempat Inspirasi Tanpa Batas</Text>
+            <Text style={styles.TextParagraph}>
+              Berkontribusi terhadap budaya indonesia!
+            </Text>
+          </>
+          : <></>
+        }
+        {
+          enableSearch ? <SearchBar clickHandler={clickHandler} onChangeText={onChangeText} value={value || ''} editable={editable}/>
+          : <></>
+        }
       </View>
     </ImageBackground>
   );
@@ -108,5 +123,13 @@ const styles = StyleSheet.create({
     width:'100%',
     fontFamily:'Poppins-Medium',
     fontSize:FONTSIZE.size_12,
+  },
+  BackButtonContainer:{
+    height:45,
+    width:45,
+    marginHorizontal:SPACING.space_16,
+    marginVertical:SPACING.space_24,
+    borderRadius:BORDERRADIUS.radius_20,
+    backgroundColor:COLORS.primaryWhiteHex,
   },
 });

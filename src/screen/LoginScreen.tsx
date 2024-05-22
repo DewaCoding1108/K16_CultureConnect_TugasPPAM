@@ -1,12 +1,14 @@
-import { StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import React,{ useEffect, useState } from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from '../theme/theme';
 import AppButton from '../components/AppButton';
 import InputText from '../components/InputText';
 import BackButton from '../components/BackButton';
-import { auth } from '../../firebaseConfig';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import auth from '@react-native-firebase/auth';
+import SignIn from '../db/SignIn';
+// import { auth } from '../../firebaseConfig';
+// import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const LoginScreen = ({navigation}:any) => {
   // const [loading, setLoading] = useState(false);
@@ -14,28 +16,22 @@ const LoginScreen = ({navigation}:any) => {
   const [password,setPassword] = useState('');
   // const [userCredentials, setUserCredentials] = useState({});
 
-  useEffect(() => {
-    const subscribe = auth.onAuthStateChanged(user => {
-      if(user){
-        navigation.navigate('Tab')
-      }
-    })
-    return subscribe
-  }, [])
+  // useEffect(() => {
+  //   const subscribe = auth.onAuthStateChanged(user => {
+  //     if(user){
+  //       navigation.navigate('Tab')
+  //     }
+  //   })
+  //   return subscribe
+  // }, [])
 
-  const loginHandler = () => {
-    signInWithEmailAndPassword(auth,email,password)
-    .then((userCredential) => {
-      // userCredential, 
-      const user = userCredential.user;
-      // console.log(res);
-      console.log('login with: ',user.email)
-    })
-    .catch(error => alert(error.message))
+  const loginHandler = async () => {
+    SignIn({email,password});
   }
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar translucent backgroundColor="transparent" />
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
       <View style={styles.FormContainer}>
         <BackButton pressHandler={()=>{navigation.goBack()}}/>
         <Text style={styles.TextHeader}>Login</Text>
@@ -50,6 +46,7 @@ const LoginScreen = ({navigation}:any) => {
           </Text>
         </View>
       </View>
+      </ScrollView>
     </View>
   )
 }
@@ -102,5 +99,8 @@ const styles = StyleSheet.create({
     fontSize:FONTSIZE.size_14,
     color:COLORS.primaryLightGreyHex,
     marginBottom:5,
+  },
+  ScrollViewFlex:{
+    flexGrow:1,
   }
 })
