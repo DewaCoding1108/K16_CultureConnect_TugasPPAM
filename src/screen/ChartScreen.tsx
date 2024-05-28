@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   Bottomheigt:{
-    height:330,
+    height:325,
   },
   ButtonAlignment: {
     alignSelf: "center",
     // position:"absolute",
-    bottom: 330,
+    bottom: 325,
 
   }
 })
