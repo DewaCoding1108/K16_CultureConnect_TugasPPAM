@@ -4,10 +4,11 @@ import HeaderBar from '../components/HeaderBar'
 import PesananCard from '../components/PesananCard'
 import { StatusBar } from "expo-status-bar";
 import ChartButton from '../components/ChartButton';
+import { COLORS } from '../theme/theme';
 
 const DetailScreen = ({navigation}:any) => {
   return (
-    <View >
+    <View style={{backgroundColor:COLORS.primaryWhiteHex}}>
       <HeaderBar title="Pesanan" description="Pesan sekarang untuk pengalaman yang tak terlupakan terhadap karya seni"/>
       <StatusBar translucent backgroundColor="transparent" />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
@@ -41,12 +42,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   Bottomheigt:{
-    height:250,
+    height:330,
   },
   ButtonAlignment: {
     alignSelf: "center",
-    position:"absolute",
-    bottom: 250,
+    // position:"absolute",
+    bottom: 330,
 
   }
 })

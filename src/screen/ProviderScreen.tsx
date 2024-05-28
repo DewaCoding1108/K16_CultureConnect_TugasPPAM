@@ -3,12 +3,12 @@ import React, { useEffect } from 'react'
 import AppButton from '../components/AppButton'
 import { COLORS } from '../theme/theme'
 import { signOut } from 'firebase/auth'
-// import { auth } from '../../firebaseConfig'
-import auth from '@react-native-firebase/auth'
+import { auth } from '../../firebaseConfig'
+// import auth from '@react-native-firebase/auth'
 
 const ProviderScreen = ({navigation}:any) => {
   const signOutHandler = async () => {
-    await auth().signOut();
+    await signOut(auth);
     // navigation.replace('Landing');
   }  
 

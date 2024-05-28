@@ -5,7 +5,7 @@ import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from '../theme/theme';
 import AppButton from '../components/AppButton';
 import InputText from '../components/InputText';
 import BackButton from '../components/BackButton';
-import auth from '@react-native-firebase/auth';
+// import auth from '@react-native-firebase/auth';
 import SignIn from '../db/SignIn';
 // import { auth } from '../../firebaseConfig';
 // import { signInWithEmailAndPassword, signOut } from 'firebase/auth';

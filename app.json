@@ -15,17 +15,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.kadekpradnyana1108.CultureConnect",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.kadekpradnyana1108.CultureConnect",
-      "googleServicesFile": "./google-services.json"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,7 +33,6 @@
     },
     "plugins": [
       "expo-font",
-      "@react-native-firebase/app",
       [
         "expo-build-properties",
         {

@@ -5,9 +5,12 @@ import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from '../theme/theme';
 import AppButton from '../components/AppButton';
 import InputText from '../components/InputText';
 import BackButton from '../components/BackButton';
-import auth from '@react-native-firebase/auth'
+// import auth from '@react-native-firebase/auth'
 // import { auth } from '../../firebaseConfig';
-import firestore from '@react-native-firebase/firestore'
+// import firestore from '@react-native-firebase/firestore'
+// import * as firebase from 'firebase'
+import {auth,firestore} from '../../firebaseConfig'
+import { collection, doc, setDoc } from 'firebase/firestore';
 import { getAuth,createUserWithEmailAndPassword } from 'firebase/auth';
 
 const RegisterUserScreen = ({navigation,route}:any) => {
@@ -21,19 +24,18 @@ const RegisterUserScreen = ({navigation,route}:any) => {
   const signUpHandler = async () => {
     if (email && password && phoneNumber && name){
       try{
-        const response = await auth().createUserWithEmailAndPassword(
+        const response = await createUserWithEmailAndPassword(auth,
           email,
           password
         );
         if(response.user){
-          const userRef = firestore().collection('Users').doc(response.user.uid);
-          await userRef.set({
+          const userRef = collection(firestore,'Users');
+          await setDoc(doc(userRef, response.user.uid), {
             email: email,
             name: name,
             nomor: phoneNumber,
-            role: role
-          });
-          console.log('User created successfully, please log in');
+            role: role });
+            console.log('User created successfully, please log in');
         }
       }
       catch(e:any){
