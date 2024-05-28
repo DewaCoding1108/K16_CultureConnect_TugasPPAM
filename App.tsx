@@ -10,8 +10,8 @@ import LandingScreen from "./src/screen/LandingScreen";
 import RegisterScreen from "./src/screen/RegisterScreen";
 import LoginScreen from "./src/screen/LoginScreen";
 import RegisterUserScreen from "./src/screen/RegisterUserScreen";
-import auth, { FirebaseAuthTypes} from "@react-native-firebase/auth"
-import User from "@react-native-firebase/auth" 
+// import auth, { FirebaseAuthTypes} from "@react-native-firebase/auth"
+// import User from "@react-native-firebase/auth" 
 import ProviderScreen from "./src/screen/ProviderScreen";
 import { AuthProvider, useAuth } from "./src/auth/AuthProvider";
 import CategoryScreen from "./src/screen/CategoryScreen";

@@ -31,7 +31,7 @@ import {
     imagelink,
   }) => {
     return (
-      <TouchableOpacity style={styles.PesananCardContainer} >
+      <TouchableOpacity style={styles.PesananCardContainer}>
         <ImageBackground
         source={imagelink}
         style={styles.CardImageBackground}

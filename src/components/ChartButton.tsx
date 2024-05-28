@@ -28,7 +28,7 @@ const formatedPrice = (price: number): string => {
 
 const styles = StyleSheet.create({
     ButtonContainer:{
-        width:0.65 * BUTTON_WIDTH,
+        width:0.9 * BUTTON_WIDTH,
         backgroundColor: "#AE1E1E",
         borderRadius: 30,
         flexDirection:"row",

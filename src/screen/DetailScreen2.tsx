@@ -4,7 +4,9 @@ import { StatusBar } from 'expo-status-bar'
 import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from '../theme/theme'
 import ImageBackgroundInfo from '../components/ImageBackgroundInfo'
 import ProductCard from '../components/ProductCard'
-import firestore from '@react-native-firebase/firestore'
+// import firestore from '@react-native-firebase/firestore'
+import { firestore } from '../../firebaseConfig'
+import { getDoc, getDocs, doc, query, collection, where } from 'firebase/firestore'
 import AppButton from '../components/AppButton'
 
 const CARD_WIDTH = Dimensions.get("window").width;
@@ -46,33 +48,50 @@ const DetailScreen2 = ({navigation,route}:any) => {
   const handleProvider = async () => {
     try {
       setLoading(true);
-      const providerData = await firestore()
-          .collection(providerTipe)
-          .doc(sanggarID)
-          .get();
-      
-      if(providerData.exists){
-        setProviderResults(providerData.data());
-        console.log(providerResults)
+      const providerDoc = await getDoc(doc(firestore, providerTipe, sanggarID));
+      if(providerDoc.exists()){
+        setProviderResults(providerDoc.data())
       }
       else{
-        console.log('tidak ditemukan')
+        console.log('tidak ditemukan');
       }
       setLoading(false);
-
-    } catch (error) {
+    }
+    catch(error){
       console.error('Error searching Firestore:', error);
       setLoading(false);
     }
+
+    //   const providerData = await firestore()
+    //       .collection(providerTipe)
+    //       .doc(sanggarID)
+    //       .get();
+      
+    //   if(providerData.exists){
+    //     setProviderResults(providerData.data());
+    //     console.log(providerResults)
+    //   }
+    //   else{
+    //     console.log('tidak ditemukan')
+    //   }
+    //   setLoading(false);
+
+    // } catch (error) {
+    //   console.error('Error searching Firestore:', error);
+    //   setLoading(false);
+    // }
   }
 
 
   const handleProduct = async () => {
     try {
-      const querySnapshot = await firestore()
-          .collection(tipe)
-          .where('sanggarID','==',sanggarID)
-          .get();
+      const q = query(collection(firestore,tipe), where('sanggarID','==',sanggarID))
+      const querySnapshot = await getDocs(q)
+
+      // const querySnapshot = await firestore()
+      //     .collection(tipe)
+      //     .where('sanggarID','==',sanggarID)
+      //     .get();
 
       const searchResults = querySnapshot.docs
       .filter(doc => doc.data().name !== name)

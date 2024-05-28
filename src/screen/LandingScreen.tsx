@@ -2,8 +2,9 @@ import { Button, Dimensions, ImageBackground, StatusBar, StyleSheet, Text, View 
 import React, { useEffect } from 'react'
 import { COLORS, FONTSIZE, SPACING } from '../theme/theme'
 import AppButton from '../components/AppButton'
-import auth,{FirebaseAuthTypes} from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
+import {auth, firestore} from '../../firebaseConfig' 
+// import auth,{FirebaseAuthTypes} from '@react-native-firebase/auth'
+// import firestore from '@react-native-firebase/firestore'
 
 const LandingScreen = ({navigation}:any) => {
   // async function onAuthStateChanged(user: FirebaseAuthTypes.User | null){

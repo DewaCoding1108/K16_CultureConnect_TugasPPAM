@@ -2,14 +2,17 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import AppButton from '../components/AppButton'
 import { COLORS, FONTSIZE, SPACING } from '../theme/theme'
-import { signOut } from 'firebase/auth'
+// import { signOut } from 'firebase/auth'
 // import { auth } from '../../firebaseConfig'
-import auth from '@react-native-firebase/auth'
+// import auth from '@react-native-firebase/auth'
 import { AuthProvider, useAuth } from '../auth/AuthProvider'
 import { Ionicons } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import ProfileCard from '../components/ProfileCard'
+import { auth } from '../../firebaseConfig'
+import { signOut } from 'firebase/auth'
+
 
 const ProfileScreen = ({navigation}: any) => {
 
@@ -31,7 +34,7 @@ const ProfileScreen = ({navigation}: any) => {
   // }, [])
 
   const signOutHandler = () => {
-    auth().signOut()
+    signOut(auth)
     .then(() => {
       console.log('User signed out successfully');
     })

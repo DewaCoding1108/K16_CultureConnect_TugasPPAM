@@ -4,7 +4,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import SearchBar from '../components/SearchBar';
 import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from '../theme/theme';
 import CategoryCard from '../components/CategoryCard';
-import firestore from '@react-native-firebase/firestore';
+// import firestore from '@react-native-firebase/firestore';
+import { firestore } from '../../firebaseConfig';
+import { collection, getDocs, getDoc, query, where, doc } from 'firebase/firestore';
 import BackButton from '../components/BackButton';
 import { FlashList } from '@shopify/flash-list';
 
@@ -77,18 +79,29 @@ const CategoryScreen = ({navigation,route}:any) => {
     }
 
     try {
-        const querySnapshot = await firestore()
-            .collection(categoryIndex.category)
-            // .orderBy('name').
-            // startAt(searchQuery).endAt(searchQuery + '\uf8ff')
-            .get();
-
-        const searchResults = querySnapshot.docs
+      const docRef = collection(firestore,categoryIndex.category);
+      const docSnap = await getDocs(docRef)
+      const searchResults = docSnap.docs
         .map(doc => ({id:doc.id , data:doc.data()}))
         .filter(doc => doc.data.name.toLowerCase().includes(searchQuery.toLowerCase()));
         setResults(searchResults);
         console.log(results);
         console.log(searchQuery);
+      
+      // const searchResults = docSnap.data()
+        // const q = query(collection(firestore,categoryIndex.category);
+        // const querySnapshot = await 
+            // getDoc(q);
+            // .orderBy('name').
+            // startAt(searchQuery).endAt(searchQuery + '\uf8ff')
+            
+
+        // const searchResults = querySnapshot.docs
+        // .map(doc => ({id:doc.id , data:doc.data()}))
+        // .filter(doc => doc.data.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        // setResults(searchResults);
+        // console.log(results);
+        // console.log(searchQuery);
     } catch (error) {
         console.error('Error searching Firestore:', error);
     }

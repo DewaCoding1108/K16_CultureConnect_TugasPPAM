@@ -4,8 +4,11 @@ import { StatusBar } from 'expo-status-bar'
 import { COLORS, FONTSIZE, SPACING } from '../theme/theme'
 import ImageBackgroundInfo from '../components/ImageBackgroundInfo'
 import ProductCard from '../components/ProductCard'
-import firestore from '@react-native-firebase/firestore'
+// import firestore from '@react-native-firebase/firestore'
+import { Firestore, collection, getDocs, query, where } from 'firebase/firestore'
+
 import AppButton from '../components/AppButton'
+import { firestore } from '../../firebaseConfig'
 
 
 const DetailScreen = ({navigation,route}:any) => {
@@ -34,10 +37,13 @@ const DetailScreen = ({navigation,route}:any) => {
 
   const handleProduct = async () => {
     try {
-      const querySnapshot = await firestore()
-          .collection(productTipe)
-          .where('sanggarID','==',id)
-          .get();
+      const q = query(collection(firestore, productTipe), where('sanggarID','==',id))
+      const querySnapshot = await getDocs(q);
+      
+      // const querySnapshot = await firestore()
+      //     .collection(productTipe)
+      //     .where('sanggarID','==',id)
+      //     .get();
 
       const searchResults = querySnapshot.docs
       .map(doc => ({id:doc.id , data:doc.data()}))
