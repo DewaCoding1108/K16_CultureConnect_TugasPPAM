@@ -32,20 +32,23 @@ import {
   }) => {
     return (
       <TouchableOpacity style={styles.PesananCardContainer} >
-        <ImageBackground
-        source={imagelink}
-        style={styles.CardImageBackground}
-        borderRadius={BORDERRADIUS.radius_15}
-        />
-        <View >
-            <Text style={styles.TextHeader }>{name}</Text>
-            <Text style={styles.OtherText}>{location}</Text>
-            <Text style={styles.PriceText}>{formatedPrice(price)}</Text>
-        </View>
-        <View >
+        <View style={styles.Container}>
+          <ImageBackground
+          source={imagelink}
+          style={styles.CardImageBackground}
+          borderRadius={BORDERRADIUS.radius_15}
+          />
+          <View style={styles.Container2}>
             <Text style={[styles.OtherText, styles.MarginType]}>{type}</Text>
-            <Icon name="trash" size={25} color="black" style={styles.MarginTrash}/>
-        </View>               
+              <Text style={styles.TextHeader }>{name}</Text>
+              <Text style={styles.OtherText}>{location}</Text>
+              <View style={styles.Container3}>
+                <Text style={styles.PriceText}>{formatedPrice(price)}</Text>
+                <Icon name="trash" size={25} color="black" style={styles.MarginTrash}/>
+              </View>
+          </View>
+             
+        </View>          
       </TouchableOpacity>
     );
   };
@@ -59,6 +62,10 @@ import {
         }).format(price);
     };
   const styles = StyleSheet.create({
+    Container:{
+      flexDirection:"row",
+      width:"100%",
+    },
     PesananCardContainer:{
         width: CARD_WIDTH * 0.9,
         backgroundColor:COLORS.primaryWhiteHex,
@@ -75,8 +82,6 @@ import {
           width: 1
         },
         borderRadius: 15,
-        flexDirection: "row",
-        justifyContent: "space-between",
       },
       CardImageBackground: {
         width: CARD_WIDTH * 0.3,
@@ -84,7 +89,7 @@ import {
         margin: SPACING.space_4,
       },
       TextHeader: {
-        marginTop: SPACING.space_30,
+        // marginTop: SPACING.space_16,
         fontFamily: "Poppins-Regular",
         fontSize: FONTSIZE.size_20,
         color: COLORS.primaryBlackHex,
@@ -95,19 +100,26 @@ import {
         color: COLORS.primaryBlackHex,
       },
       PriceText:{
-        marginTop: SPACING.space_12,
+        marginTop: SPACING.space_8,
         fontFamily: "Poppins-Regular",
         fontSize: FONTSIZE.size_12,
         color: COLORS.primaryBlackHex,
       },
       MarginType:{
-        marginTop:SPACING.space_12,
-        marginBottom:SPACING.space_30,
-        marginRight: SPACING.space_8,
+        marginTop:SPACING.space_10,
+        alignSelf:"flex-end",
       },
       MarginTrash:{
-        marginTop:SPACING.space_32,
         marginLeft:SPACING.space_36,
       },
+      Container2:{
+        width: CARD_WIDTH * 0.55,
+      },
+      Container3:{
+        marginTop:SPACING.space_4 ,
+        flexDirection:"row",
+        justifyContent:"space-between"
+      }
+
   });
   
