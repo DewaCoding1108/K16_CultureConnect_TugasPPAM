@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import HomeScreen from '../screen/HomeScreen'
-import ChatScreen from '../screen/ChatScreen'
+import ChatScreen from '../screen/ChartScreen'
 import OrderHistoryScreen from '../screen/OrderHistoryScreen'
 import ProfileScreen from '../screen/ProfileScreen'
 import CustomIcon from '../components/CustomIcon'
