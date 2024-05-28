@@ -97,6 +97,7 @@ interface FontSize {
   size_18: number;
   size_20: number;
   size_24: number;
+  size_26:number;
   size_28: number;
   size_30: number;
   size_52: number;
@@ -111,6 +112,7 @@ export const FONTSIZE: FontSize = {
   size_18: 18,
   size_20: 20,
   size_24: 24,
+  size_26: 26,
   size_28: 28,
   size_30: 30,
   size_52: 52,

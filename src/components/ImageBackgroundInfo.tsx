@@ -11,40 +11,63 @@ import {
 import React from "react";
 import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from "../theme/theme";
 import { Ionicons } from "@expo/vector-icons";
+import SearchBar from "./SearchBar";
 
 interface ImageBackgroundInfoProps {
-  EnablebackHandler?: boolean;
-  imagelink_portrait: ImageProps;
+  enablebackHandler?: boolean;
+  backHandler?:any;
+  enableSearch?:boolean;
+  enableText?:boolean;
+  imagelink_portrait: any;
+  clickHandler?:any,
+  value?:string,
+  onChangeText?:any,
+  editable?:boolean,
+  imageStyle?:any,
 }
 
 const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
-  EnablebackHandler,
+  enablebackHandler = false,
+  backHandler = () => {},
+  enableSearch = false,
+  enableText = false,
   imagelink_portrait,
+  clickHandler,
+  value,
+  onChangeText,
+  editable = true,
+  imageStyle = {},
 }) => {
   return (
     <ImageBackground
       source={imagelink_portrait}
-      style={styles.ItemBackgroundImage}
+      style={[styles.ItemBackgroundImage,imageStyle]}
     >
+        {
+          enablebackHandler ?
+          <>
+            <TouchableOpacity onPress={backHandler}style={styles.BackButtonContainer} activeOpacity={0.7}>
+              <Ionicons style={{marginVertical:SPACING.space_10,marginHorizontal:SPACING.space_10}}name="chevron-back" size={24} color="black" />
+            </TouchableOpacity>
+          </>
+          :
+          <></>
+        }
       <View style={styles.TextContainer}>
-        <Text style={styles.TextHeader}>Tempat Inspirasi Tanpa Batas</Text>
-        <Text style={styles.TextParagraph}>
-          Berkontribusi terhadap budaya indonesia!
-        </Text>
-        <View style={styles.InputContainerComponent}>
-        <TouchableOpacity onPress={() => {}}>
-          <Ionicons
-            style={styles.InputIcon}
-            name={"search-sharp"}
-            size={25}
-            color={COLORS.primaryBlackHex}
-          />
-        </TouchableOpacity>
-        <TextInput
-          style={styles.TextInputContainer}
-          placeholder="Search all you need!"
-        />
-      </View>
+        {
+          enableText ?
+          <> 
+            <Text style={styles.TextHeader}>Tempat Inspirasi Tanpa Batas</Text>
+            <Text style={styles.TextParagraph}>
+              Berkontribusi terhadap budaya indonesia!
+            </Text>
+          </>
+          : <></>
+        }
+        {
+          enableSearch ? <SearchBar clickHandler={clickHandler} onChangeText={onChangeText} value={value || ''} editable={editable}/>
+          : <></>
+        }
       </View>
     </ImageBackground>
   );
@@ -61,11 +84,12 @@ const styles = StyleSheet.create({
     marginBottom:4,
   },
   TextContainer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    flex:1,
+    // position: "absolute",
+    // top: 0,
+    // left: 0,
+    // right: 0,
+    // bottom: 0,
     justifyContent: "center",
     alignItems: "flex-start",
     paddingLeft: SPACING.space_18,
@@ -81,25 +105,31 @@ const styles = StyleSheet.create({
     color: COLORS.primaryWhiteHex,
   },
   InputContainerComponent: {
+    padding:5,
+    width:'95%',
     marginTop: SPACING.space_24,
-    marginRight: SPACING.space_18,
-    borderRadius: BORDERRADIUS.radius_20,
+    borderRadius: BORDERRADIUS.radius_15,
     backgroundColor: COLORS.primaryWhiteHex,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
-    // position: "absolute",
-    // top: 210,
-    // left: 0,
-    // right: 0,
-    // bottom: 25,
+    alignItems:'center',
   },
   InputIcon: {
-    marginHorizontal: SPACING.space_15,
+    marginTop:SPACING.space_2,
+    marginLeft:SPACING.space_10,
+    marginRight:SPACING.space_10,
   },
   TextInputContainer: {
-    flex:1,
+    width:'100%',
     fontFamily:'Poppins-Medium',
     fontSize:FONTSIZE.size_12,
+  },
+  BackButtonContainer:{
+    height:45,
+    width:45,
+    marginHorizontal:SPACING.space_16,
+    marginVertical:SPACING.space_24,
+    borderRadius:BORDERRADIUS.radius_20,
+    backgroundColor:COLORS.primaryWhiteHex,
   },
 });

@@ -7,12 +7,15 @@ interface AppButtonProps{
   title:string;
   backgroundColor:string;
   textColor:string;
+  buttonStyle?:any;
 }
 
-const AppButton:React.FC<AppButtonProps> = ({ title,backgroundColor,textColor,onPress}) => (
-  <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer, {backgroundColor:backgroundColor}]}>
-    <Text style={[styles.appButtonText,{color:textColor}]}>{title}</Text>
-  </TouchableOpacity>
+const AppButton:React.FC<AppButtonProps> = ({ title,backgroundColor,textColor,onPress, buttonStyle={}}) => (
+  // <View>
+    <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer,{backgroundColor:backgroundColor},buttonStyle]}>
+      <Text style={[styles.appButtonText,{color:textColor}]}>{title}</Text>
+    </TouchableOpacity>
+  //</View>
 );
 
 export default AppButton
@@ -29,6 +32,7 @@ const styles = StyleSheet.create({
   },
   appButtonText: {
     fontSize: FONTSIZE.size_16,
+    // paddingTop:2,
     fontFamily: "Poppins-Regular",
     // color: COLORS.primaryBlackHex,
     // fontWeight: "bold",

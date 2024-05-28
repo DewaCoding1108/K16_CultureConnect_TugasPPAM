@@ -12,18 +12,28 @@ import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from "../theme/theme";
 
 const CARD_WIDTH = Dimensions.get("window").width;
 
-interface SeniCardProps {
+interface ProductCardProps {
   buttonPressHandler: any;
   name: string;
   description: string;
+  price:number;
   imagelink: any;
 }
 
-const SeniCard: React.FC<SeniCardProps> = ({
+const formatedPrice = (price: number): string => {
+  return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0, 
+  }).format(price);
+};
+
+const ProductCard: React.FC<ProductCardProps> = ({
   buttonPressHandler,
   name,
   description,
   imagelink,
+  price,
 }) => {
   return (
     <TouchableOpacity onPress={buttonPressHandler} style={styles.SeniCardContainer}>
@@ -35,26 +45,27 @@ const SeniCard: React.FC<SeniCardProps> = ({
       ></ImageBackground>
       <View style={styles.TextContainer}>
         <Text style={styles.TextHeader}>{name}</Text>
-        <Text style={styles.TextParagraph}>{description}</Text>
+        <Text style={styles.TextParagraph}>{formatedPrice(price)}</Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default SeniCard;
+export default ProductCard;
 
 const styles = StyleSheet.create({
   CardImageBackground: {
-    width: CARD_WIDTH * 0.9,
-    height: CARD_WIDTH * 0.36,
+    width: CARD_WIDTH * 0.36,
+    height: CARD_WIDTH * 0.2,
   },
   SeniCardContainer:{
-    width: CARD_WIDTH * 0.9,
+    width: CARD_WIDTH * 0.36,
+    height: CARD_WIDTH * 0.36,
     backgroundColor:COLORS.primaryWhiteHex,
     marginBottom: SPACING.space_12,
     marginTop:SPACING.space_12,
-    marginLeft:SPACING.space_18,
-    marginRight:SPACING.space_18,
+    // marginLeft:SPACING.space_15,
+    marginRight:SPACING.space_15,
     elevation:5,
     borderRadius:BORDERRADIUS.radius_15,
     shadowColor: COLORS.primaryBlackHex,
@@ -68,7 +79,7 @@ const styles = StyleSheet.create({
   },
   TextHeader: {
     fontFamily: "Poppins-Regular",
-    fontSize: FONTSIZE.size_20,
+    fontSize: FONTSIZE.size_14,
     color: COLORS.primaryBlackHex,
   },
   TextParagraph: {

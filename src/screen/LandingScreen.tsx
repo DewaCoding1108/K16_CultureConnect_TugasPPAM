@@ -1,17 +1,42 @@
 import { Button, Dimensions, ImageBackground, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { COLORS, FONTSIZE, SPACING } from '../theme/theme'
 import AppButton from '../components/AppButton'
+import auth,{FirebaseAuthTypes} from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 
 const LandingScreen = ({navigation}:any) => {
+  // async function onAuthStateChanged(user: FirebaseAuthTypes.User | null){
+  //   // setTimeout(() => {
+  //     if(user){
+  //       // console.log(user);
+  //       console.log(Object.keys(user).length)
+  //       const userData = await firestore().collection('Users').doc(user.uid || undefined).get();
+  //       if(userData.exists){
+  //         if(userData.data()?.role == 'Provider'){
+  //         navigation.replace('Provider'); 
+  //         }
+  //         if(userData.data()?.role == 'Customer'){
+  //           navigation.replace('Tab'); 
+  //         }
+  //       }
+  //       // navigation.replace('Tab'); 
+  //     }
+  //   // }, 1000);
+  // }
+
+  // useEffect(() => {
+  //   const sub = auth().onAuthStateChanged(onAuthStateChanged);
+  //   return sub;
+  // },[]);
+
   return (
     <View>
       <StatusBar translucent backgroundColor="transparent" />
       <ImageBackground style={styles.LandingImage}source={require("../assets/app_images/LandingPageImage.png")}>
         <View style={styles.TextContainer}>
           <Text style={styles.TextHeader}>Contribute In Culture</Text>
-          <AppButton title="Login" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryBlackHex} onPress={()=>{navigation.push('Tab')}}/>
-          {/* <Button title='Login' ></Button> */}
+          <AppButton title="Login" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryBlackHex} onPress={()=>{navigation.push('Login')}}/>
           <Text style={styles.TextParagraph}>Don't have an account? 
             <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryRedHex}}> Create account</Text>
           </Text>
