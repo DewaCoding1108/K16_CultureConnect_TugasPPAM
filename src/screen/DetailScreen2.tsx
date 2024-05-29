@@ -8,6 +8,7 @@ import ProductCard from '../components/ProductCard'
 import { firestore } from '../../firebaseConfig'
 import { getDoc, getDocs, doc, query, collection, where } from 'firebase/firestore'
 import AppButton from '../components/AppButton'
+import AppLoader from '../components/AppLoader'
 
 const CARD_WIDTH = Dimensions.get("window").width;
 
@@ -111,6 +112,7 @@ const DetailScreen2 = ({navigation,route}:any) => {
   },[])
 
   return (
+    <>
     <View style={styles.ScreenContainer}>
       <StatusBar translucent backgroundColor='transparent'/>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
@@ -157,16 +159,22 @@ const DetailScreen2 = ({navigation,route}:any) => {
           <Text style={styles.TextHeader2}>Another Product</Text>
           <Text style={styles.TextParagraph}>See All</Text>
         </View>
-        <FlatList
-          style={{marginBottom:SPACING.space_15}}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={results}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <ProductCard buttonPressHandler={()=>{}} name={item.data.name} description={item.data.detail} price={item.data.price} imagelink={{uri:(item.data.imageURL)}}/>
-            )}
-        />
+        { loading ? null :
+          results.length === 0 ?
+          <View style={{alignItems:'center', marginVertical:50}}>
+              <Text>There is No Other Product in this {providerResults.category}</Text>
+          </View> :
+          <FlatList
+            style={{marginBottom:SPACING.space_15}}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={results}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <ProductCard buttonPressHandler={()=>{}} name={item.data.name} description={item.data.detail} price={item.data.price} imagelink={{uri:(item.data.imageURL)}}/>
+              )}
+          />
+          }
 
       </View>
       </ScrollView>
@@ -175,6 +183,8 @@ const DetailScreen2 = ({navigation,route}:any) => {
         <AppButton buttonStyle={{width:'45%', marginHorizontal:SPACING.space_10}} title="Daftar" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{}}/>
       </View>
     </View>
+    {loading ? <AppLoader/> : null}
+    </>
   )
 }
 

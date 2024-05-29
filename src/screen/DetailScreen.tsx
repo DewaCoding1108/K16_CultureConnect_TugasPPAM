@@ -6,7 +6,7 @@ import ImageBackgroundInfo from '../components/ImageBackgroundInfo'
 import ProductCard from '../components/ProductCard'
 // import firestore from '@react-native-firebase/firestore'
 import { Firestore, collection, getDocs, query, where } from 'firebase/firestore'
-
+import AppLoader from '../components/AppLoader'
 import AppButton from '../components/AppButton'
 import { firestore } from '../../firebaseConfig'
 
@@ -14,6 +14,7 @@ import { firestore } from '../../firebaseConfig'
 const DetailScreen = ({navigation,route}:any) => {
   const {id, name, location, address, description, tipe, phone, imageURL} = route.params
   const [results, setResults] = useState<any>([]); 
+  const [loading,setLoading] = useState(true);
 
   const productCategory = (tipe:any) => {
     if(tipe == "Sanggar"){
@@ -36,6 +37,7 @@ const DetailScreen = ({navigation,route}:any) => {
   const productTipe = productCategory(tipe.toString());
 
   const handleProduct = async () => {
+    setLoading(true);
     try {
       const q = query(collection(firestore, productTipe), where('sanggarID','==',id))
       const querySnapshot = await getDocs(q);
@@ -54,6 +56,7 @@ const DetailScreen = ({navigation,route}:any) => {
     } catch (error) {
       console.error('Error searching Firestore:', error);
     }
+    setLoading(false);
   }
 
   useEffect(()=>{
@@ -61,6 +64,7 @@ const DetailScreen = ({navigation,route}:any) => {
   },[])
 
   return (
+    <>
     <View style={styles.ScreenContainer}>
       <StatusBar translucent backgroundColor='transparent'/>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
@@ -77,6 +81,11 @@ const DetailScreen = ({navigation,route}:any) => {
           <Text style={styles.TextHeader2}>Featured Product</Text>
           <Text style={styles.TextParagraph}>See All</Text>
         </View>
+        { loading ? null :
+          results.length === 0 ?
+          <View style={{alignItems:'center', marginVertical:50}}>
+              <Text>There is No Product in this {tipe}</Text>
+          </View> :
         <FlatList
           style={{marginBottom:SPACING.space_15}}
           horizontal
@@ -103,6 +112,7 @@ const DetailScreen = ({navigation,route}:any) => {
             />
             )}
         />
+      }
         <Text style={styles.TextHeader2}>Where the {tipe} will be</Text>
         <Text style={styles.TextParagraph}>{address}</Text>
         <Text style={[styles.TextHeader2, {marginTop:SPACING.space_15}]}>Contact Us</Text>
@@ -112,6 +122,8 @@ const DetailScreen = ({navigation,route}:any) => {
       <View>
       </View>
     </View>
+    {loading ? <AppLoader/> : null}
+    </>
   )
 }
 
