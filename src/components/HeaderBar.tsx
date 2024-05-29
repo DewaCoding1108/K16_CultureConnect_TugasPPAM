@@ -15,7 +15,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ title,description}) => {
       <View style={styles.DescriptionContainer}>
         <Text style={styles.descriptionText}> {description}</Text>
       </View>
-      <View style={styles.horizontalLine} /> 
+      <View style={styles.horizontalLine} />  
     </View>
   );
 };

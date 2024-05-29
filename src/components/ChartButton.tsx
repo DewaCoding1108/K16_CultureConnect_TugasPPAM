@@ -3,14 +3,14 @@ import React from 'react'
 import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from "../theme/theme";
 
 interface ChartButtonProps {
-    onPress?: any,
+    onPress: any,
     price: number,
 }
 
 const BUTTON_WIDTH = Dimensions.get("window").width;
 
 const ChartButton: React.FC<ChartButtonProps> = ({onPress, price})=> (
-    <TouchableOpacity style={styles.ButtonContainer}>
+    <TouchableOpacity onPress={onPress} style={styles.ButtonContainer}>
         <Text style={styles.Text}>Pembayaran</Text>
         <Text style={styles.PriceText}>{formatedPrice(price)}</Text>
     </TouchableOpacity>
