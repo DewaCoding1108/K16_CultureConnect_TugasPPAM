@@ -7,6 +7,8 @@ import InputText from '../components/InputText';
 import BackButton from '../components/BackButton';
 // import auth from '@react-native-firebase/auth';
 import SignIn from '../db/SignIn';
+import { useAuth } from '../auth/AuthProvider'
+import AppLoader from '../components/AppLoader'
 // import { auth } from '../../firebaseConfig';
 // import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
@@ -14,6 +16,7 @@ const LoginScreen = ({navigation}:any) => {
   // const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password,setPassword] = useState('');
+  const {initializing} = useAuth();
   // const [userCredentials, setUserCredentials] = useState({});
 
   // useEffect(() => {
@@ -29,6 +32,7 @@ const LoginScreen = ({navigation}:any) => {
     SignIn({email,password});
   }
   return (
+    <>
     <View style={styles.ScreenContainer}>
       <StatusBar translucent backgroundColor="transparent" />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
@@ -48,6 +52,8 @@ const LoginScreen = ({navigation}:any) => {
       </View>
       </ScrollView>
     </View>
+    {initializing ? <AppLoader/> : null}
+    </>
   )
 }
 

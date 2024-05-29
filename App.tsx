@@ -17,6 +17,7 @@ import { AuthProvider, useAuth } from "./src/auth/AuthProvider";
 import CategoryScreen from "./src/screen/CategoryScreen";
 import DetailScreen from "./src/screen/DetailScreen";
 import DetailScreen2 from "./src/screen/DetailScreen2";
+import AppLoader from "./src/components/AppLoader";
 
 const Stack = createNativeStackNavigator();
 
@@ -73,7 +74,6 @@ const Navigation: React.FC = () => {
             // options={{ animation: "slide_from_bottom" }}
           ></Stack.Screen>
         </>
-
       )}
     </Stack.Navigator>
   );
