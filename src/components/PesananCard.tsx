@@ -31,18 +31,14 @@ import {
     imagelink,
   }) => {
     return (
-      <TouchableOpacity style={styles.PesananCardContainer}>
-        <ImageBackground
-        source={imagelink}
-        style={styles.CardImageBackground}
-        borderRadius={BORDERRADIUS.radius_15}
-        />
-        <View >
-            <Text style={styles.TextHeader }>{name}</Text>
-            <Text style={styles.OtherText}>{location}</Text>
-            <Text style={styles.PriceText}>{formatedPrice(price)}</Text>
-        </View>
-        <View >
+      <TouchableOpacity style={styles.PesananCardContainer} >
+        <View style={styles.Container}>
+          <ImageBackground
+          source={imagelink}
+          style={styles.CardImageBackground}
+          borderRadius={BORDERRADIUS.radius_15}
+          />
+          <View style={styles.Container2}>
             <Text style={[styles.OtherText, styles.MarginType]}>{type}</Text>
               <Text style={styles.TextHeader }>{name}</Text>
               <Text style={styles.OtherText}>{location}</Text>
