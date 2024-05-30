@@ -154,6 +154,7 @@ const Navigation: React.FC = () => {
               name="Booking Pakaian" 
               component={BookingPakaianScreen}
               ></Stack.Screen>
+              <Stack.Screen
               name="EditProfile" 
               component={EditProfile}
               ></Stack.Screen>
