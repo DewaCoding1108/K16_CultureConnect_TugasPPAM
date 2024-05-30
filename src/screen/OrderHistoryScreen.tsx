@@ -13,7 +13,7 @@ import { useAuth } from '../auth/AuthProvider';
 
 const HistoryScreen = ({navigation,route}:any) => {
   const {profile} = useAuth();
-  type ChartData = { data: any; };
+  type ChartData = { data: any; id:string };
   const [Chart, fetchChart] = useState<ChartData[]>([]); 
   const [TotalPrice,setTotalPrice] = useState(0);
   const uid = profile.id;
@@ -28,7 +28,7 @@ const HistoryScreen = ({navigation,route}:any) => {
 
   const subCollectionRef = collection(userDocRef, "History");
   const subCollectionSnapshot = await getDocs(subCollectionRef);
-  const subCollectionData = subCollectionSnapshot.docs.map(doc => ({data: doc.data()}));
+  const subCollectionData = subCollectionSnapshot.docs.map(doc => ({data: doc.data(),id:doc.id}));
 
   let a = 0;
   subCollectionData.forEach(arr =>{
@@ -37,6 +37,17 @@ const HistoryScreen = ({navigation,route}:any) => {
   fetchChart(subCollectionData);
   setTotalPrice(a);
   }
+
+  const handlerNavigate = (item: ChartData)=>{
+    if(item.data.category === "Jasa Seni"){
+      navigation.push("JasaSeniDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, senimanID:item.data.senimaID, imageURL:item.data.imageURL, show: false});
+    } else if( item.data.category ==="Seni"){
+      navigation.push("SeniDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, sanggarID:item.data.sanggarID, imageURL:item.data.imageURL, show:false});
+    }else if( item.data.category === "Sewa Pakaian"){
+      navigation.push("SewaPakaianDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, tokosewaID:item.data.tokosewaID, imageURL:item.data.imageURL, show:false});
+    }
+  }
+
   useEffect(()=>{
     handlerChart();
   },[])
@@ -49,20 +60,6 @@ const HistoryScreen = ({navigation,route}:any) => {
     return null;
   }
 
-  // const handlerDelete = async (chartName: string) => {
-  //   const userDocRef = doc(firestore, "Users", uid);
-  //   const subCollectionRef = collection(userDocRef, "Chart");
-  //   const q = query(subCollectionRef, where("name", "==", chartName));
-  //   const querySnapshot = await getDocs(q);
-
-  //   if (!querySnapshot.empty) {
-  //     const docId = querySnapshot.docs[0].id; 
-  //     const chartDocRef = doc(subCollectionRef, docId);
-  //     await deleteDoc(chartDocRef);
-  //     fetchChart(Chart.filter(chart => chart.data.name !== chartName));
-  //   }
-  // };
-
   return (
     <View style={styles.ScreenContainer}>
       <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>
@@ -74,7 +71,7 @@ const HistoryScreen = ({navigation,route}:any) => {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flex:1}}>
         <View>
           {Chart.map((item,index=0) =>
-              <PesananCard key={index+1} screen='history' buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.detail} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} ></PesananCard>
+              <PesananCard key={index+1} screen='history' buttonPressHandler={()=>{handlerNavigate(item)}} name={item.data.name} location= {item.data.detail} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} ></PesananCard>
           )}
         </View>
         {renderBottomHeight()}        

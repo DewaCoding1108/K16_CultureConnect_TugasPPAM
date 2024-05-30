@@ -147,7 +147,7 @@ const BookingPakaianScreen = ({ navigation,route }: any) => {
                 title="Booking"
                 backgroundColor={COLORS.primaryRedHex}
                 textColor={COLORS.primaryWhiteHex}
-                onPress={()=>{}}
+                onPress={()=>{navigation.push("PaymentDetails",{TotalPrice:price, Chart:[{"data":{"name":name,"price": price,"detail": detail,"category": tipe,"senimanID": senimanID,"imageURL": imageURL},'id':id }]})}}
               />
               <Text style={styles.TextParagraph}>Pastikan data sudah benar dan sesuai</Text>
             </View>

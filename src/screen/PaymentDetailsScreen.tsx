@@ -10,7 +10,7 @@ import AppButton from '../components/AppButton';
 
 
 const PaymentDetailsScreen = ({navigation,route}:any) => {
-    const { Chart=[], TotalPrice=0 } = route.params ||{};
+    const { Chart=[], TotalPrice=0,fromChart=false} = route.params ||{};
     console.log(Chart);
     console.log(TotalPrice)
   return (
@@ -33,12 +33,16 @@ const PaymentDetailsScreen = ({navigation,route}:any) => {
                 </View>
             ))}
             <View style={styles.Container}>
+                <Text style={styles.Font4}>Biaya administrasi</Text>
+                <Text style={styles.Font3}>{formatedPrice(0.1*TotalPrice)}</Text>
+            </View>
+            <View style={styles.Container}>
                 <Text style={styles.Font4}>Total Harga</Text>
-                <Text style={styles.Font3}>{formatedPrice(TotalPrice)}</Text>
+                <Text style={styles.Font3}>{formatedPrice(1.1*TotalPrice)}</Text>
             </View>
         </View>
         <View style={styles.ButtonContainer}>
-            <AppButton title="Bayar" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{navigation.push('Paymentmethod',{Chart:Chart})}} buttonStyle={{marginHorizontal:30, marginTop:20, borderRadius:30}}/>
+            <AppButton title="Bayar" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{navigation.push('Paymentmethod',{Chart:Chart ,fromChart:fromChart, TotalPrice: TotalPrice})}} buttonStyle={{marginTop:20, borderRadius:30, width:0.9*tableWidth}}/>
             <Text style={styles.Text}>Pastikan data di atas sudah benar dan sesuai</Text>
             <View style={styles.Box}/>
         </View>
@@ -81,19 +85,19 @@ const styles = StyleSheet.create({
     },
     Font1:{
         fontFamily: FONTFAMILY.poppins_semibold,
-        fontSize: FONTSIZE.size_24,
+        fontSize: FONTSIZE.size_16,
     },
     Font2:{
         fontFamily: FONTFAMILY.poppins_light,
-        fontSize: FONTSIZE.size_18,
+        fontSize: FONTSIZE.size_14,
     },
     Font3:{
         fontFamily: FONTFAMILY.poppins_light,
-        fontSize: FONTSIZE.size_14,
+        fontSize: FONTSIZE.size_12,
     },
     Font4:{
         fontFamily: FONTFAMILY.poppins_regular,
-        fontSize: FONTSIZE.size_18,
+        fontSize: FONTSIZE.size_12,
     },
     ButtonContainer: {
         width: tableWidth,
@@ -109,6 +113,7 @@ const styles = StyleSheet.create({
           width: 1
         },
         borderRadius: 15,
+        alignItems:"center",
     },    
     Text:{
         alignSelf:"center",

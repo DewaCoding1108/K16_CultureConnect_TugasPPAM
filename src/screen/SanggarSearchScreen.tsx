@@ -151,7 +151,8 @@ const SanggarSearchScreen = ({navigation,route}:any) => {
                     detail: item.data.detail, 
                     tipe:item.data.category, 
                     sanggarID:item.data.sanggarID,
-                    imageURL:item.data.imageURL
+                    imageURL:item.data.imageURL,
+                    show:true
                   })
                 }} 
               productCard={isSeni(categoryIndex.category)}

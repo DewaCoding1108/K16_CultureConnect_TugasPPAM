@@ -15,7 +15,7 @@ import { getSanggarWithDocID } from '../db/SanggarController'
 const CARD_WIDTH = Dimensions.get("window").width;
 
 const SeniDetailScreen = ({navigation,route}:any) => {
-  const {id, name, location, price, detail, tipe, sanggarID, imageURL} = route.params
+  const {id, name, price, detail, tipe, sanggarID, imageURL, show} = route.params
   const [results, setResults] = useState<any>([]);
   const [providerResults, setProviderResults] = useState<any>([]);
   const [loading, setLoading] = useState(true); 
@@ -152,7 +152,7 @@ const SeniDetailScreen = ({navigation,route}:any) => {
       </ScrollView>
       <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:SPACING.space_10}}>
         {/* <AppButton buttonStyle={{width:'45%', marginLeft:SPACING.space_10, borderWidth:2, borderColor:COLORS.primaryRedHex}} title="+ Keranjang" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryRedHex} onPress={()=>{}}/> */}
-        <AppButton buttonStyle={{width:'90%', marginHorizontal:SPACING.space_10}} title="Daftar" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{}}/>
+        {show ? (<AppButton buttonStyle={{width:'90%', marginHorizontal:SPACING.space_10}} title="Daftar" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{navigation.push("PaymentDetails",{TotalPrice:price, Chart:[{"data":{"name":name,"price": price,"detail": detail,"category": tipe,"SanggarID": sanggarID,"imageURL": imageURL},'id':id }]})}}/>) : null}
       </View>
     </View>
     {loading ? <AppLoader/> : null}

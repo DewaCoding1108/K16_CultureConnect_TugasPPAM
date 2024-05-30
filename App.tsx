@@ -174,6 +174,10 @@ const Navigation: React.FC = () => {
               name="History"
               component={HistoryScreen}
             ></Stack.Screen>
+            <Stack.Screen 
+              name="Revenue" 
+              component={Revenue}
+              ></Stack.Screen>
           </>   
         )
       ) : (

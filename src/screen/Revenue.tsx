@@ -1,12 +1,25 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { COLORS, FONTSIZE, SPACING, FONTFAMILY } from '../theme/theme'
 import BackButton from '../components/BackButton'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useAuth } from '../auth/AuthProvider'
+import { collection, doc, getDocs, query } from 'firebase/firestore'
+import { firestore } from '../../firebaseConfig'
 
 const Revenue = ({navigation,route}:any) => {
   const { user, initializing, role, profile} = useAuth();
+  const [revenue, setRevenue] = useState<number>();
+  const uid = profile.id;
+  console.log(profile);
+
+  const formatedPrice = (price: number): string => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0, 
+    }).format(price);
+};
 
   return (
     <ScrollView contentContainerStyle={{
@@ -22,25 +35,25 @@ const Revenue = ({navigation,route}:any) => {
         <Text style={[styles.TextParagraph, {marginBottom:4}]}>Look at your analytics</Text>
         <View style={styles.line}/>
         <View style={styles.analyticsContainer}>
-            <Text style={styles.analyticsHeader}>Monthly Analytics</Text>
+            <Text style={styles.analyticsHeader}>Analytics</Text>
             <View style= {{flexDirection:"row", justifyContent:"space-between", gap:20}}>
                 <View style={styles.analyticsSubContainer}>
                     <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-                        <Text style={[styles.analyticsSubHeader, {width:"60%"}]}>Monthly Revenue</Text>
+                        <Text style={[styles.analyticsSubHeader, {width:"60%"}]}>Revenue</Text>
                         <MaterialIcons name='attach-money' size={24} color="black" />
                     </View>
-                    <Text style={[styles.analyticsSubHeader, {marginTop:6}]}>Rp 1.540.000,00</Text>
+                    <Text style={[styles.analyticsSubHeader, {marginTop:6}]}>{formatedPrice(profile.data.revenue)}</Text>
                 </View>
                 <View style={styles.analyticsSubContainer}>
                     <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
                         <Text style={[styles.analyticsSubHeader, {width:"60%"}]}>Monthly Click</Text>
                         <MaterialIcons name='people-outline' size={24} color="black" />
                     </View>
-                    <Text style={[styles.analyticsSubHeader, {marginTop:6}]}>6969</Text>
+                    <Text style={[styles.analyticsSubHeader, {marginTop:6}]}>{profile.data.liked}</Text>
                 </View>
             </View>
         </View>
-        <View style={styles.analyticsContainer}>
+        {/* <View style={styles.analyticsContainer}>
             <Text style={styles.analyticsHeader}>Yearly Analytics</Text>
             <View style= {{flexDirection:"row", justifyContent:"space-between", gap:20}}>
                 <View style={styles.analyticsSubContainer}>
@@ -58,7 +71,7 @@ const Revenue = ({navigation,route}:any) => {
                     <Text style={[styles.analyticsSubHeader, {marginTop:6}]}>6969</Text>
                 </View>
             </View>
-        </View>
+        </View> */}
       </ScrollView>
   )
 }

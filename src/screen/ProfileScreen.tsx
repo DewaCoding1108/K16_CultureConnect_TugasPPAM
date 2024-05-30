@@ -51,12 +51,12 @@ const ProfileScreen = ({ navigation }: any) => {
           <ProfileCard pressHandler={()=>{navigation.push('LikedArt')}} icon="Feather" iconName="heart" text="Liked Art"/>
         {role === 'Provider'? 
           <>
-            <View style={styles.line}/>
+            
               <ProfileCard pressHandler={()=>{navigation.push('Brand')}} icon="Ionicons" iconName="newspaper-outline" text="Your Brand"/>
             <View style={styles.line}/>
               <ProfileCard pressHandler={()=>{navigation.push('Revenue')}} icon="Entypo" iconName="line-graph" text="Revenue"/>
           </>
-          : <></>
+          : <><ProfileCard pressHandler={()=>{navigation.push('Revenue')}} icon="Entypo" iconName="line-graph" text="Spent"/></>
         }
         
         <View style={styles.line}/>
