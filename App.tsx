@@ -69,6 +69,66 @@ const Navigation: React.FC = () => {
               component={DetailScreen2}
               ></Stack.Screen>
             <Stack.Screen 
+              name="Sanggar" 
+              component={SanggarSearchScreen}
+              options={{ animation: 'fade_from_bottom' }}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="SanggarDetail" 
+              component={SanggarDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="SeniDetail" 
+              component={SeniDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Jasa Seni" 
+              component={JasaSeniSearchScreen}
+              options={{ animation: 'fade_from_bottom' }}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="SenimanDetail" 
+              component={SenimanDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="JasaSeniDetail" 
+              component={JasaSeniDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Sewa Pakaian" 
+              component={SewaPakaianSearchScreen}
+              options={{ animation: 'fade_from_bottom' }}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="SewaPakaianDetail" 
+              component={SewaPakaianDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="TokoSewaDetail" 
+              component={TokoSewaDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Karya Seni" 
+              component={KaryaSeniSearchScreen}
+              options={{ animation: 'fade_from_bottom' }}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="KaryaSeniDetail" 
+              component={KaryaSeniDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="TokoKaryaDetail" 
+              component={TokoKaryaDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Booking" 
+              component={BookingScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Booking Pakaian" 
+              component={BookingPakaianScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
               name="EditProfile" 
               component={EditProfile}
               ></Stack.Screen>

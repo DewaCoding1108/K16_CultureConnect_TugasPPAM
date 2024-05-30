@@ -15,10 +15,18 @@ const CategoryScreen = ({navigation,route}:any) => {
   const [results, setResults] = useState<any>([]);
   const inputRef = useRef<TextInput>(null);
   const {category} = route.params;
+
+  const formatedPrice = (price: number): string => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0, 
+    }).format(price);
+  };
   
   const categoryContent = (x:any) => {
     if(x == 'All'){
-      return ["Sanggar", "Jasa Seni", "Sewa Pakaian", "Karya Seni", "Event"];
+      return ["Seni", "Jasa Seni", "Sewa Pakaian", "Karya Seni"];
     }
     else if (x == 'Sanggar'){
       return ["Sanggar", "Seni"];
@@ -40,6 +48,56 @@ const CategoryScreen = ({navigation,route}:any) => {
     }
   }
 
+  const navigateHandler = (item:any) => {
+    if(item.data.category === "Seni"){
+      navigation.push("SeniDetail",{
+      id:item.id,
+      name:item.data.name, 
+      price: item.data.price, 
+      detail: item.data.detail, 
+      tipe:item.data.category, 
+      sanggarID:item.data.sanggarID,
+      imageURL:item.data.imageURL
+      })
+    }
+    else if(item.data.category === "Jasa Seni"){
+      navigation.push("JasaSeniDetail",{
+        id:item.id,
+        name:item.data.name, 
+        price: item.data.price, 
+        detail: item.data.detail, 
+        tipe:item.data.category, 
+        senimanID:item.data.senimanID,
+        imageURL:item.data.imageURL
+        })
+    }
+    else if(item.data.category === "Sewa Pakaian"){
+      navigation.push("SewaPakaianDetail",{
+        id:item.id,
+        name:item.data.name, 
+        price: item.data.price, 
+        detail: item.data.detail, 
+        tipe:item.data.category, 
+        tokosewaID:item.data.tokosewaID,
+        imageURL:item.data.imageURL
+        })
+    }
+    else if(item.data.category === "Karya Seni"){
+      navigation.push("KaryaSeniDetail",{
+        id:item.id,
+        name:item.data.name, 
+        price: item.data.price, 
+        detail: item.data.detail, 
+        tipe:item.data.category, 
+        tokokaryaID:item.data.tokokaryaID,
+        imageURL:item.data.imageURL
+        })
+    }
+    else{
+      return;
+    }
+  }
+
   const categories = categoryContent(category);
   const [categoryIndex,setCategoryIndex] = useState({
     index:0,
@@ -52,6 +110,24 @@ const CategoryScreen = ({navigation,route}:any) => {
 
   const handleCategories = (index:number) => {
     setCategoryIndex({index:index,category:categories[index]});
+  }
+
+  const providerHandler = (item:any) => {
+    if(item.data.category === "Seni"){
+      return item.data.sanggarName
+    }
+    else if(item.data.category === "Jasa Seni"){
+      return item.data.senimanName
+    }
+    else if(item.data.category === "Sewa Pakaian"){
+      return item.data.tokosewaName
+    }
+    else if(item.data.category === "Karya Seni"){
+      return item.data.tokokaryaName
+    }
+    else{
+      return;
+    }
   }
 
   const handleSearch = async () => {
@@ -142,36 +218,15 @@ const CategoryScreen = ({navigation,route}:any) => {
           estimatedItemSize={100}
           renderItem={({ item }:any) => (
             <CategoryCard 
-              buttonPressHandler={item.data.category == "Sanggar" || 
-              item.data.category == "Toko Sewa" ||
-              item.data.category == "Toko Seni" || 
-              item.data.category == "Seniman" ? ()=>{
-                navigation.push('Detail',
-                {id:item.id, 
-                  name:item.data.name, 
-                  location:item.data.city, 
-                  address: item.data.address, 
-                  description: item.data.description, 
-                  tipe:item.data.category, 
-                  phone:item.data.phone,
-                  imageURL:item.data.imageURL
-                })} : ()=>{
-                  navigation.push('Detail2',{
-                    id:item.id,
-                    name:item.data.name, 
-                    location:item.data.city, 
-                    price: item.data.price, 
-                    detail: item.data.detail, 
-                    tipe:item.data.category, 
-                    sanggarID:item.data.sanggarID,
-                    imageURL:item.data.imageURL
-                  })
-                }} 
+              buttonPressHandler={() => {navigateHandler(item)}}
+              productCard={true} 
               tipe={item.data.category} 
-              location={item.data.city} 
+              location={''}
+              provider={providerHandler(item)} 
               name={item.data.name} 
               description= {item.data.description} 
               imagelink={{uri:(item.data.imageURL)}}
+              price={formatedPrice(item.data.price)}
               />
             )}
           />
