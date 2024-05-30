@@ -9,22 +9,21 @@ import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'fireb
 import { auth, firestore } from '../../firebaseConfig'
 import { useAuth } from '../auth/AuthProvider'
 
-const EditBrand = ({navigation,route}:any) => {
+const EditProduct = ({navigation,route}:any) => {
     const { profile }:any = useAuth();
-    const [data, setData] = useState({name: "", address: "", city: "", description:""})
+    const [data, setData] = useState({name: "", price: 0, detail: ""})
 
     useEffect(() => {
         const fillForm = async () => {
             if (route.params.type === "Update") {
-                const q = query(collection(firestore, route.params.category), where('userID', '==', auth.currentUser?.uid));
+                const q = query(collection(firestore, route.params.category), where('sanggarID', '==', route.params.refID), where('name', '==', route.params.refProductName));
                 const querySnapshot = await getDocs(q);
                 const document = querySnapshot.docs[0]?.data();
                 if (document) {
                     setData({
                         name: document.name,
-                        address: document.address,
-                        city: document.city,
-                        description: document.description
+                        price: document.price,
+                        detail: document.detail,
                     });
                 }
             }
@@ -34,17 +33,25 @@ const EditBrand = ({navigation,route}:any) => {
     }, [route.params.type, route.params.category]);
   
     const SubmitHandler = async () => {
-        if (data.name !== "" && data.address !== "" && data.city !== "" && data.description !== "") {
+        if (data.name !== "" && data.price !== 0 && data.detail !== "") {
             if (route.params.type === "Create") {
                 try {
-                    const docRef = await addDoc(collection(firestore, route.params.category), {...data, category: route.params.category, userID: auth.currentUser?.uid, phone: profile?.data.nomor, imageURL:"https://firebasestorage.googleapis.com/v0/b/culture-connect-a7f81.appspot.com/o/Images%2FSanggar%2FSanggar-Sekar-Arum-Wirahma.png?alt=media&token=461ea155-c385-41bd-a257-1b8b72fb0ae6"});
-                    navigation.navigate('Brand')
+                    if(route.params.category === "Seni") {
+                        const docRef = await addDoc(collection(firestore, route.params.category), {...data, category: route.params.category, sanggarID:route.params.refID, sanggarName:route.params.refName, imageURL:"https://firebasestorage.googleapis.com/v0/b/culture-connect-a7f81.appspot.com/o/Images%2FSanggar%2FSanggar-Sekar-Arum-Wirahma.png?alt=media&token=461ea155-c385-41bd-a257-1b8b72fb0ae6"});
+                    } else if (route.params.category === "Jasa Seni") {
+                        const docRef = await addDoc(collection(firestore, route.params.category), {...data, category: route.params.category, senimanID:route.params.refID, senimanName:route.params.refName, imageURL:"https://firebasestorage.googleapis.com/v0/b/culture-connect-a7f81.appspot.com/o/Images%2FSanggar%2FSanggar-Sekar-Arum-Wirahma.png?alt=media&token=461ea155-c385-41bd-a257-1b8b72fb0ae6"});
+                    } else if (route.params.category === "Sewa Pakaian") {
+                        const docRef = await addDoc(collection(firestore, route.params.category), {...data, category: route.params.category, tokosewaID:route.params.refID, tokosewaName:route.params.refName, imageURL:"https://firebasestorage.googleapis.com/v0/b/culture-connect-a7f81.appspot.com/o/Images%2FSanggar%2FSanggar-Sekar-Arum-Wirahma.png?alt=media&token=461ea155-c385-41bd-a257-1b8b72fb0ae6"});
+                    }else if (route.params.category === "Karya Seni") {
+                        const docRef = await addDoc(collection(firestore, route.params.category), {...data, category: route.params.category, tokokaryaID:route.params.refID, tokokaryaName:route.params.refName, imageURL:"https://firebasestorage.googleapis.com/v0/b/culture-connect-a7f81.appspot.com/o/Images%2FSanggar%2FSanggar-Sekar-Arum-Wirahma.png?alt=media&token=461ea155-c385-41bd-a257-1b8b72fb0ae6"});
+                    }
+                        navigation.navigate('Brand')
                 } catch (error) {
                     alert("Error!")
                 }
             } else {
                 try {
-                const q = query(collection(firestore, route.params.category), where('userID', '==', auth.currentUser?.uid));
+                const q = query(collection(firestore, route.params.category), where('sanggarID', '==', route.params.refID), where('name', '==', route.params.refProductName));
                 const querySnapshot = await getDocs(q);
                 const matchingDoc = querySnapshot.docs[0];
                 if (matchingDoc) {
@@ -80,24 +87,15 @@ const EditBrand = ({navigation,route}:any) => {
         </View>
         <View style={styles.line}/>
         <View>
-            <InputText label='Name' value={data.name} placeholder='input your brand name' changeHandler={(input:string) => {setData({...data, name: input})}}/>
+            <InputText label='Name' value={data.name} placeholder='input your product name' changeHandler={(input:string) => {setData({...data, name: input})}}/>
+            <InputText label='Price' value={data.price.toString()} placeholder='input your product price' changeHandler={(input:number) => {setData({...data, price: input})}}/>
             <View style={styles.TextInputComponent}>
-                <Text style={styles.TextLabel}>Address</Text>
-                <TextInput
-                    style={[styles.TextInputContainer,{borderColor:COLORS.primaryLightGreyHex, lineHeight:20}]}
-                    onChangeText={(input:string) => {setData({...data, address: input})}}
-                    value={data.address}
-                    placeholder='input your brand address'
-                />
-            </View>
-            <InputText label='City' value={data.city} placeholder='input your brand city' changeHandler={(input:string) => {setData({...data, city: input})}}/>
-            <View style={styles.TextInputComponent}>
-                <Text style={styles.TextLabel}>Description</Text>
+                <Text style={styles.TextLabel}>Detail</Text>
                 <TextInput
                     style={[styles.TextInputContainer,{borderColor:COLORS.primaryLightGreyHex}]}
-                    onChangeText={(input:string) => {setData({...data, description: input})}}
-                    value={data.description}
-                    placeholder='input your brand description'
+                    onChangeText={(input:string) => {setData({...data, detail: input})}}
+                    value={data.detail}
+                    placeholder='input your product detail'
                 />
             </View>
             <View style={{marginTop:SPACING.space_24}}>
@@ -108,7 +106,7 @@ const EditBrand = ({navigation,route}:any) => {
   )
 }
 
-export default EditBrand
+export default EditProduct
 
 const styles = StyleSheet.create({
     TextHeader: {

@@ -9,36 +9,42 @@ import { DocumentData, collection, deleteDoc, doc, getDocs, query, where } from 
 import { auth, firestore } from '../../firebaseConfig'
 import { useAuth } from '../auth/AuthProvider'
 
-const BrandCategory = ({navigation,route}:any) => {
+const ProductCategory = ({navigation,route}:any) => {
     const [queryData, setQueryData] =  useState<Array<{ id: string, data: any }>>([]);
-    let propsProduct = "";
-    if (route.params.title === "Sanggar") {
-        propsProduct = "Seni";
-    } else if  (route.params.title === "Seniman") {
-        propsProduct = "Jasa Seni";
-    } else if  (route.params.title === "Toko Sewa") {
-        propsProduct = "Sewa Pakaian";
-    } else if  (route.params.title === "Toko Karya") {
-        propsProduct = "Karya Seni";
-    }
-    
-    const deleteBrand = async () => {
+
+    let wherePara = ""
+    let titlePara = ""
+    const deleteProduct = async (id : any) => {
         try {
-            const q = query(collection(firestore, route.params.title), where('userID', '==', auth.currentUser?.uid));
-            const querySnapshot = await getDocs(q);
-            const matchingDoc = querySnapshot.docs[0];
-            if (matchingDoc) {
-                const docRef = doc(firestore, route.params.title, matchingDoc.id);
+            // const q = query(collection(firestore, route.params.title), where(wherePara,'==',route.params.refID));
+            // const querySnapshot = await getDocs(q);
+            // const matchingDoc = querySnapshot.docs[0];
+            // if (matchingDoc) {
+                const docRef = doc(firestore, route.params.title, id);
                 await deleteDoc(docRef);
-                navigation.navigate('Brand')
-            }
+                navigation.navigate('Brand');
+            // }
         } catch (error) {
             alert("Error!")
         }
             } 
     async function loadData() {
         try {
-            const q = query(collection(firestore, route.params.title), where('userID','==',auth.currentUser?.uid))
+            
+            if (route.params.title ===  "Seni") {
+                wherePara = "sanggarID";
+                titlePara = "Sanggar";
+            } else if (route.params.title ===  "Jasa Seni") {
+                wherePara = "senimanID";
+                titlePara = "Seniman";
+            } else if (route.params.title ===  "Sewa Pakaian") {
+                wherePara = "tokosewaID";
+                titlePara = "Toko Sewa";
+            } else if (route.params.title ===  "Karya Seni") {
+                wherePara = "tokokaryaID";
+                titlePara = "Toko Karya";
+            }
+            const q = query(collection(firestore, route.params.title), where(wherePara,'==',route.params.refID))
             const querySnapshot = await getDocs(q);
             const searchResults = querySnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
             setQueryData(searchResults);
@@ -66,19 +72,19 @@ const BrandCategory = ({navigation,route}:any) => {
         <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
             <Text style={[styles.TextParagraph, {marginBottom:4}]}>Manage grow your brand creatively</Text>
             
-            {/* <Pressable style={{marginRight:12}}>
+            <Pressable style={{marginRight:12}} onPress={() => {navigation.push("EditProduct", {type:"Create", category: route.params.title, refID: route.params.refID, refName: route.params.refName})}}>
                 <Ionicons name="add-circle" size={22} color="black" />
-            </Pressable> */}
+            </Pressable>
         </View>
         <View style={styles.line}/>
-        {queryData.length > 0 ?
-        <PesananCard screen='brand' name={queryData[0].data.name} price={0} location= {queryData[0].data.city} type= {queryData[0].data.category} imagelink= {queryData[0].data.imageURL} handleSecButton={deleteBrand} handleSecButton2={() =>(navigation.push("EditBrand", {type:"Update", category: route.params.title}))} buttonPressHandler={() => {navigation.push('ProductCategory', {title:propsProduct, refID:queryData[0].id, refName:queryData[0].data.name})}}></PesananCard>
-        : <View style={{flex: 1, paddingTop:200}}><Text style={[styles.TextAlert, {marginHorizontal:"auto"}]}>You don't have brand</Text><TouchableOpacity onPress={() => {navigation.push("EditBrand", {type:"Create", category: route.params.title})}}><Text style={[styles.TextAlert, {marginHorizontal:"auto", color: COLORS.primaryRedHex, textDecorationLine:"underline"}]}>Create One!</Text></TouchableOpacity></View> }
+            {queryData.map((item) => (
+            <PesananCard key={item.id} screen='product' buttonPressHandler={()=>{}} name={item.data.name} price={item.data.price} location= "" type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => deleteProduct(item.id)} handleSecButton2={() =>navigation.push("EditProduct", {type:"Update", category: route.params.title, refID: route.params.refID, refName: route.params.refName, refProductName: item.data.name})}></PesananCard>
+            ))}
         </View>
   )
 }
 
-export default BrandCategory
+export default ProductCategory
 
 const styles = StyleSheet.create({
     TextHeader: {
