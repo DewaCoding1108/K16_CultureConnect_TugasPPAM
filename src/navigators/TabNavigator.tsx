@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import HomeScreen from '../screen/HomeScreen'
-import ChatScreen from '../screen/ChartScreen'
+import ChartScreen from '../screen/ChartScreen'
 import OrderHistoryScreen from '../screen/OrderHistoryScreen'
 import ProfileScreen from '../screen/ProfileScreen'
 import CustomIcon from '../components/CustomIcon'
@@ -36,7 +36,7 @@ const TabNavigator = () => {
         ></Tab.Screen>
       <Tab.Screen
         name="Cart"
-        component={ChatScreen}
+        component={ChartScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
             <Ionicons name={focused ? "cart-sharp" : "cart-outline"} size={40} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   tabBarLabelStyle: {
-    fontFamily:'Poppins-Light',
+    fontFamily:'Poppins-Medium',
     fontSize:FONTSIZE.size_12,
   }
 });

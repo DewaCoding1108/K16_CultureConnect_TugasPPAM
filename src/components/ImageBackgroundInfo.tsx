@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     aspectRatio: 35 / 25,
     justifyContent: "space-between",
     shadowColor: COLORS.primaryWhiteHex,
-    marginBottom:4,
+    // marginBottom:4,
   },
   TextContainer: {
     flex:1,

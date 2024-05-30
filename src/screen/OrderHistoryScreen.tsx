@@ -1,14 +1,123 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Button, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, {useState,useEffect} from 'react'
+import HeaderBar from '../components/HeaderBar'
+import PesananCard from '../components/PesananCard'
+import { StatusBar } from "expo-status-bar";
+import ChartButton from '../components/ChartButton';
+import { COLORS, FONTSIZE, SPACING } from '../theme/theme';
+import { Firestore, doc, collection, getDocs, query, deleteDoc, where } from 'firebase/firestore';
+import {auth,firestore} from '../../firebaseConfig';
+import { useAuth } from '../auth/AuthProvider';
 
-const OrderHistoryScreen = () => {
+
+
+const HistoryScreen = ({navigation,route}:any) => {
+  const {profile} = useAuth();
+  type ChartData = { data: any; };
+  const [Chart, fetchChart] = useState<ChartData[]>([]); 
+  const [TotalPrice,setTotalPrice] = useState(0);
+  const uid = profile.id;
+  
+  const handlerChart = async ()=>{
+    const q = query(collection(firestore, "Users"));
+    const querySnapshot = await getDocs(q);
+    const search = querySnapshot.docs
+    .map(doc => ({id:doc.id , data:doc.data()}));
+    const searchResults = search.filter(doc => doc.id=== uid);
+    const userDocRef = doc(firestore, "Users", searchResults[0].id);
+
+  const subCollectionRef = collection(userDocRef, "History");
+  const subCollectionSnapshot = await getDocs(subCollectionRef);
+  const subCollectionData = subCollectionSnapshot.docs.map(doc => ({data: doc.data()}));
+
+  let a = 0;
+  subCollectionData.forEach(arr =>{
+    a += arr.data.price;
+  })
+  fetchChart(subCollectionData);
+  setTotalPrice(a);
+  }
+  useEffect(()=>{
+    handlerChart();
+  },[])
+  const renderBottomHeight = () => {
+    if (Chart.length > 3) {
+      return <View style={styles.Bottomheigt}></View>;
+    } else if (Chart.length == 0) {
+      return <Text style={{marginHorizontal:"auto"}}>Belum ada transaksi, Ayoo Belanja sekarang!!</Text>
+    }
+    return null;
+  }
+
+  // const handlerDelete = async (chartName: string) => {
+  //   const userDocRef = doc(firestore, "Users", uid);
+  //   const subCollectionRef = collection(userDocRef, "Chart");
+  //   const q = query(subCollectionRef, where("name", "==", chartName));
+  //   const querySnapshot = await getDocs(q);
+
+  //   if (!querySnapshot.empty) {
+  //     const docId = querySnapshot.docs[0].id; 
+  //     const chartDocRef = doc(subCollectionRef, docId);
+  //     await deleteDoc(chartDocRef);
+  //     fetchChart(Chart.filter(chart => chart.data.name !== chartName));
+  //   }
+  // };
+
   return (
-    <View style={{ flex:1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Order History Screen</Text>
+    <View style={styles.ScreenContainer}>
+      <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>
+      <Text style={styles.TextHeader}>History</Text>
+      <Text style={[styles.TextParagraph, {marginBottom:4}]}>Riwayat pesanan</Text>
+      <View style={styles.line}/>
+      
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flex:1}}>
+        <View>
+          {Chart.map((item,index=0) =>
+              <PesananCard key={index+1} screen='history' buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.detail} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} ></PesananCard>
+          )}
+        </View>
+        {renderBottomHeight()}        
+      </ScrollView>
     </View>
   )
 }
 
-export default OrderHistoryScreen
 
-const styles = StyleSheet.create({})
+export default HistoryScreen;
+
+const styles = StyleSheet.create({
+  ScreenContainer:{
+    flex:1,
+    flexDirection:"column",
+    backgroundColor:COLORS.primaryWhiteHex,
+  },
+  ScrollViewFlex:{
+    flexGrow:1,
+    alignItems: "center",
+  },
+  Bottomheigt:{
+    height:300,
+  },
+  ButtonAlignment: {
+    alignSelf: "center",
+    position:"absolute",
+    bottom: 90,
+  },
+  TextHeader: {
+    fontFamily: "Poppins-Medium",
+    fontSize: FONTSIZE.size_26,
+    color: COLORS.primaryBlackHex,
+  },
+  TextParagraph: {
+    fontFamily: "Poppins-ExtraLight",
+    fontSize: FONTSIZE.size_12,
+    color: COLORS.primaryBlackHex,
+}, 
+line: {
+  marginVertical:SPACING.space_8,
+  borderColor: '#A19C9C',
+  borderWidth: 0.3,
+  width: '100%',
+},
+})

@@ -15,8 +15,9 @@ const RegisterScreen = ({navigation}:any) => {
           <AppButton title="Register as a Customer" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={()=>{navigation.push('Register_User',{role:'Customer'})}}/>
           <AppButton title="Register as a Provider" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryBlackHex} onPress={()=>{navigation.push('Register_User',{role:'Provider'})}}/>
           {/* <Button title='Login' ></Button> */}
-          <Text style={styles.TextParagraph}>Have an account already? 
-            <Text onPress={()=>{navigation.push('Login')}} style={{color:COLORS.primaryRedHex}}> Login</Text>
+          <Text style={styles.TextParagraph}>Have an account already?
+            <Text> </Text>
+            <Text onPress={()=>{navigation.push('Login')}} style={{color:COLORS.primaryRedHex, textDecorationLine:"underline"}}>Login</Text>
           </Text>
         </View>
       </ImageBackground>

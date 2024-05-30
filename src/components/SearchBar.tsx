@@ -40,12 +40,12 @@ export default SearchBar
 
 const styles = StyleSheet.create({
   InputContainerComponent: {
-    padding:5,
+    padding:8,
     width:'95%',
     marginTop: SPACING.space_16,
     borderWidth:1,
     borderColor:'#A19C9C',
-    borderRadius: BORDERRADIUS.radius_15,
+    borderRadius: 30,
     backgroundColor: COLORS.primaryWhiteHex,
     flexDirection: "row",
     justifyContent: "flex-start",

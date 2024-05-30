@@ -70,7 +70,8 @@ const RegisterUserScreen = ({navigation,route}:any) => {
           </View>
           <View style={{flex:1, justifyContent:'flex-end', alignItems:'center'}}>
             <Text style={styles.TextParagraph}>Have an account already? 
-              <Text onPress={()=>{navigation.push('Login')}} style={{color:COLORS.primaryRedHex}}> Login</Text>
+            <Text> </Text>
+              <Text onPress={()=>{navigation.push('Login')}} style={{color:COLORS.primaryRedHex, textDecorationLine:  "underline"}}>Login</Text>
             </Text>
           </View>
         </View>
