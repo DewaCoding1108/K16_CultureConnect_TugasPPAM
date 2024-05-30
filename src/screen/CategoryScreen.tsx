@@ -9,9 +9,12 @@ import { firestore } from '../../firebaseConfig';
 import { collection, getDocs, getDoc, query, where, doc } from 'firebase/firestore';
 import BackButton from '../components/BackButton';
 import { FlashList } from '@shopify/flash-list';
+import AppLoader from '../components/AppLoader';
 
 const CategoryScreen = ({navigation,route}:any) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [loadImage, setLoadImage] = useState(false);
   const [results, setResults] = useState<any>([]);
   const inputRef = useRef<TextInput>(null);
   const {category} = route.params;
@@ -74,7 +77,11 @@ const CategoryScreen = ({navigation,route}:any) => {
   }
 
   const handleSearch = async () => {
+    setLoading(true)
+    setLoadImage(true)
     if (searchQuery.trim() === '') {
+        setLoading(false)
+        setLoadImage(false)
         return;
     }
 
@@ -87,24 +94,10 @@ const CategoryScreen = ({navigation,route}:any) => {
         setResults(searchResults);
         console.log(results);
         console.log(searchQuery);
-      
-      // const searchResults = docSnap.data()
-        // const q = query(collection(firestore,categoryIndex.category);
-        // const querySnapshot = await 
-            // getDoc(q);
-            // .orderBy('name').
-            // startAt(searchQuery).endAt(searchQuery + '\uf8ff')
-            
-
-        // const searchResults = querySnapshot.docs
-        // .map(doc => ({id:doc.id , data:doc.data()}))
-        // .filter(doc => doc.data.name.toLowerCase().includes(searchQuery.toLowerCase()));
-        // setResults(searchResults);
-        // console.log(results);
-        // console.log(searchQuery);
     } catch (error) {
         console.error('Error searching Firestore:', error);
     }
+    setLoading(false)
 };
 
 
@@ -159,7 +152,14 @@ const CategoryScreen = ({navigation,route}:any) => {
               ))}
           </ScrollView>
         </View>
-        <FlashList
+        {
+          loading ?
+          <AppLoader/>
+          : results.length === 0 ?
+            <View style={{marginTop:'60%', alignItems:'center'}}>
+              <Text>Search Not Found </Text>
+            </View> :
+          <FlashList
           showsVerticalScrollIndicator={false}
           data={results}
           keyExtractor={(item, index) => index.toString()}
@@ -195,11 +195,12 @@ const CategoryScreen = ({navigation,route}:any) => {
               location={item.data.city} 
               name={item.data.name} 
               description= {item.data.description} 
-              // imagelink={require("../../src/assets/app_images/Home_SanggarSeni.png")}
               imagelink={{uri:(item.data.imageURL)}}
               />
             )}
-        />
+          />
+        }
+        
     </View>
   )
 }

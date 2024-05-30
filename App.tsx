@@ -21,6 +21,7 @@ import EditProfile from "./src/screen/EditProfile";
 import LikedArt from "./src/screen/LikedArt";
 import Brand from "./src/screen/Brand";
 import Revenue from "./src/screen/Revenue";
+import AppLoader from "./src/components/AppLoader";
 
 const Stack = createNativeStackNavigator();
 
@@ -93,7 +94,6 @@ const Navigation: React.FC = () => {
             // options={{ animation: "slide_from_bottom" }}
           ></Stack.Screen>
         </>
-
       )}
     </Stack.Navigator>
   );

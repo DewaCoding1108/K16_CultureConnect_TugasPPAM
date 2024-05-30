@@ -12,6 +12,7 @@ interface CategoryCardProps {
   description: string;
   imagelink: any;
   tipe:string;
+  loadImageHandler?:any;
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
@@ -20,7 +21,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   name,
   description,
   tipe,
-  imagelink}) => {
+  imagelink,
+  loadImageHandler = ()=>{}}) => {
   return (
     <View style={styles.SeniCardContainer}>
       <TouchableOpacity onPress={buttonPressHandler} style={{flexDirection:'row'}}>
@@ -28,6 +30,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
           source={imagelink}
           style={styles.CardImageBackground}
           borderRadius={BORDERRADIUS.radius_15}
+          onLoad={loadImageHandler}
         ></ImageBackground>
         <View style={styles.TextContainer}>
           <Text style={[styles.TextLocation,{alignSelf:'flex-end', marginTop:SPACING.space_2, marginBottom:SPACING.space_4}]}>{tipe}</Text>

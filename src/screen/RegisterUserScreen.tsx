@@ -12,6 +12,8 @@ import BackButton from '../components/BackButton';
 import {auth,firestore} from '../../firebaseConfig'
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { getAuth,createUserWithEmailAndPassword } from 'firebase/auth';
+import { useAuth } from '../auth/AuthProvider'
+import AppLoader from '../components/AppLoader'
 
 const RegisterUserScreen = ({navigation,route}:any) => {
   const [email, setEmail] = useState('');
@@ -19,6 +21,7 @@ const RegisterUserScreen = ({navigation,route}:any) => {
   const [name,setName] = useState('');
   const [password,setPassword] = useState('');
   const {role} = route.params
+  const {initializing} = useAuth();
 
   // const auth = getAuth();
   const signUpHandler = async () => {
@@ -47,6 +50,7 @@ const RegisterUserScreen = ({navigation,route}:any) => {
     }
   }
   return (
+    <>
     <View style={styles.ScreenContainer}>
       <StatusBar translucent backgroundColor="transparent" />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
@@ -73,6 +77,8 @@ const RegisterUserScreen = ({navigation,route}:any) => {
         </View>
       </ScrollView>
     </View>
+    {initializing? <AppLoader/> : null}
+    </>
   )
 }
 
