@@ -84,6 +84,10 @@ const ChartScreen = ({navigation,route}:any) => {
   }
   };
 
+  const handlerNavigate = (item:any)=>{
+    navigation.push("KaryaSeniDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, tokokaryaID:item.data.tokokaryaID, imageURL:item.data.imageURL, show:false});
+  }
+
   return (
     <View style={styles.ScreenContainer}>
       <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>

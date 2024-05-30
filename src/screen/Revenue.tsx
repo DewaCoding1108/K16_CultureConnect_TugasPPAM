@@ -46,10 +46,10 @@ const Revenue = ({navigation,route}:any) => {
                 </View>
                 <View style={styles.analyticsSubContainer}>
                     <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-                        <Text style={[styles.analyticsSubHeader, {width:"60%"}]}>Monthly Click</Text>
+                        <Text style={[styles.analyticsSubHeader, {width:"60%"}]}>Sold Count</Text>
                         <MaterialIcons name='people-outline' size={24} color="black" />
                     </View>
-                    <Text style={[styles.analyticsSubHeader, {marginTop:6}]}>{profile.data.liked}</Text>
+                    <Text style={[styles.analyticsSubHeader, {marginTop:6}]}>{profile.data.soldcount}</Text>
                 </View>
             </View>
         </View>

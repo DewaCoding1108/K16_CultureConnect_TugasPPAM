@@ -151,7 +151,8 @@ const KaryaSeniSearchScreen = ({navigation,route}:any) => {
                     detail: item.data.detail, 
                     tipe:item.data.category, 
                     tokokaryaID:item.data.tokokaryaID,
-                    imageURL:item.data.imageURL
+                    imageURL:item.data.imageURL,
+                    show:true
                   })
                 }} 
               productCard={isKaryaSeni(categoryIndex.category)}
