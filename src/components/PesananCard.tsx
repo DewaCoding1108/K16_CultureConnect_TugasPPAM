@@ -77,6 +77,10 @@ import {
         }).format(price);
     };
   const styles = StyleSheet.create({
+    Container:{
+      flexDirection:"row",
+      width:"100%",
+    },
     PesananCardContainer:{
         backgroundColor:COLORS.primaryWhiteHex,
         marginBottom: SPACING.space_12,
@@ -125,5 +129,13 @@ import {
         marginHorizontal: 18,
         marginLeft:"auto",
       },
+      Container2:{
+        width: CARD_WIDTH * 0.55,
+      },
+      Container3:{
+        marginTop:SPACING.space_12 ,
+        flexDirection:"row",  
+        justifyContent:"space-between"
+      }
   });
   

@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.wklups.CultureConnect"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,12 +37,11 @@
       [
         "expo-build-properties",
         {
-          "ios":{
-            "useFrameworks":"static"
+          "ios": {
+            "useFrameworks": "static"
           }
         }
       ]
-      
     ]
   }
 }

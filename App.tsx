@@ -22,6 +22,7 @@ import LikedArt from "./src/screen/LikedArt";
 import Brand from "./src/screen/Brand";
 import Revenue from "./src/screen/Revenue";
 import AppLoader from "./src/components/AppLoader";
+import PaymentDetailsScreen from "./src/screen/PaymentDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,10 @@ const Navigation: React.FC = () => {
               name="Revenue" 
               component={Revenue}
               ></Stack.Screen>
+              <Stack.Screen
+            name="PaymentDetails"
+            component={PaymentDetailsScreen}
+          ></Stack.Screen>
           </>   
         )
       ) : (
