@@ -8,9 +8,11 @@ import CategoryBrandCard from '../components/CategoryBrandCard'
 import { DocumentData, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore'
 import { auth, firestore } from '../../firebaseConfig'
 import { useAuth } from '../auth/AuthProvider'
+import AppLoader from '../components/AppLoader'
 
 const ProductCategory = ({navigation,route}:any) => {
     const [queryData, setQueryData] =  useState<Array<{ id: string, data: any }>>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     let wherePara = ""
     let titlePara = ""
@@ -48,6 +50,7 @@ const ProductCategory = ({navigation,route}:any) => {
             const querySnapshot = await getDocs(q);
             const searchResults = querySnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
             setQueryData(searchResults);
+            setIsLoading(false);
     
             // const docRef = querySnapshot.docs[0].ref;
             // await updateDoc(docRef, { name: name, nomor: nomor });
@@ -77,9 +80,11 @@ const ProductCategory = ({navigation,route}:any) => {
             </Pressable>
         </View>
         <View style={styles.line}/>
-            {queryData.map((item) => (
-            <PesananCard key={item.id} screen='product' buttonPressHandler={()=>{}} name={item.data.name} price={item.data.price} location= "" type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => deleteProduct(item.id)} handleSecButton2={() =>navigation.push("EditProduct", {type:"Update", category: route.params.title, refID: route.params.refID, refName: route.params.refName, refProductName: item.data.name})}></PesananCard>
-            ))}
+            {isLoading ? <AppLoader /> :
+            queryData.map((item) => (
+                <PesananCard key={item.id} screen='product' buttonPressHandler={()=>{}} name={item.data.name} price={item.data.price} location= "" type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => deleteProduct(item.id)} handleSecButton2={() =>navigation.push("EditProduct", {type:"Update", category: route.params.title, refID: route.params.refID, refName: route.params.refName, refProductName: item.data.name})}></PesananCard>
+                ))
+            }
         </View>
   )
 }

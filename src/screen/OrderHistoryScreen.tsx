@@ -55,7 +55,7 @@ const HistoryScreen = ({navigation,route}:any) => {
     if (Chart.length > 3) {
       return <View style={styles.Bottomheigt}></View>;
     } else if (Chart.length == 0) {
-      return <Text style={{marginHorizontal:"auto"}}>Belum ada transaksi, Ayoo Belanja sekarang!!</Text>
+      return <Text style={{marginHorizontal:"auto"}}>You don't have order history yet!</Text>
     }
     return null;
   }
@@ -64,7 +64,7 @@ const HistoryScreen = ({navigation,route}:any) => {
     <View style={styles.ScreenContainer}>
       <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>
       <Text style={styles.TextHeader}>History</Text>
-      <Text style={[styles.TextParagraph, {marginBottom:4}]}>Riwayat pesanan</Text>
+      <Text style={[styles.TextParagraph, {marginBottom:4}]}>Discover all your recent order</Text>
       <View style={styles.line}/>
       
       </View>

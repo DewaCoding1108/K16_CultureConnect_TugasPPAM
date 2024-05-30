@@ -48,7 +48,7 @@ const ChartScreen = ({navigation,route}:any) => {
     if (Chart.length > 3) {
       return <View style={styles.Bottomheigt}></View>;
     } else if (Chart.length == 0) {
-      return <Text style={{marginHorizontal:"auto"}}>Chart kosong</Text>
+      return <Text style={{marginHorizontal:"auto"}}>Chart is Empty!</Text>
     }
     return null;
   }
@@ -87,8 +87,8 @@ const ChartScreen = ({navigation,route}:any) => {
   return (
     <View style={styles.ScreenContainer}>
       <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>
-      <Text style={styles.TextHeader}>Pesanan</Text>
-      <Text style={[styles.TextParagraph, {marginBottom:4}]}>Pesan sekarang untuk pengalaman yang tak terlupakan terhadap karya seni</Text>
+      <Text style={styles.TextHeader}>Cart</Text>
+      <Text style={[styles.TextParagraph, {marginBottom:4}]}>Simply click order to explore various culture</Text>
       <View style={styles.line}/>
       
       </View>

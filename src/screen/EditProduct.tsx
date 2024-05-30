@@ -15,8 +15,19 @@ const EditProduct = ({navigation,route}:any) => {
 
     useEffect(() => {
         const fillForm = async () => {
+            let paramWhere = ""
+            if(route.params.category === "Seni") {
+                paramWhere = "sanggarID"
+            } else if (route.params.category === "Jasa Seni") {
+                paramWhere = "senimanID"
+            } else if (route.params.category === "Sewa Pakaian") {
+                paramWhere = "tokosewaID"
+            }else if (route.params.category === "Karya Seni") {
+                paramWhere = "tokokaryaID"
+            }
+
             if (route.params.type === "Update") {
-                const q = query(collection(firestore, route.params.category), where('sanggarID', '==', route.params.refID), where('name', '==', route.params.refProductName));
+                const q = query(collection(firestore, route.params.category), where(paramWhere, '==', route.params.refID), where('name', '==', route.params.refProductName));
                 const querySnapshot = await getDocs(q);
                 const document = querySnapshot.docs[0]?.data();
                 if (document) {
@@ -51,7 +62,17 @@ const EditProduct = ({navigation,route}:any) => {
                 }
             } else {
                 try {
-                const q = query(collection(firestore, route.params.category), where('sanggarID', '==', route.params.refID), where('name', '==', route.params.refProductName));
+                let paramWhere = ""
+                if(route.params.category === "Seni") {
+                    paramWhere = "sanggarID"
+                } else if (route.params.category === "Jasa Seni") {
+                    paramWhere = "senimanID"
+                } else if (route.params.category === "Sewa Pakaian") {
+                    paramWhere = "tokosewaID"
+                }else if (route.params.category === "Karya Seni") {
+                    paramWhere = "tokokaryaID"
+                }
+                const q = query(collection(firestore, route.params.category), where(paramWhere, '==', route.params.refID), where('name', '==', route.params.refProductName));
                 const querySnapshot = await getDocs(q);
                 const matchingDoc = querySnapshot.docs[0];
                 if (matchingDoc) {
@@ -79,7 +100,7 @@ const EditProduct = ({navigation,route}:any) => {
         <BackButton pressHandler={()=>{navigation.goBack()}}/>
         <Text style={[styles.TextHeader,{marginTop:16}]}>{route.params.type == "Create" ? "Create your Brand" : "Edit your Brand"}</Text>
         <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-            <Text style={[styles.TextParagraph, {marginBottom:4}]}>{route.params.type == "Create" ? "Create and grow your brand creatively" : "Customize and grow your brand creatively"}</Text>
+            <Text style={[styles.TextParagraph, {marginBottom:4}]}>{route.params.type == "Create" ? "Create and grow your product creatively" : "Customize and grow your product creatively"}</Text>
             
             {/* <Pressable style={{marginRight:12}}>
                 <Ionicons name="add-circle" size={22} color="black" />
