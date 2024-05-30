@@ -40,11 +40,13 @@ const HistoryScreen = ({navigation,route}:any) => {
 
   const handlerNavigate = (item: ChartData)=>{
     if(item.data.category === "Jasa Seni"){
-      navigation.push("JasaSeniDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, senimanID:item.data.senimaID, imageURL:item.data.imageURL, show: false});
+      navigation.push("JasaSeniDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, senimanID:item.data.senimanID, imageURL:item.data.imageURL, show: false});
     } else if( item.data.category ==="Seni"){
       navigation.push("SeniDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, sanggarID:item.data.sanggarID, imageURL:item.data.imageURL, show:false});
     }else if( item.data.category === "Sewa Pakaian"){
       navigation.push("SewaPakaianDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, tokosewaID:item.data.tokosewaID, imageURL:item.data.imageURL, show:false});
+    }else if(item.data.category === "Karya Seni"){
+      navigation.push("KaryaSeniDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, tokokaryaID:item.data.tokokaryaID, imageURL:item.data.imageURL, show:false});
     }
   }
 

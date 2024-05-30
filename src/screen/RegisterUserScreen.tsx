@@ -40,7 +40,7 @@ const RegisterUserScreen = ({navigation,route}:any) => {
             nomor: phoneNumber,
             role: role,
             revenue :0,
-            liked:0 });
+            soldcount:0 });
             console.log('User created successfully, please log in');
         }
       }

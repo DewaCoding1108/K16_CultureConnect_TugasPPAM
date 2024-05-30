@@ -14,8 +14,9 @@ import { firestore } from '../../firebaseConfig';
 import Revenue from './Revenue';
 
 const PaymentMethodScreen = ({navigation, route}: any) => {
-    const {Chart = [], fromchart,Totalprice } = route.params || {};
-    console.log(Chart);
+    const {Chart = [], fromChart,Totalprice } = route.params || {};
+    console.log("IniChart",Chart);
+    console.log("Fromchart",fromChart)
     const [selectedOption, setSelectedOption] = useState<string | null>(null);  
     let imageURL1, imageURL3, imageURL2: any;
     imageURL1 = "https://firebasestorage.googleapis.com/v0/b/culture-connect-a7f81.appspot.com/o/Images%2Fpaymentmethod%2Fcard.png?alt=media&token=0fb1ab8c-f6d8-44d6-9eea-f1654b2af008";
@@ -29,22 +30,73 @@ const PaymentMethodScreen = ({navigation, route}: any) => {
         if(selectedOption !== null){
             try {
                 const userDocRef = doc(firestore, "Users", uid);
+                // const chartDocRef = doc(collection(userDocRef, "Chart"));
+                // console.log("chartdocref",chartDocRef);
                 const chartCollectionRef = collection(userDocRef, "Chart");
+                console.log("Coba:",chartCollectionRef)
+                
                 const historyCollectionRef = collection(userDocRef, "History");
+                console.log("Coba2:",historyCollectionRef)
 
-                if (fromchart) {
+                if (fromChart) {
                     // Ambil dokumen dari subkoleksi Chart
                     const chartSnapshot = await getDocs(chartCollectionRef);
-                    
+                    console.log("charts",chartSnapshot.docs);
+                    try{
+                        console.log('tes')
                     for (const chartDoc of chartSnapshot.docs) {
-                        const chartData = chartDoc.data();
+                        console.log('tes1')
+                        const q = query(collection(firestore, "Users"));
+                        const querySnapshot = await getDocs(q);
+                        const search = querySnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+                        const searchResults = search.filter(doc => doc.id === uid);
+        
+                        if (searchResults.length === 0) {
+                          throw new Error(`User with uid ${uid} not found`);
+                        }
+        
+                        // const userDocRef = doc(firestore, "Users", uid);
+        
+                        // Dapatkan dokumen dari subkoleksi Chart
+                        const chartCollectionRef = collection(userDocRef, "Chart");
+                        const chartSnapshot = await getDocs(chartCollectionRef);
+                        console.log("chartsnapshot",chartSnapshot);
+                        const chartMap = chartSnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+        
+                        // Proses setiap dokumen dalam subkoleksi Chart
+                        for (const chartDoc of chartMap) {
+                          const chartData = chartDoc.data;
+                          console.log("Cta",chartDoc.data.name)
+                          console.log("id",chartDoc.id)
+        
+                          // Tambahkan dokumen ke subkoleksi History
+                          const historyDocRef = doc(collection(userDocRef, "History"));
+                          console.log("sebelumhistory")
+                          console.log(chartDoc)
+                          await setDoc(historyDocRef, {
+                            name:chartDoc.data.name, price: chartDoc.data.price, detail: chartDoc.data.detail, category:chartDoc.data.category, tokoKaryaID:chartDoc.data.tokokaryaID, imageURL:chartDoc.data.imageURL});
+                            console.log("seblemsaa");
+                          // Hapus dokumen dari subkoleksi Chart
+                          const tokoSewa = doc(firestore, "Toko Karya", chartDoc.data.tokokaryaID);
+                            const tokoSewaDoc = await getDoc(tokoSewa);
+                            const tokoSewaa= tokoSewaDoc.data();
+                            const pemilik = doc(firestore, "Users", tokoSewaa?.userID);
+                            const pemilikDoc = await getDoc(pemilik);
+                            const pemilikk = pemilikDoc.data();
+                            let pemilikrevenue = pemilikk?.revenue;
+                            let soldcount = pemilikk?.soldcount;
+                            pemilikrevenue += (0.9*chartDoc.data.price);
+                            await updateDoc(pemilik,{
+                                revenue: pemilikrevenue,
+                                soldcount:soldcount+1
+                            });
+                          await deleteDoc(doc(chartCollectionRef, chartDoc.id));
 
-                        // Tambahkan dokumen ke subkoleksi History
-                        const historyDocRef = doc(historyCollectionRef, chartDoc.id);
-                        await setDoc(historyDocRef, chartData);
-
-                        // Hapus dokumen dari subkoleksi Chart
-                        await deleteDoc(doc(chartCollectionRef, chartDoc.id));
+                          console.log("setelah ele");
+                        }
+                    }}
+                    catch(error){
+                        console.log("erro :",error);
                     }
 
                     console.log("Data berhasil dipindahkan dari Chart ke History untuk user:", uid);
@@ -68,9 +120,11 @@ const PaymentMethodScreen = ({navigation, route}: any) => {
                             const pemilikDoc = await getDoc(pemilik);
                             const pemilikk = pemilikDoc.data();
                             let pemilikrevenue = pemilikk?.revenue;
+                            let soldcount = pemilikk?.soldcount;
                             pemilikrevenue += (0.9*item.data.price);
                             await updateDoc(pemilik,{
                                 revenue: pemilikrevenue,
+                                soldcount:soldcount+1
                             });
                         } else if(item.data.category === "Jasa Seni"){
                             const jasaSeni = doc(firestore, "Jasa Seni", item.id);
@@ -84,9 +138,11 @@ const PaymentMethodScreen = ({navigation, route}: any) => {
                             const pemilikDoc = await getDoc(pemilik);
                             const pemilikk = pemilikDoc.data();
                             let pemilikrevenue = pemilikk?.revenue;
+                            let soldcount = pemilikk?.soldcount;
                             pemilikrevenue += (0.9*item.data.price);
                             await updateDoc(pemilik,{
                                 revenue: pemilikrevenue,
+                                soldcount:soldcount+1
                             });
                         } else if(item.data.category === "Sewa Pakaian"){
                             const sewaPakaian = doc(firestore, "Sewa Pakaian", item.id);
@@ -100,12 +156,36 @@ const PaymentMethodScreen = ({navigation, route}: any) => {
                             const pemilikDoc = await getDoc(pemilik);
                             const pemilikk = pemilikDoc.data();
                             let pemilikrevenue = pemilikk?.revenue;
+                            let soldcount = pemilikk?.soldcount;
                             pemilikrevenue += (0.9*item.data.price);
                             await updateDoc(pemilik,{
                                 revenue: pemilikrevenue,
+                                soldcount:soldcount+1
                             });
-                        } 
+                        } else if(item.data.category === "Karya Seni"){
+                            console.log("karya seni")
+                            const sewaPakaian = doc(firestore, "Karya Seni", item.id);
+                            const sewaPakaianDoc = await getDoc(sewaPakaian);
+                            const sewaPakaian1= sewaPakaianDoc.data();
+                            console.log(sewaPakaian)
+                            console.log(sewaPakaianDoc)
+                            console.log(sewaPakaian1)
+
+                            const tokoSewa = doc(firestore, "Toko Karya", sewaPakaian1?.tokokaryaID);
+                            const tokoSewaDoc = await getDoc(tokoSewa);
+                            const tokoSewaa= tokoSewaDoc.data();
+                            const pemilik = doc(firestore, "Users", tokoSewaa?.userID);
+                            const pemilikDoc = await getDoc(pemilik);
+                            const pemilikk = pemilikDoc.data();
+                            let pemilikrevenue = pemilikk?.revenue;
+                            let soldcount = pemilikk?.soldcount;
+                            pemilikrevenue += (0.9*item.data.price);
+                            await updateDoc(pemilik,{
+                                revenue: pemilikrevenue,
+                                soldcount:soldcount+1
+                            });
                     }
+                }
 
                     console.log("Data dari Chart prop berhasil dimasukkan ke History untuk user:", uid);
                 }

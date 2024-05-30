@@ -84,6 +84,10 @@ const ChartScreen = ({navigation,route}:any) => {
   }
   };
 
+  const handlerNavigate = (item:any)=>{
+    navigation.push("KaryaSeniDetail",{id: item.id, name: item.data.name, price: item.data.price, detail: item.data.detail, tipe: item.data.category, tokokaryaID:item.data.tokokaryaID, imageURL:item.data.imageURL, show:false});
+  }
+
   return (
     <View style={styles.ScreenContainer}>
       <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>
@@ -94,7 +98,7 @@ const ChartScreen = ({navigation,route}:any) => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flexGrow:1}}>
           {Chart.map((item,index) =>
-              <PesananCard key={index+1} screen="chart" buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.detail} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => {handlerDelete(item.id)}}></PesananCard>
+              <PesananCard key={index+1} screen="chart" buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {''} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => {handlerDelete(item.id)}}></PesananCard>
           )}
         {renderBottomHeight()}        
       </ScrollView>

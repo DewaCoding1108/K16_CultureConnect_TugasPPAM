@@ -12,7 +12,8 @@ import AppButton from '../components/AppButton';
 const PaymentDetailsScreen = ({navigation,route}:any) => {
     const { Chart=[], TotalPrice=0,fromChart=false} = route.params ||{};
     console.log(Chart);
-    console.log(TotalPrice)
+    console.log(TotalPrice);
+    console.log("from" , fromChart);
   return (
     <View style={styles.ScreenContainer}>
         <HeaderBar title="Payment Details" description="Bayar dengan mudah dan aman! Cek kembali detail pembayaran Anda"/>

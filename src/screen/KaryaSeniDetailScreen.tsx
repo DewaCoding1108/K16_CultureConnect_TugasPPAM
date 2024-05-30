@@ -19,7 +19,7 @@ import { getTokoKaryaWithDocID } from '../db/TokoKaryaController'
 const CARD_WIDTH = Dimensions.get("window").width;
 
 const KaryaSeniDetailScreen = ({navigation,route}:any) => {
-  const {id, name, location, price, detail, tipe, tokokaryaID, imageURL} = route.params
+  const {id, name, price, detail, tipe, tokokaryaID, imageURL,show} = route.params
   const [results, setResults] = useState<any>([]);
   const [providerResults, setProviderResults] = useState<any>([]);
   const [loading, setLoading] = useState(true); 
@@ -40,6 +40,7 @@ const KaryaSeniDetailScreen = ({navigation,route}:any) => {
   const KeranjangHandler = async () => {
     try{
       const userDocRef = doc(firestore, "Users", userID);
+      console.log("karyaseni")
       const chartDocRef = doc(collection(userDocRef, "Chart"));
       await setDoc(chartDocRef,{
         userID:userID,
@@ -47,7 +48,7 @@ const KaryaSeniDetailScreen = ({navigation,route}:any) => {
         name: name, 
         price: price, 
         detail: detail, 
-        tipe: tipe, 
+        category: tipe, 
         tokokaryaID: tokokaryaID,
         imageURL: imageURL
       });
@@ -169,7 +170,7 @@ const KaryaSeniDetailScreen = ({navigation,route}:any) => {
                   location:item.data.city, 
                   price: item.data.price, 
                   detail: item.data.detail, 
-                  tipe:item.data.category, 
+                  category:item.data.category, 
                   tokokaryaID:item.data.tokokaryaID,
                   imageURL:item.data.imageURL
                   })
@@ -181,6 +182,8 @@ const KaryaSeniDetailScreen = ({navigation,route}:any) => {
       </ScrollView>
       <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:SPACING.space_10}}>
         {/* <AppButton buttonStyle={{width:'45%', marginLeft:SPACING.space_10, borderWidth:2, borderColor:COLORS.primaryRedHex}} title="+ Keranjang" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryRedHex} onPress={()=>{}}/> */}
+      {show ? (
+        <>
         <AppButton 
           buttonStyle={{borderColor:COLORS.primaryRedHex, borderWidth:1, width:'45%', marginLeft:SPACING.space_10,marginRight:5}} 
           title="+ Keranjang" 
@@ -192,17 +195,10 @@ const KaryaSeniDetailScreen = ({navigation,route}:any) => {
           title="Beli Sekarang" 
           backgroundColor={COLORS.primaryRedHex} 
           textColor={COLORS.primaryWhiteHex} 
-          onPress={()=>{navigation.push('Booking',{
-            id:id, 
-            name:name, 
-            location:location, 
-            price:price, 
-            detail:detail, 
-            tipe:tipe, 
-            tokokaryaID:tokokaryaID, 
-            imageURL:imageURL
-        })}}/>
-      </View>
+          onPress={()=>{navigation.push("PaymentDetails",{TotalPrice:price, Chart:[{"data":{"name":name,"price": price,"detail": detail,"category": tipe,"tokokaryaID": tokokaryaID,"imageURL": imageURL},'id':id }]})}}/>
+          </>
+      ): null}
+              </View>
     </View>
     {loading ? <AppLoader/> : null}
     </>
