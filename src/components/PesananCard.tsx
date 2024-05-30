@@ -66,7 +66,9 @@ import {
               <Pressable>
               {screen == "liked" ? 
               <AntDesign name= "heart" size={25} color= {COLORS.primaryRedHex} /> :
+              screen != "history" ?
               <Icon name="trash-o" size={25} color="black" />
+              : <></>
               }
               </Pressable>
               </View>

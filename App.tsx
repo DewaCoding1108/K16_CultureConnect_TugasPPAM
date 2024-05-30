@@ -25,6 +25,8 @@ import AppLoader from "./src/components/AppLoader";
 import PaymentDetailsScreen from "./src/screen/PaymentDetailsScreen";
 import BrandCategory from "./src/screen/BrandCategory";
 import EditBrand from "./src/screen/EditBrand";
+import PaymentMethodScreen from "./src/screen/PaymentMethodScreen";
+import HistoryScreen from "./src/screen/OrderHistoryScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -111,6 +113,14 @@ const Navigation: React.FC = () => {
             name="PaymentDetails"
             component={PaymentDetailsScreen}
           ></Stack.Screen>
+          <Stack.Screen
+              name="Paymentmethod"
+              component={PaymentMethodScreen}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="History"
+              component={HistoryScreen}
+            ></Stack.Screen>
           </>   
         )
       ) : (
