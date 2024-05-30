@@ -4,7 +4,7 @@ import HeaderBar from '../components/HeaderBar'
 import PesananCard from '../components/PesananCard'
 import { StatusBar } from "expo-status-bar";
 import ChartButton from '../components/ChartButton';
-import { COLORS } from '../theme/theme';
+import { COLORS, FONTSIZE, SPACING } from '../theme/theme';
 import { Firestore, doc, collection, getDocs, query, deleteDoc, where } from 'firebase/firestore';
 import {auth,firestore} from '../../firebaseConfig';
 import { useAuth } from '../auth/AuthProvider';
@@ -45,7 +45,7 @@ const ChartScreen = ({navigation,route}:any) => {
     if (Chart.length > 3) {
       return <View style={styles.Bottomheigt}></View>;
     } else if (Chart.length == 0) {
-      return <Text>Chart kosong</Text>
+      return <Text style={{marginHorizontal:"auto"}}>Chart kosong</Text>
     }
     return null;
   }
@@ -80,14 +80,16 @@ const ChartScreen = ({navigation,route}:any) => {
 
   return (
     <View style={styles.ScreenContainer}>
-      <HeaderBar title="Pesanan" description="Pesan sekarang untuk pengalaman yang tak terlupakan terhadap karya seni" />
-      <StatusBar translucent backgroundColor="transparent" />
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
-        <View>
-          {Chart.map((item,index=0) =>
-              <PesananCard key={index+1} buttonPressHandler={()=>{navigation.push('Detail')}} Chart={true} name={item.data.name} detail= {item.data.detail} price={item.data.price} type= {item.data.category} imageURL= {item.data.imageURL} handlerDelete={() => handlerDelete(item.data.name)}></PesananCard>
+      <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>
+      <Text style={styles.TextHeader}>Pesanan</Text>
+      <Text style={[styles.TextParagraph, {marginBottom:4}]}>Pesan sekarang untuk pengalaman yang tak terlupakan terhadap karya seni</Text>
+      <View style={styles.line}/>
+      
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flex:1}}>
+          {Chart.map((item) =>
+              <PesananCard screen="chart" buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.detail} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => {handlerDelete(item.data.name)}}></PesananCard>
           )}
-        </View>
         {renderBottomHeight()}        
       </ScrollView>
       {renderButton()}
@@ -101,14 +103,27 @@ export default ChartScreen
 const styles = StyleSheet.create({
   ScreenContainer:{
     flex:1,
+    flexDirection:"column",
     backgroundColor:COLORS.primaryWhiteHex,
   },
-  ScrollViewFlex:{
-    flexGrow:1,
-    alignItems: "center",
+  TextHeader: {
+    fontFamily: "Poppins-Medium",
+    fontSize: FONTSIZE.size_26,
+    color: COLORS.primaryBlackHex,
   },
+  TextParagraph: {
+    fontFamily: "Poppins-ExtraLight",
+    fontSize: FONTSIZE.size_12,
+    color: COLORS.primaryBlackHex,
+}, 
   Bottomheigt:{
     height:300,
+  },
+  line: {
+    marginVertical:SPACING.space_8,
+    borderColor: '#A19C9C',
+    borderWidth: 0.3,
+    width: '100%',
   },
   ButtonAlignment: {
     alignSelf: "center",

@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   tabBarLabelStyle: {
-    fontFamily:'Poppins-Light',
+    fontFamily:'Poppins-Medium',
     fontSize:FONTSIZE.size_12,
   }
 });

@@ -34,18 +34,19 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         justifyContent: "space-between",
         alignItems: "center",
+        paddingHorizontal: 10
     },
     Text:{
         marginHorizontal: SPACING.space_12,
         marginVertical: SPACING.space_16,
-        fontFamily: "Poppins-Medium",
+        fontFamily: "Poppins-SemiBold",
         fontSize: FONTSIZE.size_12,
         color: COLORS.primaryWhiteHex,
     },
     PriceText:{
         marginHorizontal: SPACING.space_12,
         marginVertical: SPACING.space_16,
-        fontFamily: "Poppins-Regular",
+        fontFamily: "Poppins-Medium",
         fontSize: FONTSIZE.size_12,
         color: COLORS.primaryWhiteHex,
         alignContent: "flex-end"
