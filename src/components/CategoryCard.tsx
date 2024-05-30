@@ -64,7 +64,7 @@ export default CategoryCard
 const styles = StyleSheet.create({
   CardImageBackground: {
     width: CARD_WIDTH * 0.36,
-    height: CARD_WIDTH * 0.36,
+    height: CARD_WIDTH * 0.40,
     margin:SPACING.space_4,
   },
   SeniCardContainer:{

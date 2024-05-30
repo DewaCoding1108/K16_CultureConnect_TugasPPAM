@@ -6,7 +6,7 @@ import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firesto
 const getAllSewaPakaian = async () => {
   const sewaPakaianRef = collection(firestore,'Sewa Pakaian');
   const sewaPakaianDocs = await getDocs(sewaPakaianRef);
-  return sewaPakaianRef; 
+  return sewaPakaianDocs; 
 }
 
 const getSewaPakaianWithDocID = async (docID:any) => {
