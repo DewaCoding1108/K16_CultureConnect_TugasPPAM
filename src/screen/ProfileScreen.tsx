@@ -48,7 +48,7 @@ const ProfileScreen = ({ navigation }: any) => {
         <View style={styles.line}/>
           <ProfileCard pressHandler={()=>{navigation.push('EditProfile')}} icon="Feather" iconName="edit" text="Edit Personal Information"/>
         <View style={styles.line}/>
-          <ProfileCard pressHandler={()=>{navigation.push('LikedArt')}} icon="Feather" iconName="heart" text="Liked Art"/>
+          {/* <ProfileCard pressHandler={()=>{navigation.push('LikedArt')}} icon="Feather" iconName="heart" text="Liked Art"/> */}
         {role === 'Provider'? 
           <>
             
