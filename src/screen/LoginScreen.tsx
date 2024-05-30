@@ -38,11 +38,12 @@ const LoginScreen = ({navigation}:any) => {
         <Text style={styles.TextParagraph}>Fill the Information Below with the Correct Identity to Complete the Login Account</Text>
         <InputText label='Email' value={email} placeholder='input your email address' changeHandler={(email:string) => setEmail(email)}/>
         <InputText label='Password' value={password} placeholder='input your password' changeHandler={(password:string) => setPassword(password)} secureTextEntry={true} />
-        <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryBlackHex, textAlign:'right', marginBottom:SPACING.space_24, fontFamily:'Poppins-Medium', fontSize:14}}> Forgot Password?</Text>
+        <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryBlackHex, textAlign:'right', marginBottom:SPACING.space_24, fontFamily:'Poppins-Medium', fontSize:14, textDecorationLine:"underline"}}>Forgot Password?</Text>
         <AppButton title="Login" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={loginHandler}/>
         <View style={{flex:1, justifyContent:'flex-end', alignItems:'center'}}>
           <Text style={styles.TextParagraph}>Don't have an account? 
-            <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryRedHex}}> Create account</Text>
+          <Text> </Text>
+            <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryRedHex, textDecorationLine:"underline"}}>Create account</Text>
           </Text>
         </View>
       </View>

@@ -6,10 +6,12 @@ import {
     Text,
     View,
     TouchableOpacity,
+    Pressable,
   } from "react-native";
   import React from "react";
   import { BORDERRADIUS, COLORS, FONTSIZE, SPACING } from "../theme/theme";
   import Icon from 'react-native-vector-icons/FontAwesome';
+  import { AntDesign, SimpleLineIcons } from '@expo/vector-icons'
   
   const CARD_WIDTH = Dimensions.get("window").width;
   
@@ -20,6 +22,7 @@ import {
     type: string;
     price: number;
     imagelink: ImageProps;
+    screen: string;
   }
   
   const PesananCard: React.FC<PesananCardProps> = ({
@@ -29,22 +32,37 @@ import {
     type,
     price,
     imagelink,
+    screen = "",
   }) => {
     return (
       <TouchableOpacity style={styles.PesananCardContainer}>
         <ImageBackground
         source={imagelink}
         style={styles.CardImageBackground}
-        borderRadius={BORDERRADIUS.radius_15}
+        borderRadius={20}
         />
-        <View >
+        <View style={styles.TextContainer} >
+            <Text style={[styles.OtherText, styles.MarginType]}>{type}</Text>
             <Text style={styles.TextHeader }>{name}</Text>
             <Text style={styles.OtherText}>{location}</Text>
-            <Text style={styles.PriceText}>{formatedPrice(price)}</Text>
-        </View>
-        <View >
-            <Text style={[styles.OtherText, styles.MarginType]}>{type}</Text>
-            <Icon name="trash" size={25} color="black" style={styles.MarginTrash}/>
+            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", marginVertical:14, marginRight:18}}>
+              <Text style={styles.PriceText}>{formatedPrice(price)}</Text>
+              <View style={{flexDirection:"row", gap:24, alignItems:"center"}}>
+              {screen == "brand" ?
+              <Pressable>
+                <SimpleLineIcons name="pencil" size={20} color="black" />
+              </Pressable>
+              :
+              <></>
+              }
+              <Pressable>
+              {screen == "liked" ? 
+              <AntDesign name= "heart" size={25} color= {COLORS.primaryRedHex} /> :
+              <Icon name="trash-o" size={25} color="black" />
+              }
+              </Pressable>
+              </View>
+            </View>
         </View>               
       </TouchableOpacity>
     );
@@ -60,54 +78,52 @@ import {
     };
   const styles = StyleSheet.create({
     PesananCardContainer:{
-        width: CARD_WIDTH * 0.9,
         backgroundColor:COLORS.primaryWhiteHex,
         marginBottom: SPACING.space_12,
         marginTop:SPACING.space_12,
-        marginLeft:SPACING.space_30,
-        marginRight:SPACING.space_30,
-        elevation:5,
+        elevation:12,
         shadowColor: COLORS.primaryBlackHex,
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
+        shadowOpacity: 0.2,
+        shadowRadius: 9,
         shadowOffset: {
-          height: 1,
-          width: 1
+          height: 2,
+          width: 2
         },
-        borderRadius: 15,
+        borderRadius: 20,
         flexDirection: "row",
-        justifyContent: "space-between",
       },
       CardImageBackground: {
         width: CARD_WIDTH * 0.3,
-        height: CARD_WIDTH * 0.3,
+        minHeight: CARD_WIDTH * 0.3,
         margin: SPACING.space_4,
+        marginRight: SPACING.space_8,
+      },
+      TextContainer: {
+        flex:1,
+        flexDirection: "column",
+        justifyContent: "flex-start"
       },
       TextHeader: {
-        marginTop: SPACING.space_30,
         fontFamily: "Poppins-Regular",
         fontSize: FONTSIZE.size_20,
         color: COLORS.primaryBlackHex,
       },
       OtherText: {
-        fontFamily: "Poppins-Light",
+        fontFamily: "Poppins-ExtraLight",
         fontSize: FONTSIZE.size_12,
         color: COLORS.primaryBlackHex,
       },
+
       PriceText:{
-        marginTop: SPACING.space_12,
+        
         fontFamily: "Poppins-Regular",
         fontSize: FONTSIZE.size_12,
         color: COLORS.primaryBlackHex,
       },
       MarginType:{
-        marginTop:SPACING.space_12,
-        marginBottom:SPACING.space_30,
-        marginRight: SPACING.space_8,
-      },
-      MarginTrash:{
-        marginTop:SPACING.space_32,
-        marginLeft:SPACING.space_36,
+        marginTop: 12,
+        marginHorizontal: 18,
+        marginLeft:"auto",
       },
   });
   

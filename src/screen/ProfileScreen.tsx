@@ -45,7 +45,7 @@ const ProfileScreen = ({navigation}: any) => {
 
   return (
     <View style={styles.ScreenContainer}>
-      <View style={{marginTop:50, paddingHorizontal:SPACING.space_12}}>
+      <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>
         <Text style={styles.TextHeader}>Profile</Text>
         <View style={{flexDirection:'row'}}>
           <Ionicons name={"person-circle-outline"} size={72} color={COLORS.primaryBlackHex} />
@@ -55,7 +55,19 @@ const ProfileScreen = ({navigation}: any) => {
           </View>
         </View>
         <View style={styles.line}/>
-          <ProfileCard pressHandler={()=>{}} icon="Feather" iconName="edit" text="Edit Personal Information"/>
+          <ProfileCard pressHandler={()=>{navigation.push('EditProfile')}} icon="Feather" iconName="edit" text="Edit Personal Information"/>
+        <View style={styles.line}/>
+          <ProfileCard pressHandler={()=>{navigation.push('LikedArt')}} icon="Feather" iconName="heart" text="Liked Art"/>
+        {role === 'Customer'? 
+          <>
+            <View style={styles.line}/>
+              <ProfileCard pressHandler={()=>{navigation.push('Brand')}} icon="Ionicons" iconName="newspaper-outline" text="Your Brand"/>
+            <View style={styles.line}/>
+              <ProfileCard pressHandler={()=>{navigation.push('Revenue')}} icon="Entypo" iconName="line-graph" text="Revenue"/>
+          </>
+          : <></>
+        }
+        
         <View style={styles.line}/>
           <ProfileCard pressHandler={signOutHandler} icon="Octicons" iconName="sign-out" text="Sign Out" textPaddingLeft={14}/>
         <View style={styles.line}/>

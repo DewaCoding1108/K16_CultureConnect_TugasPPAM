@@ -38,8 +38,9 @@ const LandingScreen = ({navigation}:any) => {
         <View style={styles.TextContainer}>
           <Text style={styles.TextHeader}>Contribute In Culture</Text>
           <AppButton title="Login" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryBlackHex} onPress={()=>{navigation.push('Login')}}/>
-          <Text style={styles.TextParagraph}>Don't have an account? 
-            <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryRedHex}}> Create account</Text>
+          <Text style={styles.TextParagraph}>Don't have an account?
+            <Text> </Text>
+            <Text onPress={()=>{navigation.push('Register')}} style={{color:COLORS.primaryRedHex, textDecorationLine:"underline"}}>Create account</Text>
           </Text>
         </View>
       </ImageBackground>
