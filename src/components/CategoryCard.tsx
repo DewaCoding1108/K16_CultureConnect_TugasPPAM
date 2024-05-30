@@ -6,22 +6,28 @@ import SeniCard from './SeniCard';
 const CARD_WIDTH = Dimensions.get("window").width;
 
 interface CategoryCardProps {
+  productCard?:boolean;
   buttonPressHandler: any;
-  location:string;
+  location?:string;
+  provider?:string;
   name: string;
   description: string;
   imagelink: any;
   tipe:string;
   loadImageHandler?:any;
+  price?:any;
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
   buttonPressHandler,
+  productCard = false,
   location,
   name,
+  provider,
   description,
   tipe,
   imagelink,
+  price,
   loadImageHandler = ()=>{}}) => {
   return (
     <View style={styles.SeniCardContainer}>
@@ -35,8 +41,18 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         <View style={styles.TextContainer}>
           <Text style={[styles.TextLocation,{alignSelf:'flex-end', marginTop:SPACING.space_2, marginBottom:SPACING.space_4}]}>{tipe}</Text>
           <Text style={styles.TextHeader}>{name}</Text>
-          <Text style={styles.TextLocation}>{location}</Text>
-          {/* <Text style={styles.TextParagraph}>{description}</Text> */}
+          {
+            !productCard && <Text style={styles.TextLocation}>{location}</Text>
+          }
+          
+          {
+            productCard && 
+            <>
+              <Text style={styles.TextLocation}>{provider}</Text>
+              <Text style={[styles.TextLocation,{alignSelf:'flex-end', marginTop:SPACING.space_24, marginRight:SPACING.space_2}]}>{price}</Text>
+            </>
+          }
+          
         </View>
       </TouchableOpacity>
     </View>

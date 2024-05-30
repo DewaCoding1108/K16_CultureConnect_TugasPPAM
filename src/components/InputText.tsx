@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize:FONTSIZE.size_12,
     borderRadius:BORDERRADIUS.radius_4,
     paddingTop:SPACING.space_10,
-    paddingBottom:SPACING.space_12,
+    paddingBottom:SPACING.space_10,
     paddingLeft:SPACING.space_12,
   },
   TextInputComponent:{
