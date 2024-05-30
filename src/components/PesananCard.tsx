@@ -49,7 +49,7 @@ import {
         <View style={styles.TextContainer} >
             <Text style={[styles.OtherText, styles.MarginType]}>{type}</Text>
             <Text style={styles.TextHeader }>{name}</Text>
-            {screen != "brand" ?
+            {screen != "brand" && screen != "product" ?
             <Text style={styles.OtherText}>{location}</Text>
             :
             <></>

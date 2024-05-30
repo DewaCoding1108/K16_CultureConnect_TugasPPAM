@@ -24,6 +24,7 @@ const EditProfile = ({navigation,route}:any) => {
         const docRef = querySnapshot.docs[0].ref;
         await updateDoc(docRef, { name: name, nomor: nomor });
         console.log(profile?.data.name)
+        alert("Silakan SignOut dan Login kembali untuk mengubah data profile")
       } catch (error) {
         alert("Error");
       }

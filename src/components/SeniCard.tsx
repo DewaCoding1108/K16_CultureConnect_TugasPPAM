@@ -53,18 +53,17 @@ const styles = StyleSheet.create({
     backgroundColor:COLORS.primaryWhiteHex,
     marginBottom: SPACING.space_12,
     marginTop:SPACING.space_12,
-    marginLeft:SPACING.space_18,
-    marginRight:SPACING.space_18,
-    elevation:5,
-    borderRadius:BORDERRADIUS.radius_15,
+    marginLeft:SPACING.space_20,
+    marginRight:SPACING.space_20,
+    elevation:12,
     shadowColor: COLORS.primaryBlackHex,
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    shadowOpacity: 0.2,
+    shadowRadius: 9,
     shadowOffset: {
-      height: 1,
-      width: 1
-    }
-    
+      height: 2,
+      width: 2
+    },
+    borderRadius:BORDERRADIUS.radius_15,
   },
   TextHeader: {
     fontFamily: "Poppins-Regular",
@@ -78,8 +77,8 @@ const styles = StyleSheet.create({
   },
   TextContainer:{
     paddingTop:SPACING.space_10,
-    paddingLeft:SPACING.space_10,
-    paddingBottom:SPACING.space_10,
-    paddingRight:SPACING.space_10,
+    paddingLeft:SPACING.space_16,
+    paddingBottom:SPACING.space_16,
+    paddingRight:SPACING.space_16,
   }
 });

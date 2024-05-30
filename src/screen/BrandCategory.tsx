@@ -8,9 +8,12 @@ import CategoryBrandCard from '../components/CategoryBrandCard'
 import { DocumentData, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore'
 import { auth, firestore } from '../../firebaseConfig'
 import { useAuth } from '../auth/AuthProvider'
+import AppLoader from '../components/AppLoader'
 
 const BrandCategory = ({navigation,route}:any) => {
     const [queryData, setQueryData] =  useState<Array<{ id: string, data: any }>>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     let propsProduct = "";
     if (route.params.title === "Sanggar") {
         propsProduct = "Seni";
@@ -32,6 +35,7 @@ const BrandCategory = ({navigation,route}:any) => {
                 await deleteDoc(docRef);
                 navigation.navigate('Brand')
             }
+            
         } catch (error) {
             alert("Error!")
         }
@@ -42,6 +46,7 @@ const BrandCategory = ({navigation,route}:any) => {
             const querySnapshot = await getDocs(q);
             const searchResults = querySnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
             setQueryData(searchResults);
+            setIsLoading(false);
     
             // const docRef = querySnapshot.docs[0].ref;
             // await updateDoc(docRef, { name: name, nomor: nomor });
@@ -71,9 +76,11 @@ const BrandCategory = ({navigation,route}:any) => {
             </Pressable> */}
         </View>
         <View style={styles.line}/>
-        {queryData.length > 0 ?
+        {isLoading ? <AppLoader /> :
+        queryData.length > 0 ?
         <PesananCard screen='brand' name={queryData[0].data.name} price={0} location= {queryData[0].data.city} type= {queryData[0].data.category} imagelink= {queryData[0].data.imageURL} handleSecButton={deleteBrand} handleSecButton2={() =>(navigation.push("EditBrand", {type:"Update", category: route.params.title}))} buttonPressHandler={() => {navigation.push('ProductCategory', {title:propsProduct, refID:queryData[0].id, refName:queryData[0].data.name})}}></PesananCard>
-        : <View style={{flex: 1, paddingTop:200}}><Text style={[styles.TextAlert, {marginHorizontal:"auto"}]}>You don't have brand</Text><TouchableOpacity onPress={() => {navigation.push("EditBrand", {type:"Create", category: route.params.title})}}><Text style={[styles.TextAlert, {marginHorizontal:"auto", color: COLORS.primaryRedHex, textDecorationLine:"underline"}]}>Create One!</Text></TouchableOpacity></View> }
+        :<View style={{flex: 1, paddingTop:200}}><Text style={[styles.TextAlert, {marginHorizontal:"auto"}]}>You don't have brand</Text><TouchableOpacity onPress={() => {navigation.push("EditBrand", {type:"Create", category: route.params.title})}}><Text style={[styles.TextAlert, {marginHorizontal:"auto", color: COLORS.primaryRedHex, textDecorationLine:"underline"}]}>Create One!</Text></TouchableOpacity></View>
+        }
         </View>
   )
 }
