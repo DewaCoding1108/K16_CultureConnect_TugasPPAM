@@ -18,7 +18,7 @@ const LikedArt = ({navigation,route}:any) => {
         <Text style={[styles.TextHeader,{marginTop:16}]}>Liked Art</Text>
         <Text style={[styles.TextParagraph, {marginBottom:4}]}>Save your favorite art for later</Text>
         <View style={styles.line}/>
-        <PesananCard screen='liked' buttonPressHandler={()=>{navigation.push('Detail')}} name="Komunitas Batik" location= "Yogyakarta" price={57000} type= "Sanggar Seni" imagelink= {require("../../src/assets/app_images/Home_SanggarSeni.png")}></PesananCard>
+        <PesananCard screen='liked' buttonPressHandler={()=>{navigation.push('Detail')}} name="Komunitas Batik" location= "Yogyakarta" price={57000} type= "Sanggar Seni" imagelink= "https://firebasestorage.googleapis.com/v0/b/culture-connect-a7f81.appspot.com/o/Images%2FSanggar%2FSanggar-Tari-Melati-Bandung.png?alt=media&token=7076ff12-8406-445e-8e35-4c661127b55f"></PesananCard>
       </ScrollView>
   )
 }

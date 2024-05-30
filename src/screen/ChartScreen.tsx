@@ -4,7 +4,7 @@ import HeaderBar from '../components/HeaderBar'
 import PesananCard from '../components/PesananCard'
 import { StatusBar } from "expo-status-bar";
 import ChartButton from '../components/ChartButton';
-import { COLORS } from '../theme/theme';
+import { COLORS, FONTSIZE, SPACING } from '../theme/theme';
 import { Firestore, doc, collection, getDocs, query, where } from 'firebase/firestore';
 import {auth,firestore} from '../../firebaseConfig';
 
@@ -51,16 +51,19 @@ const ChartScreen = ({navigation,route}:any) => {
 
   return (
     <View style={styles.ScreenContainer}>
-      <HeaderBar title="Pesanan" description="Pesan sekarang untuk pengalaman yang tak terlupakan terhadap karya seni" />
-      <StatusBar translucent backgroundColor="transparent" />
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.ScrollViewFlex}>
-        <View>
+      <View style={{marginTop:50, paddingHorizontal:SPACING.space_20}}>
+      <Text style={styles.TextHeader}>Pesanan</Text>
+      <Text style={[styles.TextParagraph, {marginBottom:4}]}>Pesan sekarang untuk pengalaman yang tak terlupakan terhadap karya seni</Text>
+      <View style={styles.line}/>
+      
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flex:1}}>
           {Chart.map((item) =>
-              <PesananCard buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.city} price={item.data.price} type= {item.data.category} imageURL= {item.data.imageURL}></PesananCard>
+              <PesananCard screen="chart" buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.city} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL}></PesananCard>
           )}
-        </View>
         {renderBottomHeight()}        
       </ScrollView>
+      
       <View style={styles.ButtonAlignment}>
         <ChartButton 
           price={TotalPrice} 
@@ -78,18 +81,31 @@ export default ChartScreen
 const styles = StyleSheet.create({
   ScreenContainer:{
     flex:1,
+    flexDirection:"column",
     backgroundColor:COLORS.primaryWhiteHex,
   },
-  ScrollViewFlex:{
-    flexGrow:1,
-    alignItems: "center",
+  TextHeader: {
+    fontFamily: "Poppins-Medium",
+    fontSize: FONTSIZE.size_26,
+    color: COLORS.primaryBlackHex,
   },
+  TextParagraph: {
+    fontFamily: "Poppins-ExtraLight",
+    fontSize: FONTSIZE.size_12,
+    color: COLORS.primaryBlackHex,
+}, 
   Bottomheigt:{
     height:300,
+  },
+  line: {
+    marginVertical:SPACING.space_8,
+    borderColor: '#A19C9C',
+    borderWidth: 0.3,
+    width: '100%',
   },
   ButtonAlignment: {
     alignSelf: "center",
     position:"absolute",
-    top: 700,
+    bottom: 90,
   }
 })

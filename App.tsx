@@ -23,6 +23,8 @@ import Brand from "./src/screen/Brand";
 import Revenue from "./src/screen/Revenue";
 import AppLoader from "./src/components/AppLoader";
 import PaymentDetailsScreen from "./src/screen/PaymentDetailsScreen";
+import BrandCategory from "./src/screen/BrandCategory";
+import EditBrand from "./src/screen/EditBrand";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,11 +35,6 @@ const Navigation: React.FC = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {user ? (
         role === 'Provider' ? (
-          <Stack.Screen 
-            name="Provider" 
-            component={ProviderScreen} 
-            ></Stack.Screen>
-        ) : (
           <>
             <Stack.Screen 
               name="Tab" 
@@ -70,6 +67,45 @@ const Navigation: React.FC = () => {
             <Stack.Screen 
               name="Revenue" 
               component={Revenue}
+              ></Stack.Screen>
+              <Stack.Screen
+            name="PaymentDetails"
+            component={PaymentDetailsScreen}
+          ></Stack.Screen>
+          <Stack.Screen 
+              name="BrandCategory" 
+              component={BrandCategory}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="EditBrand" 
+              component={EditBrand}
+              ></Stack.Screen>
+          </>   
+        ) : (
+          <>
+            <Stack.Screen 
+              name="Tab" 
+              component={TabNavigator}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Category" 
+              component={CategoryScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Detail" 
+              component={DetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Detail2" 
+              component={DetailScreen2}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="EditProfile" 
+              component={EditProfile}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="LikedArt" 
+              component={LikedArt}
               ></Stack.Screen>
               <Stack.Screen
             name="PaymentDetails"
@@ -110,6 +146,8 @@ export default function App({navigation}:any) {
     'Poppins-Black': require('./src/assets/fonts/Poppins-Black.ttf'),
     'Poppins-Medium': require('./src/assets/fonts/Poppins-Medium.ttf'),
     'Poppins-SemiBold': require('./src/assets/fonts/Poppins-SemiBold.ttf'),
+    'Poppins-Bold': require('./src/assets/fonts/Poppins-Bold.ttf'),
+    'Poppins-ExtraBold': require('./src/assets/fonts/Poppins-ExtraBold.ttf'),
     'Poppins-ExtraLight': require('./src/assets/fonts/Poppins-ExtraLight.ttf'),
     'Poppins-Light': require('./src/assets/fonts/Poppins-Light.ttf'),
     'Poppins-Regular': require('./src/assets/fonts/Poppins-Regular.ttf'),

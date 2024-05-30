@@ -1,13 +1,12 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { COLORS, FONTSIZE, SPACING, FONTFAMILY } from '../theme/theme'
 import BackButton from '../components/BackButton'
-import PesananCard from '../components/PesananCard'
-import { Ionicons } from '@expo/vector-icons'
+import CategoryBrandCard from '../components/CategoryBrandCard'
 
 const Brand = ({navigation,route}:any) => {
   return (
-    <ScrollView contentContainerStyle={{
+    <View style={{
         flex: 1,
         flexDirection:'column',
         justifyContent:'flex-start',
@@ -16,16 +15,22 @@ const Brand = ({navigation,route}:any) => {
         backgroundColor:COLORS.primaryWhiteHex}}
       >
         <BackButton pressHandler={()=>{navigation.goBack()}}/>
-        <Text style={[styles.TextHeader,{marginTop:16}]}>Your Brand</Text>
+        <Text style={[styles.TextHeader,{marginTop:16}]}>Brand Category</Text>
         <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-            <Text style={[styles.TextParagraph, {marginBottom:4}]}>Customize your brand creatively</Text>
-            <Pressable style={{marginRight:12}}>
+            <Text style={[styles.TextParagraph, {marginBottom:4}]}>Show your creativity in culture category</Text>
+            
+            {/* <Pressable style={{marginRight:12}}>
                 <Ionicons name="add-circle" size={22} color="black" />
-            </Pressable>
+            </Pressable> */}
         </View>
         <View style={styles.line}/>
-        <PesananCard screen='brand' buttonPressHandler={()=>{navigation.push('Detail')}} name="Komunitas Batik" location= "Yogyakarta" price={57000} type= "Sanggar Seni" imagelink= {require("../../src/assets/app_images/Home_SanggarSeni.png")}></PesananCard>
-      </ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flexDirection:"column", gap:20, justifyContent:"center", marginTop:8}}>
+          <CategoryBrandCard title="Sanggar" image={require("../assets/app_images/Home_SanggarSeni.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Sanggar"})}} />
+          <CategoryBrandCard title="Seniman" image={require("../assets/app_images/Home_BeliKaryaSeni.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Seniman"})}} />
+          <CategoryBrandCard title="Toko Sewa" image={require("../assets/app_images/Home_SewaPakaian.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Toko Sewa"})}} />
+        </ScrollView>
+        
+      </View>
   )
 }
 
@@ -42,6 +47,7 @@ const styles = StyleSheet.create({
         fontSize: FONTSIZE.size_12,
         color: COLORS.primaryBlackHex,
     }, 
+    
     line: {
         marginVertical:SPACING.space_8,
         borderColor: '#A19C9C',

@@ -37,18 +37,26 @@ import {
     return (
       <TouchableOpacity style={styles.PesananCardContainer}>
         <ImageBackground
-        source={imagelink}
+        source={{uri:imagelink}}
         style={styles.CardImageBackground}
         borderRadius={20}
         />
         <View style={styles.TextContainer} >
             <Text style={[styles.OtherText, styles.MarginType]}>{type}</Text>
             <Text style={styles.TextHeader }>{name}</Text>
+            {screen != "brand" ?
             <Text style={styles.OtherText}>{location}</Text>
+            :
+            <></>
+            }
             <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", marginVertical:14, marginRight:18}}>
-              <Text style={styles.PriceText}>{formatedPrice(price)}</Text>
-              <View style={{flexDirection:"row", gap:24, alignItems:"center"}}>
               {screen == "brand" ?
+              <Text style={styles.PriceText}>{location}</Text>
+              :
+              <Text style={styles.PriceText}>{formatedPrice(price)}</Text>
+              }
+              <View style={{flexDirection:"row", gap:24, alignItems:"center"}}>
+              {screen == "brand" || screen == "product" ?
               <Pressable>
                 <SimpleLineIcons name="pencil" size={20} color="black" />
               </Pressable>
