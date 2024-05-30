@@ -9,42 +9,34 @@ import BackButton from '../components/BackButton';
 import { FlashList } from '@shopify/flash-list';
 import AppLoader from '../components/AppLoader';
 
-const CategoryScreen = ({navigation,route}:any) => {
+const SanggarSearchScreen = ({navigation,route}:any) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any>([]);
   const inputRef = useRef<TextInput>(null);
   const {category} = route.params;
-  
-  const categoryContent = (x:any) => {
-    if(x == 'All'){
-      return ["Sanggar", "Jasa Seni", "Sewa Pakaian", "Karya Seni", "Event"];
-    }
-    else if (x == 'Sanggar'){
-      return ["Sanggar", "Seni"];
-    }
-    else if(x=='Jasa Seni'){
-      return ["Jasa Seni", "Seniman"];
-    }
-    else if(x=='Sewa Pakaian'){
-      return ["Sewa Pakaian", "Toko Sewa"];
-    }
-    else if(x=="Karya Seni"){
-      return ['Karya Seni','Toko Seni'];
-    }
-    else if(x=='Event'){
-      return ['Event','Lomba'];
-    }
-    else{
-      return [];
-    }
-  }
 
-  const categories = categoryContent(category);
+  const categories = ['Sanggar','Seni'];
   const [categoryIndex,setCategoryIndex] = useState({
     index:0,
     category:categories[0]
   })
+
+  const formatedPrice = (price: number): string => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0, 
+    }).format(price);
+  };
+
+  const isSanggar = (x:string) => {
+    return x == "Sanggar";
+  }
+
+  const isSeni = (x:string) => {
+    return x == "Seni";
+  }
 
   useEffect(()=>{
     handleSearch();
@@ -68,8 +60,6 @@ const CategoryScreen = ({navigation,route}:any) => {
         .map(doc => ({id:doc.id , data:doc.data()}))
         .filter(doc => doc.data.name.toLowerCase().includes(searchQuery.toLowerCase()));
         setResults(searchResults);
-        console.log(results);
-        console.log(searchQuery);
     } catch (error) {
         console.error('Error searching Firestore:', error);
     }
@@ -142,11 +132,8 @@ const CategoryScreen = ({navigation,route}:any) => {
           estimatedItemSize={100}
           renderItem={({ item }:any) => (
             <CategoryCard 
-              buttonPressHandler={item.data.category == "Sanggar" || 
-              item.data.category == "Toko Sewa" ||
-              item.data.category == "Toko Seni" || 
-              item.data.category == "Seniman" ? ()=>{
-                navigation.push('Detail',
+              buttonPressHandler={item.data.category == "Sanggar" ? ()=>{
+                navigation.push('SanggarDetail',
                 {id:item.id, 
                   name:item.data.name, 
                   location:item.data.city, 
@@ -156,7 +143,7 @@ const CategoryScreen = ({navigation,route}:any) => {
                   phone:item.data.phone,
                   imageURL:item.data.imageURL
                 })} : ()=>{
-                  navigation.push('Detail2',{
+                  navigation.push('SeniDetail',{
                     id:item.id,
                     name:item.data.name, 
                     location:item.data.city, 
@@ -167,11 +154,14 @@ const CategoryScreen = ({navigation,route}:any) => {
                     imageURL:item.data.imageURL
                   })
                 }} 
+              productCard={isSeni(categoryIndex.category)}
               tipe={item.data.category} 
-              location={item.data.city} 
+              location={isSanggar(categoryIndex.category) ? item.data.city : null}
+              provider={isSeni(categoryIndex.category) ? item.data.sanggarName : null} 
               name={item.data.name} 
               description= {item.data.description} 
               imagelink={{uri:(item.data.imageURL)}}
+              price={isSeni(categoryIndex.category)? formatedPrice(item.data.price) : null}
               />
             )}
           />
@@ -181,7 +171,7 @@ const CategoryScreen = ({navigation,route}:any) => {
   )
 }
 
-export default CategoryScreen
+export default SanggarSearchScreen
 
 const styles = StyleSheet.create({
   container: {

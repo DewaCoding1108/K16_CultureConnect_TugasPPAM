@@ -1,75 +1,77 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
-import AppButton from '../components/AppButton'
-import { COLORS, FONTSIZE, SPACING } from '../theme/theme'
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import AppButton from "../components/AppButton";
+import { COLORS, FONTSIZE, SPACING } from "../theme/theme";
 // import { signOut } from 'firebase/auth'
 // import { auth } from '../../firebaseConfig'
 // import auth from '@react-native-firebase/auth'
-import { AuthProvider, useAuth } from '../auth/AuthProvider'
-import { Ionicons } from '@expo/vector-icons'
-import { Feather } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons';
-import ProfileCard from '../components/ProfileCard'
-import { auth } from '../../firebaseConfig'
-import { signOut } from 'firebase/auth'
+import { AuthProvider, useAuth } from "../auth/AuthProvider";
+import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
+import ProfileCard from "../components/ProfileCard";
+import { auth } from "../../firebaseConfig";
+import { signOut } from "firebase/auth";
+import { SignOut } from "../db/Authentication";
 
+const ProfileScreen = ({ navigation }: any) => {
+  const { user, initializing, role, profile } = useAuth();
 
-const ProfileScreen = ({navigation}: any) => {
-
-  const { user, initializing, role, profile} = useAuth();
-  
-  useEffect(()=>{
+  useEffect(() => {
     console.log(user);
-  },[])
-  
-
-
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged(user => {
-  //     if(!user){
-  //       navigation.navigate('Landing')
-  //     }
-  //   })
-  //   return unsubscribe
-  // }, [])
+  }, []);
 
   const signOutHandler = () => {
-    signOut(auth)
-    .then(() => {
-      console.log('User signed out successfully');
-    })
-    .catch(error => {
-      console.error('Error signing out:', error);
-    });
-  }  
+    SignOut();
+  };
 
   return (
     <View style={styles.ScreenContainer}>
-      <View style={{marginTop:50, paddingHorizontal:SPACING.space_12}}>
+      <View style={{ marginTop: 50, paddingHorizontal: SPACING.space_12 }}>
         <Text style={styles.TextHeader}>Profile</Text>
-        <View style={{flexDirection:'row'}}>
-          <Ionicons name={"person-circle-outline"} size={72} color={COLORS.primaryBlackHex} />
-          <View style={{marginTop:SPACING.space_16, paddingHorizontal:SPACING.space_4}}>
+        <View style={{ flexDirection: "row" }}>
+          <Ionicons
+            name={"person-circle-outline"}
+            size={72}
+            color={COLORS.primaryBlackHex}
+          />
+          <View
+            style={{
+              marginTop: SPACING.space_16,
+              paddingHorizontal: SPACING.space_4,
+            }}
+          >
             <Text style={styles.TextName}>{profile?.data.name}</Text>
             <Text style={styles.TextEmail}>{profile?.data.email}</Text>
           </View>
         </View>
-        <View style={styles.line}/>
-          <ProfileCard pressHandler={()=>{}} icon="Feather" iconName="edit" text="Edit Personal Information"/>
-        <View style={styles.line}/>
-          <ProfileCard pressHandler={signOutHandler} icon="Octicons" iconName="sign-out" text="Sign Out" textPaddingLeft={14}/>
-        <View style={styles.line}/>
+        <View style={styles.line} />
+        <ProfileCard
+          pressHandler={() => {}}
+          icon="Feather"
+          iconName="edit"
+          text="Edit Personal Information"
+        />
+        <View style={styles.line} />
+        <ProfileCard
+          pressHandler={signOutHandler}
+          icon="Octicons"
+          iconName="sign-out"
+          text="Sign Out"
+          textPaddingLeft={14}
+        />
+        <View style={styles.line} />
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default ProfileScreen
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  ScreenContainer:{
-    flex:1,
-    backgroundColor:COLORS.primaryWhiteHex,
+  ScreenContainer: {
+    flex: 1,
+    backgroundColor: COLORS.primaryWhiteHex,
   },
   TextHeader: {
     fontFamily: "Poppins-Medium",
@@ -87,14 +89,14 @@ const styles = StyleSheet.create({
     color: COLORS.primaryBlackHex,
   },
   line: {
-    marginVertical:SPACING.space_8,
-    borderColor: '#A19C9C',
+    marginVertical: SPACING.space_8,
+    borderColor: "#A19C9C",
     borderWidth: 0.3,
-    width: '100%',
+    width: "100%",
   },
   TextProfile: {
     fontFamily: "Poppins-Light",
     fontSize: FONTSIZE.size_14,
     color: COLORS.primaryBlackHex,
   },
-})
+});

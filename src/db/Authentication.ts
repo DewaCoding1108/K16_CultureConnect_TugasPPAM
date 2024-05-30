@@ -3,6 +3,7 @@ import React from 'react'
 // import auth from '@react-native-firebase/auth'
 // import firestore from '@react-native-firebase/firestore'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
 import {auth,firestore} from '../../firebaseConfig'
 
 const SignIn = async ({email,password}:any) => {
@@ -29,4 +30,14 @@ const SignIn = async ({email,password}:any) => {
 
 }
 
-export default SignIn
+const SignOut = () => {
+  signOut(auth)
+    .then(() => {
+      console.log('User signed out successfully');
+    })
+    .catch(error => {
+      console.error('Error signing out:', error);
+    });
+}
+
+export { SignIn, SignOut }
