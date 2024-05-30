@@ -15,7 +15,7 @@ import { getSewaPakaianWithTokoSewaID } from '../db/SewaPakaianController'
 const CARD_WIDTH = Dimensions.get("window").width;
 
 const SewaPakaianDetailScreen = ({navigation,route}:any) => {
-  const {id, name, location, price, detail, tipe, tokosewaID, imageURL} = route.params
+  const {id, name, price, detail, tipe, tokosewaID, imageURL, show} = route.params
   const [results, setResults] = useState<any>([]);
   const [providerResults, setProviderResults] = useState<any>([]);
   const [loading, setLoading] = useState(true); 
@@ -94,8 +94,7 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
           <>
           <TouchableOpacity activeOpacity={0.7} onPress={()=>{navigation.push('TokoSewaDetail',
           {id:tokosewaID, 
-          name:providerResults.name, 
-          location:providerResults.city, 
+          name:providerResults.name,
           address: providerResults.address, 
           description: providerResults.description, 
           tipe:providerResults.category, 
@@ -137,7 +136,6 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
                 navigation.push('SewaPakaianDetail',{
                   id:item.id,
                   name:item.data.name, 
-                  location:item.data.city, 
                   price: item.data.price, 
                   detail: item.data.detail, 
                   tipe:item.data.category, 
@@ -152,21 +150,20 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
       </ScrollView>
       <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:SPACING.space_10}}>
         {/* <AppButton buttonStyle={{width:'45%', marginLeft:SPACING.space_10, borderWidth:2, borderColor:COLORS.primaryRedHex}} title="+ Keranjang" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryRedHex} onPress={()=>{}}/> */}
-        <AppButton 
+        {show ? (<AppButton 
           buttonStyle={{width:'90%', marginHorizontal:SPACING.space_10}} 
           title="Booking" 
           backgroundColor={COLORS.primaryRedHex} 
           textColor={COLORS.primaryWhiteHex} 
           onPress={()=>{navigation.push('Booking Pakaian', {
             id:id,
-            name:name, 
-            location:location, 
+            name:name,
             price: price, 
             detail: detail, 
             tipe:tipe, 
             tokosewaID:tokosewaID,
             imageURL:imageURL  
-          })}}/>
+          })}}/>) : null}
       </View>
     </View>
     {loading ? <AppLoader/> : null}

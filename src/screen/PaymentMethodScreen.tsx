@@ -9,11 +9,12 @@ import BackButton from '../components/BackButton';
 import AppButton from '../components/AppButton';
 import CircleDotButton from '../components/CircleButton';
 import { useAuth } from '../auth/AuthProvider';
-import { collection, deleteDoc, doc, getDocs, query, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../../firebaseConfig';
+import Revenue from './Revenue';
 
 const PaymentMethodScreen = ({navigation, route}: any) => {
-    const {Chart = []} = route.params || {};
+    const {Chart = [], fromchart,Totalprice } = route.params || {};
     console.log(Chart);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);  
     let imageURL1, imageURL3, imageURL2: any;
@@ -24,43 +25,96 @@ const PaymentMethodScreen = ({navigation, route}: any) => {
     const uid = profile.id;
     
     const HandlerToHistory = async()=>{
+    
         if(selectedOption !== null){
             try {
-                // Query untuk mendapatkan user document berdasarkan uid
-                const q = query(collection(firestore, "Users"));
-                const querySnapshot = await getDocs(q);
-                const search = querySnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
-                const searchResults = search.filter(doc => doc.id === uid);
-                
-                if (searchResults.length === 0) {
-                  throw new Error(`User with uid ${uid} not found`);
-                }
-            
-                const userDocRef = doc(firestore, "Users", searchResults[0].id);
-                
-                // Dapatkan dokumen dari subkoleksi Chart
+                const userDocRef = doc(firestore, "Users", uid);
                 const chartCollectionRef = collection(userDocRef, "Chart");
-                const chartSnapshot = await getDocs(chartCollectionRef);
-            
-                // Proses setiap dokumen dalam subkoleksi Chart
-                for (const chartDoc of chartSnapshot.docs) {
-                  const chartData = chartDoc.data();
-                  
-                  // Tambahkan dokumen ke subkoleksi History
-                  const historyDocRef = doc(collection(userDocRef, "History"), chartDoc.id);
-                  await setDoc(historyDocRef, chartData);
-            
-                  // Hapus dokumen dari subkoleksi Chart
-                  await deleteDoc(doc(chartCollectionRef, chartDoc.id));
+                const historyCollectionRef = collection(userDocRef, "History");
+
+                if (fromchart) {
+                    // Ambil dokumen dari subkoleksi Chart
+                    const chartSnapshot = await getDocs(chartCollectionRef);
+                    
+                    for (const chartDoc of chartSnapshot.docs) {
+                        const chartData = chartDoc.data();
+
+                        // Tambahkan dokumen ke subkoleksi History
+                        const historyDocRef = doc(historyCollectionRef, chartDoc.id);
+                        await setDoc(historyDocRef, chartData);
+
+                        // Hapus dokumen dari subkoleksi Chart
+                        await deleteDoc(doc(chartCollectionRef, chartDoc.id));
+                    }
+
+                    console.log("Data berhasil dipindahkan dari Chart ke History untuk user:", uid);
+                } else {
+                    for (const item of Chart) {
+                        // Tambahkan item dari Chart prop ke subkoleksi History
+                        const historyDocRef = doc(historyCollectionRef);
+                        console.log(item);
+                        await setDoc(historyDocRef, item.data);
+                        console.log("1");
+                        console.log(item);
+                        if(item.data.category === "Seni"){
+                            const seni = doc(firestore, "Seni", item.id);
+                            const seniDoc = await getDoc(seni);
+                            const Sanggar1= seniDoc.data();
+
+                            const sanggar = doc(firestore, "Sanggar", Sanggar1?.sanggarID);
+                            const sanggarDoc = await getDoc(sanggar);
+                            const sanggarr= sanggarDoc.data();
+                            const pemilik = doc(firestore, "Users", sanggarr?.userID);
+                            const pemilikDoc = await getDoc(pemilik);
+                            const pemilikk = pemilikDoc.data();
+                            let pemilikrevenue = pemilikk?.revenue;
+                            pemilikrevenue += (0.9*item.data.price);
+                            await updateDoc(pemilik,{
+                                revenue: pemilikrevenue,
+                            });
+                        } else if(item.data.category === "Jasa Seni"){
+                            const jasaSeni = doc(firestore, "Jasa Seni", item.id);
+                            const jasaSeniDoc = await getDoc(jasaSeni);
+                            const seniman1= jasaSeniDoc.data();
+
+                            const seniman = doc(firestore, "Seniman", seniman1?.senimanID);
+                            const senimanDoc = await getDoc(seniman);
+                            const senimann= senimanDoc.data();
+                            const pemilik = doc(firestore, "Users", senimann?.userID);
+                            const pemilikDoc = await getDoc(pemilik);
+                            const pemilikk = pemilikDoc.data();
+                            let pemilikrevenue = pemilikk?.revenue;
+                            pemilikrevenue += (0.9*item.data.price);
+                            await updateDoc(pemilik,{
+                                revenue: pemilikrevenue,
+                            });
+                        } else if(item.data.category === "Sewa Pakaian"){
+                            const sewaPakaian = doc(firestore, "Sewa Pakaian", item.id);
+                            const sewaPakaianDoc = await getDoc(sewaPakaian);
+                            const sewaPakaian1= sewaPakaianDoc.data();
+
+                            const tokoSewa = doc(firestore, "Toko Sewa", sewaPakaian1?.tokosewaID);
+                            const tokoSewaDoc = await getDoc(tokoSewa);
+                            const tokoSewaa= tokoSewaDoc.data();
+                            const pemilik = doc(firestore, "Users", tokoSewaa?.userID);
+                            const pemilikDoc = await getDoc(pemilik);
+                            const pemilikk = pemilikDoc.data();
+                            let pemilikrevenue = pemilikk?.revenue;
+                            pemilikrevenue += (0.9*item.data.price);
+                            await updateDoc(pemilik,{
+                                revenue: pemilikrevenue,
+                            });
+                        } 
+                    }
+
+                    console.log("Data dari Chart prop berhasil dimasukkan ke History untuk user:", uid);
                 }
-            
-                console.log("Successfully moved all documents from Chart to History for user:", uid);
-              } catch (error) {
+
+                alert("Pembayaran berhasil");
+                navigation.push('Tab');
+            } catch (error) {
                 console.error("Error moving documents from Chart to History:", error);
-              }
-            alert("Pembayaran berhasil");
-            navigation.push('Tab');
-            console.log('Data berhasil dipindahkan dari Chart ke History.');   
+            }
         } else{
             alert("Pilih metode pembayaran");
         }
@@ -123,7 +177,7 @@ const PaymentMethodScreen = ({navigation, route}: any) => {
                 </View>
             </View>
             <View style={styles.ButtonContainer}>
-                <AppButton title="Bayar" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={HandlerToHistory} buttonStyle={{ marginHorizontal: 30, marginTop: 20, borderRadius: 30 }} />
+                <AppButton title="Bayar" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={HandlerToHistory} buttonStyle={{ width:0.9*tableWidth, marginTop: 20, borderRadius: 30 }} />
                 <Text style={styles.Text}>Pastikan metode pembayaran anda benar</Text>
                 <View style={styles.Box} />
             </View>
@@ -177,6 +231,7 @@ const styles = StyleSheet.create({
             width: 1,
         },
         borderRadius: 15,
+        alignItems:"center",
     },
     Text: {
         alignSelf: "center",

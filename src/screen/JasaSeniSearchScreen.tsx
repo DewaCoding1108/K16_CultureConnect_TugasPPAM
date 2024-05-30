@@ -141,7 +141,8 @@ const JasaSeniSearchScreen = ({navigation,route}:any) => {
                   description: item.data.description, 
                   tipe:item.data.category, 
                   phone:item.data.phone,
-                  imageURL:item.data.imageURL
+                  imageURL:item.data.imageURL,
+                  show:true
                 })} : ()=>{
                   navigation.push('JasaSeniDetail',{
                     id:item.id,
@@ -151,7 +152,8 @@ const JasaSeniSearchScreen = ({navigation,route}:any) => {
                     detail: item.data.detail, 
                     tipe:item.data.category, 
                     senimanID:item.data.senimanID,
-                    imageURL:item.data.imageURL
+                    imageURL:item.data.imageURL,
+                    show:true
                   })
                 }} 
               productCard={isJasaSeni(categoryIndex.category)}

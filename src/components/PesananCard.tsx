@@ -38,7 +38,7 @@ import {
   }) => {
 
     return (
-      <TouchableOpacity style={styles.PesananCardContainer}>
+      <TouchableOpacity style={styles.PesananCardContainer} onPress={buttonPressHandler}>
         <ImageBackground
         source={{uri:imagelink}}
         style={styles.CardImageBackground}
