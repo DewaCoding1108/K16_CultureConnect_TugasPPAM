@@ -9,14 +9,14 @@ import BackButton from '../components/BackButton';
 import { FlashList } from '@shopify/flash-list';
 import AppLoader from '../components/AppLoader';
 
-const JasaSeniSearchScreen = ({navigation,route}:any) => {
+const KaryaSeniSearchScreen = ({navigation,route}:any) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any>([]);
   const inputRef = useRef<TextInput>(null);
   const {category} = route.params;
 
-  const categories = ['Jasa Seni','Seniman'];
+  const categories = ['Karya Seni','Toko Karya'];
   const [categoryIndex,setCategoryIndex] = useState({
     index:0,
     category:categories[0]
@@ -30,12 +30,12 @@ const JasaSeniSearchScreen = ({navigation,route}:any) => {
     }).format(price);
   };
 
-  const isJasaSeni = (x:string) => {
-    return x == "Jasa Seni";
+  const isTokoKarya = (x:string) => {
+    return x == "Toko Karya";
   }
 
-  const isSeniman = (x:string) => {
-    return x == "Seniman";
+  const isKaryaSeni = (x:string) => {
+    return x == "Karya Seni";
   }
 
   useEffect(()=>{
@@ -132,8 +132,8 @@ const JasaSeniSearchScreen = ({navigation,route}:any) => {
           estimatedItemSize={100}
           renderItem={({ item }:any) => (
             <CategoryCard 
-              buttonPressHandler={item.data.category == "Seniman" ? ()=>{
-                navigation.push('SenimanDetail',
+              buttonPressHandler={item.data.category == "Toko Karya" ? ()=>{
+                navigation.push('TokoKaryaDetail',
                 {id:item.id, 
                   name:item.data.name, 
                   location:item.data.city, 
@@ -141,29 +141,27 @@ const JasaSeniSearchScreen = ({navigation,route}:any) => {
                   description: item.data.description, 
                   tipe:item.data.category, 
                   phone:item.data.phone,
-                  imageURL:item.data.imageURL,
-                  show:true
+                  imageURL:item.data.imageURL
                 })} : ()=>{
-                  navigation.push('JasaSeniDetail',{
+                  navigation.push('KaryaSeniDetail',{
                     id:item.id,
                     name:item.data.name, 
                     location:item.data.city, 
                     price: item.data.price, 
                     detail: item.data.detail, 
                     tipe:item.data.category, 
-                    senimanID:item.data.senimanID,
-                    imageURL:item.data.imageURL,
-                    show:true
+                    tokokaryaID:item.data.tokokaryaID,
+                    imageURL:item.data.imageURL
                   })
                 }} 
-              productCard={isJasaSeni(categoryIndex.category)}
+              productCard={isKaryaSeni(categoryIndex.category)}
               tipe={item.data.category} 
-              location={isSeniman(categoryIndex.category) ? item.data.city : null}
-              provider={isJasaSeni(categoryIndex.category) ? item.data.senimanName : null} 
+              location={isTokoKarya(categoryIndex.category) ? item.data.city : null}
+              provider={isKaryaSeni(categoryIndex.category) ? item.data.tokokaryaName : null} 
               name={item.data.name} 
               description= {item.data.description} 
               imagelink={{uri:(item.data.imageURL)}}
-              price={isJasaSeni(categoryIndex.category)? formatedPrice(item.data.price) : null}
+              price={isKaryaSeni(categoryIndex.category)? formatedPrice(item.data.price) : null}
               />
             )}
           />
@@ -173,7 +171,7 @@ const JasaSeniSearchScreen = ({navigation,route}:any) => {
   )
 }
 
-export default JasaSeniSearchScreen
+export default KaryaSeniSearchScreen
 
 const styles = StyleSheet.create({
   container: {

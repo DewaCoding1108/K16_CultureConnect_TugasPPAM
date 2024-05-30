@@ -73,7 +73,7 @@ const SewaPakaianSearchScreen = ({navigation,route}:any) => {
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'flex-start',
-        marginTop:SPACING.space_30,
+        marginTop:45,
         paddingLeft:SPACING.space_10,
         paddingRight:SPACING.space_10}}
       >
@@ -141,7 +141,8 @@ const SewaPakaianSearchScreen = ({navigation,route}:any) => {
                   description: item.data.description, 
                   tipe:item.data.category, 
                   phone:item.data.phone,
-                  imageURL:item.data.imageURL
+                  imageURL:item.data.imageURL,
+                  show:true
                 })} : ()=>{
                   navigation.push('SewaPakaianDetail',{
                     id:item.id,
@@ -151,7 +152,8 @@ const SewaPakaianSearchScreen = ({navigation,route}:any) => {
                     detail: item.data.detail, 
                     tipe:item.data.category, 
                     tokosewaID:item.data.tokosewaID,
-                    imageURL:item.data.imageURL
+                    imageURL:item.data.imageURL,
+                    show:true
                   })
                 }} 
               productCard={isSewaPakaian(categoryIndex.category)}

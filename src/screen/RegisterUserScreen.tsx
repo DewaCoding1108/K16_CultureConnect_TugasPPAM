@@ -14,6 +14,7 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 import { getAuth,createUserWithEmailAndPassword } from 'firebase/auth';
 import { useAuth } from '../auth/AuthProvider'
 import AppLoader from '../components/AppLoader'
+import Revenue from './Revenue';
 
 const RegisterUserScreen = ({navigation,route}:any) => {
   const [email, setEmail] = useState('');
@@ -37,7 +38,9 @@ const RegisterUserScreen = ({navigation,route}:any) => {
             email: email,
             name: name,
             nomor: phoneNumber,
-            role: role });
+            role: role,
+            revenue :0,
+            liked:0 });
             console.log('User created successfully, please log in');
         }
       }

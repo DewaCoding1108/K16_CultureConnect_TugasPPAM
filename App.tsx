@@ -38,6 +38,9 @@ import PaymentMethodScreen from "./src/screen/PaymentMethodScreen";
 import HistoryScreen from "./src/screen/OrderHistoryScreen";
 import ProductCategory from "./src/screen/ProductCategory";
 import EditProduct from "./src/screen/EditProduct";
+import KaryaSeniSearchScreen from "./src/screen/KaryaSeniSearchScreen";
+import KaryaSeniDetailScreen from "./src/screen/KaryaSeniDetailScreen";
+import TokoKaryaDetailScreen from "./src/screen/TokoKaryaDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -111,6 +114,7 @@ const Navigation: React.FC = () => {
             <Stack.Screen 
               name="Category" 
               component={CategoryScreen}
+              options={{ animation: 'fade_from_bottom' }}
               ></Stack.Screen>
             <Stack.Screen 
               name="Detail" 
@@ -123,6 +127,7 @@ const Navigation: React.FC = () => {
             <Stack.Screen 
               name="Sanggar" 
               component={SanggarSearchScreen}
+              options={{ animation: 'fade_from_bottom' }}
               ></Stack.Screen>
             <Stack.Screen 
               name="SanggarDetail" 
@@ -135,6 +140,7 @@ const Navigation: React.FC = () => {
             <Stack.Screen 
               name="Jasa Seni" 
               component={JasaSeniSearchScreen}
+              options={{ animation: 'fade_from_bottom' }}
               ></Stack.Screen>
             <Stack.Screen 
               name="SenimanDetail" 
@@ -147,6 +153,7 @@ const Navigation: React.FC = () => {
             <Stack.Screen 
               name="Sewa Pakaian" 
               component={SewaPakaianSearchScreen}
+              options={{ animation: 'fade_from_bottom' }}
               ></Stack.Screen>
             <Stack.Screen 
               name="SewaPakaianDetail" 
@@ -155,6 +162,19 @@ const Navigation: React.FC = () => {
             <Stack.Screen 
               name="TokoSewaDetail" 
               component={TokoSewaDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="Karya Seni" 
+              component={KaryaSeniSearchScreen}
+              options={{ animation: 'fade_from_bottom' }}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="KaryaSeniDetail" 
+              component={KaryaSeniDetailScreen}
+              ></Stack.Screen>
+            <Stack.Screen 
+              name="TokoKaryaDetail" 
+              component={TokoKaryaDetailScreen}
               ></Stack.Screen>
             <Stack.Screen 
               name="Booking" 
@@ -184,6 +204,10 @@ const Navigation: React.FC = () => {
               name="History"
               component={HistoryScreen}
             ></Stack.Screen>
+            <Stack.Screen 
+              name="Revenue" 
+              component={Revenue}
+              ></Stack.Screen>
           </>   
         )
       ) : (
