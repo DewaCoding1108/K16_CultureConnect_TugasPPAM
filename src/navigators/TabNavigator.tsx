@@ -30,7 +30,7 @@ const TabNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarIcon:({focused, color,size}) => (
-            <Ionicons name={focused?"home-sharp":"home-outline"} size={35} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
+            <Ionicons name={focused?"home-sharp":"home-outline"} size={25} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
           ),
         }}
         ></Tab.Screen>
@@ -39,7 +39,7 @@ const TabNavigator = () => {
         component={ChartScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Ionicons name={focused ? "cart-sharp" : "cart-outline"} size={40} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
+            <Ionicons name={focused ? "cart-sharp" : "cart-outline"} size={30} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
           ),
         }}></Tab.Screen>
       <Tab.Screen
@@ -47,7 +47,7 @@ const TabNavigator = () => {
         component={OrderHistoryScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Ionicons name={focused?"list-sharp":"list-outline"} size={40} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
+            <Ionicons name={focused?"list-sharp":"list-outline"} size={30} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
           ),
         }}></Tab.Screen>
       <Tab.Screen
@@ -55,7 +55,7 @@ const TabNavigator = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
-            <Ionicons name={focused ? "person-circle-sharp" : "person-circle-outline"} size={40} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
+            <Ionicons name={focused ? "person-circle-sharp" : "person-circle-outline"} size={30} color={focused ? COLORS.primaryRedHex : COLORS.primaryBlackHex} />
           ),
         }}></Tab.Screen>
     </Tab.Navigator>
@@ -66,7 +66,7 @@ export default TabNavigator;
 
 const styles = StyleSheet.create({
   tabBarStyle: {
-    height: 80,
+    height: 70,
     position: 'absolute',
     backgroundColor: COLORS.primaryWhiteHex,
     borderTopWidth: 2,
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   },
   tabBarLabelStyle: {
     fontFamily:'Poppins-Medium',
-    fontSize:FONTSIZE.size_12,
+    fontSize:FONTSIZE.size_10,
+    marginBottom:4
   }
 });

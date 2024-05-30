@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     backgroundColor:COLORS.primaryWhiteHex,
     marginBottom: SPACING.space_12,
     marginTop:SPACING.space_12,
-    // marginLeft:SPACING.space_15,
     marginRight:SPACING.space_15,
     elevation:5,
     borderRadius:BORDERRADIUS.radius_15,

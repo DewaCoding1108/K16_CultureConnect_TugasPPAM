@@ -9,14 +9,14 @@ import BackButton from '../components/BackButton';
 import { FlashList } from '@shopify/flash-list';
 import AppLoader from '../components/AppLoader';
 
-const SanggarSearchScreen = ({navigation,route}:any) => {
+const KaryaSeniSearchScreen = ({navigation,route}:any) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any>([]);
   const inputRef = useRef<TextInput>(null);
   const {category} = route.params;
 
-  const categories = ['Sanggar','Seni'];
+  const categories = ['Karya Seni','Toko Karya'];
   const [categoryIndex,setCategoryIndex] = useState({
     index:0,
     category:categories[0]
@@ -30,12 +30,12 @@ const SanggarSearchScreen = ({navigation,route}:any) => {
     }).format(price);
   };
 
-  const isSanggar = (x:string) => {
-    return x == "Sanggar";
+  const isTokoKarya = (x:string) => {
+    return x == "Toko Karya";
   }
 
-  const isSeni = (x:string) => {
-    return x == "Seni";
+  const isKaryaSeni = (x:string) => {
+    return x == "Karya Seni";
   }
 
   useEffect(()=>{
@@ -132,8 +132,8 @@ const SanggarSearchScreen = ({navigation,route}:any) => {
           estimatedItemSize={100}
           renderItem={({ item }:any) => (
             <CategoryCard 
-              buttonPressHandler={item.data.category == "Sanggar" ? ()=>{
-                navigation.push('SanggarDetail',
+              buttonPressHandler={item.data.category == "Toko Karya" ? ()=>{
+                navigation.push('TokoKaryaDetail',
                 {id:item.id, 
                   name:item.data.name, 
                   location:item.data.city, 
@@ -143,25 +143,25 @@ const SanggarSearchScreen = ({navigation,route}:any) => {
                   phone:item.data.phone,
                   imageURL:item.data.imageURL
                 })} : ()=>{
-                  navigation.push('SeniDetail',{
+                  navigation.push('KaryaSeniDetail',{
                     id:item.id,
                     name:item.data.name, 
                     location:item.data.city, 
                     price: item.data.price, 
                     detail: item.data.detail, 
                     tipe:item.data.category, 
-                    sanggarID:item.data.sanggarID,
+                    tokokaryaID:item.data.tokokaryaID,
                     imageURL:item.data.imageURL
                   })
                 }} 
-              productCard={isSeni(categoryIndex.category)}
+              productCard={isKaryaSeni(categoryIndex.category)}
               tipe={item.data.category} 
-              location={isSanggar(categoryIndex.category) ? item.data.city : null}
-              provider={isSeni(categoryIndex.category) ? item.data.sanggarName : null} 
+              location={isTokoKarya(categoryIndex.category) ? item.data.city : null}
+              provider={isKaryaSeni(categoryIndex.category) ? item.data.tokokaryaName : null} 
               name={item.data.name} 
               description= {item.data.description} 
               imagelink={{uri:(item.data.imageURL)}}
-              price={isSeni(categoryIndex.category)? formatedPrice(item.data.price) : null}
+              price={isKaryaSeni(categoryIndex.category)? formatedPrice(item.data.price) : null}
               />
             )}
           />
@@ -171,7 +171,7 @@ const SanggarSearchScreen = ({navigation,route}:any) => {
   )
 }
 
-export default SanggarSearchScreen
+export default KaryaSeniSearchScreen
 
 const styles = StyleSheet.create({
   container: {

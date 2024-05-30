@@ -6,19 +6,25 @@ import ImageBackgroundInfo from '../components/ImageBackgroundInfo'
 import ProductCard from '../components/ProductCard'
 // import firestore from '@react-native-firebase/firestore'
 import { firestore } from '../../firebaseConfig'
-import { getDoc, getDocs, doc, query, collection, where } from 'firebase/firestore'
+import { getDoc, getDocs, doc, query, collection, where, setDoc } from 'firebase/firestore'
 import AppButton from '../components/AppButton'
 import AppLoader from '../components/AppLoader'
-import { getTokoSewaWithDocID } from '../db/TokoSewaController'
-import { getSewaPakaianWithTokoSewaID } from '../db/SewaPakaianController'
+import { useAuth } from '../auth/AuthProvider'
+// import { getJasaSeniWithSenimanID } from '../db/JasaSeniController'
+// import { getSenimanWithDocID } from '../db/SenimanController'
+import { getKaryaSeniWithTokoKaryaID } from '../db/KaryaSeniController'
+import { getTokoKaryaWithDocID } from '../db/TokoKaryaController'
+
 
 const CARD_WIDTH = Dimensions.get("window").width;
 
-const SewaPakaianDetailScreen = ({navigation,route}:any) => {
-  const {id, name, location, price, detail, tipe, tokosewaID, imageURL} = route.params
+const KaryaSeniDetailScreen = ({navigation,route}:any) => {
+  const {id, name, location, price, detail, tipe, tokokaryaID, imageURL} = route.params
   const [results, setResults] = useState<any>([]);
   const [providerResults, setProviderResults] = useState<any>([]);
   const [loading, setLoading] = useState(true); 
+  const {profile} = useAuth();
+  const userID = profile.id;
 
   const formatedPrice = (price: number): string => {
     return new Intl.NumberFormat('id-ID', {
@@ -28,12 +34,35 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
     }).format(price);
   };
 
-  const providerTipe = "Toko Sewa";
+
+  const providerTipe = "Toko Karya";
+
+  const KeranjangHandler = async () => {
+    try{
+      const userDocRef = doc(firestore, "Users", userID);
+      const chartDocRef = doc(collection(userDocRef, "Chart"));
+      await setDoc(chartDocRef,{
+        userID:userID,
+        karyaseniID: id, 
+        name: name, 
+        price: price, 
+        detail: detail, 
+        tipe: tipe, 
+        tokokaryaID: tokokaryaID,
+        imageURL: imageURL
+      });
+      alert('Karya seni berhasil ditambahkan ke keranjang');
+      navigation.replace('Tab');
+    }
+    catch(error:any){
+      alert(error.message)
+    }
+  }
 
   const handleProvider = async () => {
     try {
       setLoading(true);
-      const providerDoc = await getTokoSewaWithDocID(tokosewaID);
+      const providerDoc = await getTokoKaryaWithDocID(tokokaryaID);
       // const providerDoc = await getDoc(doc(firestore, providerTipe, sanggarID));
       if(providerDoc.exists()){
         setProviderResults(providerDoc.data())
@@ -55,7 +84,7 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
       // const q = query(collection(firestore,tipe), where('sanggarID','==',sanggarID))
       // const querySnapshot = await getDocs(q)
 
-      const querySnapshot = await getSewaPakaianWithTokoSewaID(tokosewaID);
+      const querySnapshot = await getKaryaSeniWithTokoKaryaID(tokokaryaID);
       const searchResults = querySnapshot.docs
       .filter(doc => doc.data().name !== name)
       .map(doc => ({id:doc.id , data:doc.data()}));
@@ -81,7 +110,7 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
       <ImageBackgroundInfo enablebackHandler={true} backHandler={()=>{navigation.goBack()}} imageStyle={{aspectRatio: 35 / 20}}imagelink_portrait={{uri:(imageURL)}}/>
       <View style={{paddingHorizontal:SPACING.space_15, paddingVertical:SPACING.space_10}}>
         <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-        <Text style={styles.TextHeader2}>{formatedPrice(price)} / Hari</Text>
+        <Text style={styles.TextHeader2}>{formatedPrice(price)}</Text>
           <Text style={styles.TextParagraph}>{tipe}</Text>
         </View>
         <Text style={[styles.TextHeader,{width:'85%'}]}>{name}</Text>
@@ -92,8 +121,8 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
           <Text>Loading</Text> 
           :
           <>
-          <TouchableOpacity activeOpacity={0.7} onPress={()=>{navigation.push('TokoSewaDetail',
-          {id:tokosewaID, 
+          <TouchableOpacity activeOpacity={0.7} onPress={()=>{navigation.push('TokoKaryaDetail',
+          {id:tokokaryaID, 
           name:providerResults.name, 
           location:providerResults.city, 
           address: providerResults.address, 
@@ -134,14 +163,14 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <ProductCard buttonPressHandler={()=>{
-                navigation.push('SewaPakaianDetail',{
+                navigation.push('KaryaSeniDetail',{
                   id:item.id,
                   name:item.data.name, 
                   location:item.data.city, 
                   price: item.data.price, 
                   detail: item.data.detail, 
                   tipe:item.data.category, 
-                  tokosewaID:item.data.tokosewaID,
+                  tokokaryaID:item.data.tokokaryaID,
                   imageURL:item.data.imageURL
                   })
               }} name={item.data.name} description={item.data.detail} price={item.data.price} imagelink={{uri:(item.data.imageURL)}}/>
@@ -153,20 +182,26 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
       <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center', marginVertical:SPACING.space_10}}>
         {/* <AppButton buttonStyle={{width:'45%', marginLeft:SPACING.space_10, borderWidth:2, borderColor:COLORS.primaryRedHex}} title="+ Keranjang" backgroundColor={COLORS.primaryWhiteHex} textColor={COLORS.primaryRedHex} onPress={()=>{}}/> */}
         <AppButton 
-          buttonStyle={{width:'90%', marginHorizontal:SPACING.space_10}} 
-          title="Booking" 
+          buttonStyle={{borderColor:COLORS.primaryRedHex, borderWidth:1, width:'45%', marginLeft:SPACING.space_10,marginRight:5}} 
+          title="+ Keranjang" 
+          backgroundColor={COLORS.primaryWhiteHex} 
+          textColor={COLORS.primaryRedHex} 
+          onPress={KeranjangHandler}/>
+        <AppButton 
+          buttonStyle={{width:'45%', marginLeft:SPACING.space_10,marginRight:5}} 
+          title="Beli Sekarang" 
           backgroundColor={COLORS.primaryRedHex} 
           textColor={COLORS.primaryWhiteHex} 
-          onPress={()=>{navigation.push('Booking Pakaian', {
-            id:id,
+          onPress={()=>{navigation.push('Booking',{
+            id:id, 
             name:name, 
             location:location, 
-            price: price, 
-            detail: detail, 
+            price:price, 
+            detail:detail, 
             tipe:tipe, 
-            tokosewaID:tokosewaID,
-            imageURL:imageURL  
-          })}}/>
+            tokokaryaID:tokokaryaID, 
+            imageURL:imageURL
+        })}}/>
       </View>
     </View>
     {loading ? <AppLoader/> : null}
@@ -174,7 +209,7 @@ const SewaPakaianDetailScreen = ({navigation,route}:any) => {
   )
 }
 
-export default SewaPakaianDetailScreen
+export default KaryaSeniDetailScreen
 
 const styles = StyleSheet.create({
   ScreenContainer:{

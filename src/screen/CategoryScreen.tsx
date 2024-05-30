@@ -83,7 +83,7 @@ const CategoryScreen = ({navigation,route}:any) => {
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'flex-start',
-        marginTop:SPACING.space_30,
+        marginTop:45,
         paddingLeft:SPACING.space_10,
         paddingRight:SPACING.space_10}}
       >

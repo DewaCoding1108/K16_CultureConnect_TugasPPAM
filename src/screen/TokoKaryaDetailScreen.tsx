@@ -11,23 +11,23 @@ import AppButton from '../components/AppButton'
 import { firestore } from '../../firebaseConfig'
 import { getAllSanggar , getSanggarWithDocID } from '../db/SanggarController'
 // import { getAllSeni, getSeniWithDocID, getSeniWithSanggarID } from '../db/SeniController'
-import { getSewaPakaianWithTokoSewaID } from '../db/SewaPakaianController'
+// import { getSewaPakaianWithTokoSewaID } from '../db/SewaPakaianController'
+import { getKaryaSeniWithTokoKaryaID } from '../db/KaryaSeniController'
 
 
-const TokoSewaDetailScreen = ({navigation,route}:any) => {
+const TokoKaryaDetailScreen = ({navigation,route}:any) => {
   const {id, name, location, address, description, tipe, phone, imageURL} = route.params
   const [results, setResults] = useState<any>([]); 
   const [loading,setLoading] = useState(true);
 
-  const productTipe = "Sewa Pakaian";
+  const productTipe = "Karya Seni";
 
   const handleProduct = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await getSewaPakaianWithTokoSewaID(id);
+      const querySnapshot = await getKaryaSeniWithTokoKaryaID(id);
       // const q = query(collection(firestore, productTipe), where('sanggarID','==',id))
       // const querySnapshot = await getDocs(q);
-
       const searchResults = querySnapshot.docs
       .map(doc => ({id:doc.id , data:doc.data()}))
 
@@ -75,14 +75,14 @@ const TokoSewaDetailScreen = ({navigation,route}:any) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <ProductCard buttonPressHandler={()=>{
-              navigation.push('SewaPakaianDetail',{
+              navigation.push('KaryaSeniDetail',{
                 id:item.id,
                 name:item.data.name, 
                 location:item.data.city, 
                 price: item.data.price, 
                 detail: item.data.detail, 
                 tipe:item.data.category, 
-                tokosewaID:item.data.tokosewaID,
+                tokokaryaID:item.data.tokokaryaID,
                 imageURL:item.data.imageURL
                 })
               }} 
@@ -108,7 +108,7 @@ const TokoSewaDetailScreen = ({navigation,route}:any) => {
   )
 }
 
-export default TokoSewaDetailScreen
+export default TokoKaryaDetailScreen
 
 const styles = StyleSheet.create({
   ScreenContainer:{
