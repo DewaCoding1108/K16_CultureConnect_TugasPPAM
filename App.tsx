@@ -18,6 +18,9 @@ import CategoryScreen from "./src/screen/CategoryScreen";
 import DetailScreen from "./src/screen/DetailScreen";
 import DetailScreen2 from "./src/screen/DetailScreen2";
 import AppLoader from "./src/components/AppLoader";
+import PaymentDetailsScreen from "./src/screen/PaymentDetailsScreen";
+import PaymentMethodScreen from "./src/screen/PaymentMethodScreen";
+import HistoryScreen from "./src/screen/OrderHistoryScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +53,18 @@ const Navigation: React.FC = () => {
               name="Detail2" 
               component={DetailScreen2}
               ></Stack.Screen>
+            <Stack.Screen
+              name="PaymentDetails"
+              component={PaymentDetailsScreen}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Paymentmethod"
+              component={PaymentMethodScreen}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="History"
+              component={HistoryScreen}
+            ></Stack.Screen>
           </>   
         )
       ) : (
