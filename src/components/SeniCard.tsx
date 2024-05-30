@@ -55,16 +55,15 @@ const styles = StyleSheet.create({
     marginTop:SPACING.space_12,
     marginLeft:SPACING.space_18,
     marginRight:SPACING.space_18,
-    elevation:5,
-    borderRadius:BORDERRADIUS.radius_15,
+    elevation:12,
     shadowColor: COLORS.primaryBlackHex,
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    shadowOpacity: 0.2,
+    shadowRadius: 9,
     shadowOffset: {
-      height: 1,
-      width: 1
-    }
-    
+      height: 2,
+      width: 2
+    },
+    borderRadius:BORDERRADIUS.radius_15,
   },
   TextHeader: {
     fontFamily: "Poppins-Regular",
