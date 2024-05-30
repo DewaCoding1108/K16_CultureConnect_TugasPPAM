@@ -23,6 +23,7 @@ const EditProfile = ({navigation,route}:any) => {
 
         const docRef = querySnapshot.docs[0].ref;
         await updateDoc(docRef, { name: name, nomor: nomor });
+        console.log(profile?.data.name)
       } catch (error) {
         alert("Error");
       }
@@ -45,7 +46,7 @@ const EditProfile = ({navigation,route}:any) => {
         <View style={styles.line}/>
           <EditProfileCard title="Phone Number" text={nomor} setText={setNomor} />
         <View style={styles.line}/>
-        <AppButton title="Save" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={handleClick} buttonStyle={{marginHorizontal:30, marginTop:20, borderRadius:30}}/>
+        <AppButton title="Save" backgroundColor={COLORS.primaryRedHex} textColor={COLORS.primaryWhiteHex} onPress={handleClick} buttonStyle={{marginTop:20, borderRadius:30}}/>
       </View>
   )
 }

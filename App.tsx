@@ -36,6 +36,8 @@ import BrandCategory from "./src/screen/BrandCategory";
 import EditBrand from "./src/screen/EditBrand";
 import PaymentMethodScreen from "./src/screen/PaymentMethodScreen";
 import HistoryScreen from "./src/screen/OrderHistoryScreen";
+import ProductCategory from "./src/screen/ProductCategory";
+import EditProduct from "./src/screen/EditProduct";
 import KaryaSeniSearchScreen from "./src/screen/KaryaSeniSearchScreen";
 import KaryaSeniDetailScreen from "./src/screen/KaryaSeniDetailScreen";
 import TokoKaryaDetailScreen from "./src/screen/TokoKaryaDetailScreen";
@@ -94,6 +96,14 @@ const Navigation: React.FC = () => {
               name="EditBrand" 
               component={EditBrand}
               ></Stack.Screen>
+            <Stack.Screen 
+              name="ProductCategory" 
+              component={ProductCategory}
+              ></Stack.Screen> 
+              <Stack.Screen 
+              name="EditProduct" 
+              component={EditProduct}
+              ></Stack.Screen> 
           </>   
         ) : (
           <>

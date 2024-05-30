@@ -24,6 +24,7 @@ import {
     imagelink: string;
     screen: string;
     handleSecButton?: any;
+    handleSecButton2?: any;
   }
   
   const PesananCard: React.FC<PesananCardProps> = ({
@@ -35,6 +36,7 @@ import {
     imagelink,
     screen = "",
     handleSecButton,
+    handleSecButton2,
   }) => {
 
     return (
@@ -60,7 +62,7 @@ import {
               }
               <View style={{flexDirection:"row", gap:24, alignItems:"center"}}>
               {screen == "brand" || screen == "product" ?
-              <Pressable>
+              <Pressable onPress={handleSecButton2}>
                 <SimpleLineIcons name="pencil" size={20} color="black" />
               </Pressable>
               :
