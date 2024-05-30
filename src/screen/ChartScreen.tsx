@@ -4,7 +4,7 @@ import HeaderBar from '../components/HeaderBar'
 import PesananCard from '../components/PesananCard'
 import { StatusBar } from "expo-status-bar";
 import ChartButton from '../components/ChartButton';
-import { COLORS } from '../theme/theme';
+import { COLORS, FONTSIZE, SPACING } from '../theme/theme';
 import { Firestore, doc, collection, getDocs, query, deleteDoc, where } from 'firebase/firestore';
 import {auth,firestore} from '../../firebaseConfig';
 import { useAuth } from '../auth/AuthProvider';
@@ -45,7 +45,7 @@ const ChartScreen = ({navigation,route}:any) => {
     if (Chart.length > 3) {
       return <View style={styles.Bottomheigt}></View>;
     } else if (Chart.length == 0) {
-      return <Text>Chart kosong</Text>
+      return <Text style={{marginHorizontal:"auto"}}>Chart kosong</Text>
     }
     return null;
   }
@@ -88,7 +88,7 @@ const ChartScreen = ({navigation,route}:any) => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flex:1}}>
           {Chart.map((item) =>
-              <PesananCard screen="chart" buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.city} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL}></PesananCard>
+              <PesananCard screen="chart" buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.detail} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => {handlerDelete(item.data.name)}}></PesananCard>
           )}
         {renderBottomHeight()}        
       </ScrollView>

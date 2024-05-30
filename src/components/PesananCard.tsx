@@ -21,8 +21,9 @@ import {
     location: string;
     type: string;
     price: number;
-    imagelink: ImageProps;
+    imagelink: string;
     screen: string;
+    handleSecButton?: any;
   }
   
   const PesananCard: React.FC<PesananCardProps> = ({
@@ -33,7 +34,9 @@ import {
     price,
     imagelink,
     screen = "",
+    handleSecButton,
   }) => {
+
     return (
       <TouchableOpacity style={styles.PesananCardContainer}>
         <ImageBackground
@@ -63,7 +66,7 @@ import {
               :
               <></>
               }
-              <Pressable>
+              <Pressable onPress={handleSecButton}>
               {screen == "liked" ? 
               <AntDesign name= "heart" size={25} color= {COLORS.primaryRedHex} /> :
               screen != "history" ?
