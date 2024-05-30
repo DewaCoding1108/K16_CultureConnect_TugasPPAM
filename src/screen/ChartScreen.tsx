@@ -92,7 +92,7 @@ const ChartScreen = ({navigation,route}:any) => {
       <View style={styles.line}/>
       
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flex:1}}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flexGrow:1}}>
           {Chart.map((item,index) =>
               <PesananCard key={index+1} screen="chart" buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {item.data.detail} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => {handlerDelete(item.id)}}></PesananCard>
           )}
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     color: COLORS.primaryBlackHex,
 }, 
   Bottomheigt:{
-    height:300,
+    height:80,
   },
   line: {
     marginVertical:SPACING.space_8,

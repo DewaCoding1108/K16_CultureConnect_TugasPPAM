@@ -24,7 +24,7 @@ import moment from 'moment';
 // import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const BookingPakaianScreen = ({ navigation,route }: any) => {
-  const {id, name, location, price, detail, tipe, senimanID, imageURL} = route.params
+  const {id, name, location, price, detail, tipe, tokosewaID, imageURL} = route.params
   // const [loading, setLoading] = useState(false);
   const [dateStart, setDateStart] = useState<Date | undefined>(new Date());
   const [dateStartString, setDateStartString] = useState("");
@@ -147,7 +147,7 @@ const BookingPakaianScreen = ({ navigation,route }: any) => {
                 title="Booking"
                 backgroundColor={COLORS.primaryRedHex}
                 textColor={COLORS.primaryWhiteHex}
-                onPress={()=>{navigation.push("PaymentDetails",{TotalPrice:price, Chart:[{"data":{"name":name,"price": price,"detail": detail,"category": tipe,"senimanID": senimanID,"imageURL": imageURL},'id':id }]})}}
+                onPress={()=>{navigation.push("PaymentDetails",{TotalPrice:price, Chart:[{"data":{"name":name,"price": price,"detail": detail,"category": tipe,"tokosewaID": tokosewaID,"imageURL": imageURL},'id':id }]})}}
               />
               <Text style={styles.TextParagraph}>Pastikan data sudah benar dan sesuai</Text>
             </View>

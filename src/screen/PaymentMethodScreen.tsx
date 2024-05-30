@@ -51,7 +51,8 @@ const PaymentMethodScreen = ({navigation, route}: any) => {
                 } else {
                     for (const item of Chart) {
                         // Tambahkan item dari Chart prop ke subkoleksi History
-                        const historyDocRef = doc(historyCollectionRef, item.id);
+                        const historyDocRef = doc(historyCollectionRef);
+                        console.log(item);
                         await setDoc(historyDocRef, item.data);
                         console.log("1");
                         console.log(item);
