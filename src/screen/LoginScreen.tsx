@@ -6,7 +6,7 @@ import AppButton from '../components/AppButton';
 import InputText from '../components/InputText';
 import BackButton from '../components/BackButton';
 // import auth from '@react-native-firebase/auth';
-import SignIn from '../db/SignIn';
+import { SignIn } from '../db/Authentication';
 import { useAuth } from '../auth/AuthProvider'
 import AppLoader from '../components/AppLoader'
 // import { auth } from '../../firebaseConfig';
