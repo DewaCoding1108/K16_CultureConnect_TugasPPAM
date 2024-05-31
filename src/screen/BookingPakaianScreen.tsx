@@ -51,6 +51,7 @@ const BookingPakaianScreen = ({ navigation,route }: any) => {
   }
 
   const lamaTampil = dateDifference(dateStart,dateEnd);
+  const totalharga = lamaTampil * price;
   const onChangeStart = (date: any, selectedDate?: Date | undefined) => {
     const currentDate = selectedDate || date;
     setShowStart(Platform.OS === 'ios');
@@ -147,7 +148,7 @@ const BookingPakaianScreen = ({ navigation,route }: any) => {
                 title="Booking"
                 backgroundColor={COLORS.primaryRedHex}
                 textColor={COLORS.primaryWhiteHex}
-                onPress={()=>{navigation.push("PaymentDetails",{TotalPrice:price, Chart:[{"data":{"name":name,"price": price,"detail": detail,"category": tipe,"tokosewaID": tokosewaID,"imageURL": imageURL},'id':id }]})}}
+                onPress={()=>{navigation.push("PaymentDetails",{TotalPrice:totalharga, Chart:[{"data":{"name":name,"price": totalharga,"detail": detail,"category": tipe,"tokosewaID": tokosewaID,"imageURL": imageURL},'id':id }]})}}
               />
               <Text style={styles.TextParagraph}>Pastikan data sudah benar dan sesuai</Text>
             </View>

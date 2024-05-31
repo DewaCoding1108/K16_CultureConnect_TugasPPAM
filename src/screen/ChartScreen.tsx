@@ -98,7 +98,7 @@ const ChartScreen = ({navigation,route}:any) => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flexGrow:1}}>
           {Chart.map((item,index) =>
-              <PesananCard key={index+1} screen="chart" buttonPressHandler={()=>{navigation.push('Detail')}} name={item.data.name} location= {''} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => {handlerDelete(item.id)}}></PesananCard>
+              <PesananCard key={index+1} screen="chart" buttonPressHandler={()=>{handlerNavigate(item)}} name={item.data.name} location= {''} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} handleSecButton={() => {handlerDelete(item.id)}}></PesananCard>
           )}
         {renderBottomHeight()}        
       </ScrollView>

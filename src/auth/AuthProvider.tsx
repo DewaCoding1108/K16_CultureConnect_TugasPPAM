@@ -10,6 +10,7 @@ interface AuthContextProps {
   profile:any;
   initializing: boolean;
   role:string;
+  setProfile:any;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -73,7 +74,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, initializing, role, profile }}>
+    <AuthContext.Provider value={{ user, initializing, role, profile, setProfile}}>
       {children}
     </AuthContext.Provider>
   );

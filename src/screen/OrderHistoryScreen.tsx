@@ -73,7 +73,7 @@ const HistoryScreen = ({navigation,route}:any) => {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:SPACING.space_20, flexGrow:1}}>
         <View>
           {Chart.map((item,index=0) =>
-              <PesananCard key={index+1} screen='history' buttonPressHandler={()=>{handlerNavigate(item)}} name={item.data.name} location= {item.data.detail} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} ></PesananCard>
+              <PesananCard key={index+1} screen='history' buttonPressHandler={()=>{handlerNavigate(item)}} name={item.data.name} location= {''} price={item.data.price} type= {item.data.category} imagelink= {item.data.imageURL} ></PesananCard>
           )}
         </View>
         {renderBottomHeight()}        
