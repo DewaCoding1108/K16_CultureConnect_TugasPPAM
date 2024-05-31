@@ -26,9 +26,9 @@ const Brand = ({navigation,route}:any) => {
         <View style={styles.line}/>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flexDirection:"column", gap:20, justifyContent:"center", marginTop:8, paddingBottom:26}}>
           <CategoryBrandCard title="Sanggar" image={require("../assets/app_images/Home_SanggarSeni.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Sanggar"})}} />
-          <CategoryBrandCard title="Seniman" image={require("../assets/app_images/Home_BeliKaryaSeni.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Seniman"})}} />
+          <CategoryBrandCard title="Toko Karya" image={require("../assets/app_images/Home_BeliKaryaSeni.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Toko Karya"})}} />
           <CategoryBrandCard title="Toko Sewa" image={require("../assets/app_images/Home_SewaPakaian.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Toko Sewa"})}} />
-          <CategoryBrandCard title="Toko Sewa" image={require("../assets/app_images/Home_JasaTampil.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Toko Karya"})}} />
+          <CategoryBrandCard title="Seniman" image={require("../assets/app_images/Home_JasaTampil.png")} handlePress={() => {navigation.push('BrandCategory', {title:"Seniman"})}} />
         </ScrollView>
         
       </View>

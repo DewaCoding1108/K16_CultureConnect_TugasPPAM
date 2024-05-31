@@ -10,7 +10,7 @@ import { firestore } from '../../firebaseConfig'
 
 
 const EditProfile = ({navigation,route}:any) => {
-  const { user, profile }:any = useAuth();
+  const { user, profile, setProfile }:any = useAuth();
   const [name, setName] = useState(profile?.data.name);
   const [nomor, setNomor] = useState(profile?.data.nomor);
 
@@ -23,8 +23,9 @@ const EditProfile = ({navigation,route}:any) => {
 
         const docRef = querySnapshot.docs[0].ref;
         await updateDoc(docRef, { name: name, nomor: nomor });
-        console.log(profile?.data.name)
-        alert("Silakan SignOut dan Login kembali untuk mengubah data profile")
+        console.log(profile?.data.name);
+        setProfile(profile)
+        alert("Edit personal informasi berhasil")
       } catch (error) {
         alert("Error");
       }

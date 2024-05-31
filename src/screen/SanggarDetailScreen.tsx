@@ -82,7 +82,8 @@ const SanggarDetailScreen = ({navigation,route}:any) => {
                 detail: item.data.detail, 
                 tipe:item.data.category, 
                 sanggarID:item.data.sanggarID,
-                imageURL:item.data.imageURL
+                imageURL:item.data.imageURL,
+                show:true
                 })
               }} 
               name={item.data.name} 
